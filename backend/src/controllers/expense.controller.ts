@@ -1,9 +1,9 @@
 import { Response } from "express";
-import { ExpenseModel } from "../models/expense.model";
+import { ExpenseRepository } from "../repositories/expense.repository";
 
 export class ExpenseController {
   static async getAll(response: Response): Promise<void> {
-    const expenses = await ExpenseModel.getAll();
+    const expenses = await ExpenseRepository.getAll();
 
     response.json({ value: expenses });
   }

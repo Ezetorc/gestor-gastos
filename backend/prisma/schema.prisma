@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Expense {
+  id            Int      @id @default(autoincrement())
+  amount        Int
+  date          DateTime
+  category      String
+  paymentMethod String   @map("payment_method")
+  description   String
+
+  @@map("expenses")
+}
+
+model Income {
+  id            Int      @id @default(autoincrement())
+  amount        Int
+  date          DateTime
+  category      String
+  paymentMethod String   @map("payment_method")
+  description   String
+
+  @@map("incomes")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  password String
+  email    String
+  image    String
+
+  @@map("users")
+}

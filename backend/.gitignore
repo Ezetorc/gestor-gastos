@@ -1,5 +1,6 @@
 # Node modules: las dependencias instaladas no se suben, se instalan con npm install
 node_modules/
+node_modules
 
 # Archivos de log
 logs

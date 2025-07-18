@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 
-export class ExpenseService {
+export class ExpenseRepository {
   static prisma = new PrismaClient()
 
   static async getAll () {

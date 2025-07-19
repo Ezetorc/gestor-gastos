@@ -1,10 +1,10 @@
-import { Response } from 'express'
+import { Request,Response } from 'express'
 import { ExpenseService } from '../services/expense.service'
 
 export class ExpenseController {
-  static async getAll (response: Response): Promise<void> {
+  static async getAll (req: Request,res: Response): Promise<void> {
     const expenses = await ExpenseService.getAll()
 
-    response.json({ value: expenses })
+    res.json({ value: expenses })
   }
 }

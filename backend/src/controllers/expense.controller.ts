@@ -1,10 +1,10 @@
-import { Request,Response } from 'express'
-import { ExpenseService } from '../services/expense.service'
+import { Response } from "express";
+import { ExpenseRepository } from "../repositories/expense.repository";
 
 export class ExpenseController {
-  static async getAll (req: Request,res: Response): Promise<void> {
-    const expenses = await ExpenseService.getAll()
+  static async getAll(req: Request,res: Response): Promise<void> {
+    const expenses = await ExpenseRepository.getAll();
 
-    res.json({ value: expenses })
+    response.json({ value: expenses });
   }
 }

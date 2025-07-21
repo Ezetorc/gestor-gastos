@@ -14,15 +14,14 @@ import { formStyle, inputStyles, buttonSubmit } from "@/styles/formsStyles";
 import { theme } from "@/constants/theme";
 import Icon from "@/components/Icon";
 import { loginSchema } from "@/schemas/login.schema";
+import type { LoginFormData } from "@/types/login.type";
 
 export function FormLogin() {
-  // Hook de react-hook-form para manejar el formulario
   const {
-    handleSubmit, // función que se ejecuta al enviar el formulario
-    control, // se usa con Controller para conectar los inputs
-    formState: { errors }, // contiene los errores de validación
+    handleSubmit,
+    control,
+    formState: { errors },
   } = useForm<LoginFormData>({
-    // Se le pasa un validador de Yup como resolver
     resolver: yupResolver(loginSchema),
   });
 
@@ -31,7 +30,6 @@ export function FormLogin() {
   const [errorLogin, setErrorLogin] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginFormData) => {
-    // Lista simulada de usuarios registrados (esto simula una base de datos)
     const fakeUsers = [
       { email: "test@ejemplo.com", password: "123456" },
       { email: "mazal@ejemplo.com", password: "shalom123" },
@@ -106,7 +104,6 @@ export function FormLogin() {
         )}
       />
 
-      {/* Campo contraseña */}
       <Controller
         name="password"
         control={control}
@@ -122,40 +119,38 @@ export function FormLogin() {
             error={!!errors.password}
             helperText={errors.password?.message}
             sx={inputStyles.root}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge="end"
-                    sx={{ color: "#ccc" }}
-                  >
-                    {showPassword ? (
-                      <Icon name="visibilityOff" />
-                    ) : (
-                      <Icon name="visibility" />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? (
+                        <Icon name="visibilityOff" />
+                      ) : (
+                        <Icon name="visibility" />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
             }}
           />
         )}
       />
 
-      {/* Error de login */}
       {errorLogin && (
         <Typography color="error" align="center" mt={1}>
           {errorLogin}
         </Typography>
       )}
 
-      {/* Botón de envío */}
       <Button type="submit" variant="contained" sx={buttonSubmit}>
         Iniciar Sesión
       </Button>
 
-      {/* Link a registro */}
       <Typography align="center" color={theme.colors.muted}>
         ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
       </Typography>

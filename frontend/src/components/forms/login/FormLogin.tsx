@@ -15,6 +15,7 @@ import { theme } from "@/constants/theme";
 import Icon from "@/components/Icon";
 import { loginSchema } from "@/schemas/login.schema";
 import type { LoginFormData } from "@/types/login.type";
+import { useAuth } from "@/hooks/useAuth";
 
 export function FormLogin() {
   const {
@@ -24,29 +25,17 @@ export function FormLogin() {
   } = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema),
   });
-
+  const { login, error } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
-  const [errorLogin, setErrorLogin] = useState<string | null>(null);
-
   const onSubmit = async (data: LoginFormData) => {
-    const fakeUsers = [
-      { email: "test@ejemplo.com", password: "123456" },
-      { email: "mazal@ejemplo.com", password: "shalom123" },
-    ];
-
-    const usuarioValido = fakeUsers.find(
-      (user) => user.email === data.email && user.password === data.password
-    );
-
-    if (usuarioValido) {
-      console.log("¡Login exitoso!", usuarioValido);
-      setErrorLogin(null);
-
-      // 👉 Aquí podrías redirigir al usuario, guardar token, etc.
-    } else {
-      setErrorLogin("Email o contraseña incorrectos");
-    }
+    const usuario = {
+      id: "a",
+      nombre: "pedro",
+      email: data.email,
+    };
+    // cuando usemos el backend esto cambia
+    login(usuario);
   };
 
   return (
@@ -141,9 +130,9 @@ export function FormLogin() {
         )}
       />
 
-      {errorLogin && (
+      {error && (
         <Typography color="error" align="center" mt={1}>
-          {errorLogin}
+          {error}
         </Typography>
       )}
 

@@ -9,5 +9,9 @@ export const loginSchema = yup.object({
   password: yup
     .string()
     .min(8, "La contraseña debe tener al menos 8 caracteres")
-    .required("La contraseña es obligatoria"),
+    .required("La contraseña es obligatoria")
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d).+$/,
+      "Debe contener al menos una mayúscula y un número"
+    ),
 });

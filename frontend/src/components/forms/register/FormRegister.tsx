@@ -13,9 +13,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useUserStore } from "@/store/useUserStore";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 export function FormRegister() {
   const {
@@ -26,9 +26,7 @@ export function FormRegister() {
     resolver: yupResolver(registerSchema),
   });
 
-  const { user, setUser } = useUserStore();
-  const navigate = useNavigate();
-
+  const { register, error } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (data: RegisterFormData) => {
@@ -37,15 +35,9 @@ export function FormRegister() {
       nombre: data.name,
       email: data.email,
     };
-    setUser(usuario);
-    console.log("Datos enviados:", data);
+    // esto cambia cuando usemos backend
+    register(usuario);
   };
-
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, [user, navigate]);
 
   return (
     <Box
@@ -189,6 +181,12 @@ export function FormRegister() {
           />
         )}
       />
+
+      {error && (
+        <Typography color="error" align="center" mt={1}>
+          {error}
+        </Typography>
+      )}
 
       <Button type="submit" variant="contained" sx={buttonSubmit}>
         Crear Cuenta

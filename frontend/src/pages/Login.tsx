@@ -1,3 +1,4 @@
+
 import { FormLogin } from "@/components/forms/login/FormLogin";
 import { theme } from "@/constants/theme";
 import {Box} from "@mui/material";
@@ -15,6 +16,7 @@ const Login = () => {
         >
           <FormLogin />
         </Box>
+
   );
 };
 

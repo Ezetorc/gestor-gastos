@@ -8,8 +8,12 @@ export const registerSchema = yup.object({
     .required("El email es obligatorio"),
   password: yup
     .string()
-    .min(8, "Mínimo 6 caracteres")
-    .required("La contraseña es obligatoria"),
+    .min(8, "Mínimo 8 caracteres")
+    .required("La contraseña es obligatoria")
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d).+$/,
+      "Debe contener al menos una mayúscula y un número"
+    ),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Las contraseñas no coinciden")

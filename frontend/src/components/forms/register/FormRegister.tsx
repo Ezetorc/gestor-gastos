@@ -13,8 +13,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserStore } from "@/store/useUserStore";
 
 export function FormRegister() {
   const {
@@ -25,11 +26,26 @@ export function FormRegister() {
     resolver: yupResolver(registerSchema),
   });
 
+  const { user, setUser } = useUserStore();
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (data: RegisterFormData) => {
+    const usuario = {
+      id: "a",
+      nombre: data.name,
+      email: data.email,
+    };
+    setUser(usuario);
     console.log("Datos enviados:", data);
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <Box
@@ -115,22 +131,23 @@ export function FormRegister() {
             error={!!errors.password}
             helperText={errors.password?.message}
             sx={inputStyles.root}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge="end"
-                    sx={{ color: "#ccc" }}
-                  >
-                    {showPassword ? (
-                      <Icon name="visibilityOff" />
-                    ) : (
-                      <Icon name="visibility" />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? (
+                        <Icon name="visibilityOff" />
+                      ) : (
+                        <Icon name="visibility" />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
             }}
           />
         )}
@@ -151,22 +168,23 @@ export function FormRegister() {
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword?.message}
             sx={inputStyles.root}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge="end"
-                    sx={{ color: "#ccc" }}
-                  >
-                    {showPassword ? (
-                      <Icon name="visibilityOff" />
-                    ) : (
-                      <Icon name="visibility" />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? (
+                        <Icon name="visibilityOff" />
+                      ) : (
+                        <Icon name="visibility" />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
             }}
           />
         )}

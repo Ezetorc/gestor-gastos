@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import * as Yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
   Button,
@@ -9,32 +8,18 @@ import {
   InputAdornment,
   TextField,
   Typography,
-} from '@mui/material';
-import { Link } from 'react-router-dom';
-import { formStyle, inputStyles, buttonSubmit } from '@/styles/formsStyles';
-import { theme } from '@/constants/theme';
-import Icon from '@/components/Icon';
-
-const loginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Email inválido')
-    .required('El email es obligatorio'),
-
-  password: Yup.string()
-    .min(6, 'La contraseña debe tener al menos 6 caracteres')
-    .required('La contraseña es obligatoria'),
-});
-
-type LoginFormData = {
-  email: string;
-  password: string;
-};
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import { formStyle, inputStyles, buttonSubmit } from "@/styles/formsStyles";
+import { theme } from "@/constants/theme";
+import Icon from "@/components/Icon";
+import { loginSchema } from "@/schemas/login.schema";
 
 export function FormLogin() {
   // Hook de react-hook-form para manejar el formulario
   const {
     handleSubmit, // función que se ejecuta al enviar el formulario
-    control,      // se usa con Controller para conectar los inputs
+    control, // se usa con Controller para conectar los inputs
     formState: { errors }, // contiene los errores de validación
   } = useForm<LoginFormData>({
     // Se le pasa un validador de Yup como resolver
@@ -48,22 +33,21 @@ export function FormLogin() {
   const onSubmit = async (data: LoginFormData) => {
     // Lista simulada de usuarios registrados (esto simula una base de datos)
     const fakeUsers = [
-      { email: 'test@ejemplo.com', password: '123456' },
-      { email: 'mazal@ejemplo.com', password: 'shalom123' },
+      { email: "test@ejemplo.com", password: "123456" },
+      { email: "mazal@ejemplo.com", password: "shalom123" },
     ];
 
     const usuarioValido = fakeUsers.find(
-      (user) =>
-        user.email === data.email && user.password === data.password
+      (user) => user.email === data.email && user.password === data.password
     );
 
     if (usuarioValido) {
-      console.log('¡Login exitoso!', usuarioValido);
+      console.log("¡Login exitoso!", usuarioValido);
       setErrorLogin(null);
 
       // 👉 Aquí podrías redirigir al usuario, guardar token, etc.
     } else {
-      setErrorLogin('Email o contraseña incorrectos');
+      setErrorLogin("Email o contraseña incorrectos");
     }
   };
 
@@ -75,16 +59,16 @@ export function FormLogin() {
       sx={formStyle}
     >
       <Box
-        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
         <Box
           mb={2}
           sx={{
-            display: 'grid',
-            placeContent: 'center',
-            width: '60px',
-            height: '60px',
-            borderRadius: '100%',
+            display: "grid",
+            placeContent: "center",
+            width: "60px",
+            height: "60px",
+            borderRadius: "100%",
             background: theme.colors.primary,
           }}
         >
@@ -131,7 +115,7 @@ export function FormLogin() {
           <TextField
             margin="dense"
             fullWidth
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword ? "text" : "password"}
             label="Contraseña"
             variant="outlined"
             {...field}
@@ -144,7 +128,7 @@ export function FormLogin() {
                   <IconButton
                     onClick={() => setShowPassword(!showPassword)}
                     edge="end"
-                    sx={{ color: '#ccc' }}
+                    sx={{ color: "#ccc" }}
                   >
                     {showPassword ? (
                       <Icon name="visibilityOff" />

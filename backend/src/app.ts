@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import express, { json as jsonMiddleware } from "express";
 import { ExpenseRouter } from "./routers/expense.router";
 import { AuthRouter } from "./routers/auth.router";

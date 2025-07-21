@@ -1,24 +1,24 @@
-import { JWT_SECRET } from "../configuration/env.configuration";
 import { UserRepository } from "../repositories/user.repository";
-import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../configuration/env.configuration";
 import { compare } from "bcrypt";
+import jwt from "jsonwebtoken";
+import { NotFoundError } from "../models/not-found-error.model";
+import { BadRequestError } from "../models/bad-request-error.model";
 
 export class AuthService {
   static async login(email: string, password: string) {
     const user = await UserRepository.getByEmail(email);
 
-    if (!user) return null;
+    if (!user) throw new NotFoundError("User not found");
 
-    const passwordsMatches: boolean = await compare(password, user.password);
+    const passwordsMatches = await compare(password, user.password);
 
-    if (!passwordsMatches) return null;
+    if (!passwordsMatches) throw new BadRequestError("Invalid password");
 
-    const authorization = this.getAuthorization(user.id);
-
-    return { user, authorization };
+    return this.getAuthorization(user.id);
   }
 
   static async getAuthorization(userId: number | string) {
-    return jwt.sign(String(userId), JWT_SECRET, { expiresIn: "1d" });
+    return jwt.sign({ userId }, JWT_SECRET, { expiresIn: "1h" });
   }
 }

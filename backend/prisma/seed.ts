@@ -1,49 +1,48 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
-async function main() {
+import { prisma } from "../src/configuration/prisma.configuration";
 
-  //usuario de Alice
+async function main() {
+  // Usuario de Alice
   const alice = await prisma.user.upsert({
-    where: { email: 'alice@prisma.io' },
+    where: { email: "alice@prisma.io" },
     update: {},
     create: {
-      email: 'alice@prisma.io',
-      name: 'Alice',
-      password: 'securepassword123',
-      image: 'https://example.com/alice.jpg'
-
+      email: "alice@prisma.io",
+      name: "Alice",
+      password: "securepassword123",
+      image: "https://example.com/alice.jpg",
     },
-  })
-   //  Ingresos de Alice
+  });
+
+  // Ingresos de Alice
   const income = await prisma.income.create({
     data: {
       amount: 5000,
-      date: new Date('2025-07-01'),
-      category: 'Salario',
-      paymentMethod: 'Transferencia',
-      description: 'Sueldo mensual'
+      date: new Date("2025-07-01"),
+      category: "Salario",
+      paymentMethod: "Transferencia",
+      description: "Sueldo mensual",
     },
-  })
+  });
 
-  //  Gastos de Alice
+  // Gastos de Alice
   const expense = await prisma.expense.create({
     data: {
       amount: 250,
-      date: new Date('2025-07-03'),
-      category: 'Supermercado',
-      paymentMethod: 'Efectivo',
-      description: 'Compras de alimentos'
+      date: new Date("2025-07-03"),
+      category: "Supermercado",
+      paymentMethod: "Efectivo",
+      description: "Compras de alimentos",
     },
-  })
-
-  console.log({ alice })
+  });
 }
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+  .catch(async (error) => {
+    console.error(error);
+
+    await prisma.$disconnect();
+
+    process.exit(1);
+  });

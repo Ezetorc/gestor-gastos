@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "amount": 10000,
+    "date": "2025-05-12T18:12:14Z",
+    "category": "Comida",
+    "payment_method": "Efectivo",
+    "description": "Comida de todo el mes",
+    "user_id": 1
+  },
+  {
+    "id": 2,
+    "amount": 5000,
+    "date": "2024-11-09T16:18:01Z",
+    "category": "Impuesto",
+    "payment_method": "Tarjeta de débito",
+    "description": "Impuesto de la luz",
+    "user_id": 1
+  },
+  {
+    "id": 3,
+    "amount": 67000,
+    "date": "2024-09-29T06:41:35Z",
+    "category": "Electrodoméstico",
+    "payment_method": "Tarjeta de débito",
+    "description": "Televisor",
+    "user_id": 2
+  },
+  {
+    "id": 4,
+    "amount": 5000,
+    "date": "2024-12-20T18:12:49Z",
+    "category": "Comida",
+    "payment_method": "Mercado Pago",
+    "description": "Comida de la semana",
+    "user_id": 3
+  },
+  {
+    "id": 5,
+    "amount": 120000,
+    "date": "2025-01-20T19:24:04Z",
+    "category": "Cuota",
+    "payment_method": "Tarjeta de crédito",
+    "description": "Cuota de la escuela de mis hijos",
+    "user_id": 4
+  }
+]

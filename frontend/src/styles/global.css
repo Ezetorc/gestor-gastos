@@ -4,8 +4,11 @@
 --color-gradient-start: #3b82f6;    /* Azul degradado botón */
 --color-gradient-end: #8b5cf6;      /* Violeta degradado botón */
 
---color-primary: #3b82f6;           /* Azul primario (botones, íconos activos) */
---color-secondary: #8b5cf6;         /* Violeta secundario */
+--color-border: #4d6485;
+
+--color-primary: #2757a5;           /* Azul primario (botones, íconos activos) */
+--color-secondary: #6952bb;         /* Violeta secundario */
+
 --color-accent: #facc15;            /* Amarillo para elementos destacados si lo necesitás */
 
 --color-text: #f1f5f9;              /* Texto principal (blanco grisáceo) */
@@ -21,8 +24,15 @@
 }
  
 
+html, body {
+  margin: 0;
+  padding: 0;
+  
+
+
+
+
 body {
   background: var(--color-background);
   color: var(--color-text);
 }
-

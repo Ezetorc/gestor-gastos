@@ -1,7 +1,7 @@
-import { HttpError } from "./http-error.model";
+import { CustomError } from "./custom-error.model";
 
-export class BadRequestError extends HttpError {
-  constructor(message: string) {
-    super(message, 400);
+export class BadRequestError extends CustomError {
+  constructor(message?: string) {
+    super(message || "Bad request", 400);
   }
 }

@@ -20,20 +20,14 @@ export function dtoValidationMiddleware(dto: new () => Object) {
           constraints: error.constraints,
         }));
 
-        response.status(400).json({
-          message: "Validation failed",
-          errors: formattedErrors,
-        });
+        response.status(400).json({ error: formattedErrors });
 
         return;
       }
 
       next();
     } catch (error) {
-      response.status(400).json({
-        message: "Validation error",
-        error: (error as Error).message || error,
-      });
+      response.status(400).json({ error: (error as Error).message || error });
 
       return;
     }

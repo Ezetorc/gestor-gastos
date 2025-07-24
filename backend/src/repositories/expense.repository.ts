@@ -1,9 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../configuration/prisma.configuration";
 
 export class ExpenseRepository {
-  static prisma = new PrismaClient();
-
   static async getAll() {
-    return this.prisma.expense.findMany();
+    return prisma.expense.findMany();
   }
 }

@@ -10,6 +10,9 @@
     "skipLibCheck": true,
     "outDir": "dist",
     "rootDir": ".",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
     "isolatedModules": true
   },
   "include": ["src", "prisma"],

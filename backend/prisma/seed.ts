@@ -1,8 +1,8 @@
 import { prisma } from "../src/configuration/prisma.configuration";
 
 async function main() {
-  // Usuario de Alice
-  const alice = await prisma.user.upsert({
+  // Usuarios
+  await prisma.user.upsert({
     where: { email: "alice@prisma.io" },
     update: {},
     create: {
@@ -13,8 +13,8 @@ async function main() {
     },
   });
 
-  // Ingresos de Alice
-  const income = await prisma.income.create({
+  // Ingresos
+  await prisma.income.create({
     data: {
       amount: 5000,
       date: new Date("2025-07-01"),
@@ -24,8 +24,8 @@ async function main() {
     },
   });
 
-  // Gastos de Alice
-  const expense = await prisma.expense.create({
+  // Gastos
+  await prisma.expense.create({
     data: {
       amount: 250,
       date: new Date("2025-07-03"),
@@ -35,6 +35,7 @@ async function main() {
     },
   });
 }
+
 main()
   .then(async () => {
     await prisma.$disconnect();

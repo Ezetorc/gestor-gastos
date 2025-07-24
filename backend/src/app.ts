@@ -1,8 +1,8 @@
+import { errorHandlerMiddleware } from "./middlewares/error-handler.middleware";
 import express, { json as jsonMiddleware } from "express";
 import { ExpenseRouter } from "./routers/expense.router";
 import { AuthRouter } from "./routers/auth.router";
 import { PORT } from "./configuration/env.configuration";
-import { errorHandlerMiddleware } from "./middlewares/error-handler.middleware";
 
 export const app = express();
 
@@ -11,5 +11,5 @@ app
   .use(jsonMiddleware())
   .use("/expenses", ExpenseRouter)
   .use("/auth", AuthRouter)
-  .use(errorHandlerMiddleware)
+  .use(errorHandlerMiddleware())
   .listen(PORT, () => console.log("✅ API is active"));

@@ -9,8 +9,9 @@
     "types": ["node"],
     "skipLibCheck": true,
     "outDir": "dist",
-    "rootDir": "."
+    "rootDir": ".",
+    "isolatedModules": true
   },
-  "include": ["src","prisma"],
+  "include": ["src", "prisma"],
   "exclude": ["node_modules"]
 }

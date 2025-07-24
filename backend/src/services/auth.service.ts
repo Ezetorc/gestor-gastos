@@ -1,9 +1,9 @@
 import { UserRepository } from "../repositories/user.repository";
 import { JWT_SECRET } from "../configuration/env.configuration";
-import { compare } from "bcrypt";
-import jwt from "jsonwebtoken";
 import { NotFoundError } from "../models/not-found-error.model";
 import { BadRequestError } from "../models/bad-request-error.model";
+import { compare } from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export class AuthService {
   static async login(email: string, password: string) {

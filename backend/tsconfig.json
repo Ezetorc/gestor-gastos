@@ -12,7 +12,8 @@
     "rootDir": ".",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "isolatedModules": true
   },
   "include": ["src", "prisma"],
   "exclude": ["node_modules"]

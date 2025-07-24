@@ -1,15 +1,22 @@
-import Icon from "@/components/Icon";
-import { Link } from "react-router-dom";
+
+import { FormLogin } from "@/components/forms/login/FormLogin";
+import { theme } from "@/constants/theme";
+import {Box} from "@mui/material";
 
 const Login = () => {
   return (
-    <div>
-      <Icon name="login" size={20} />
-      <h2>Login</h2>
-      <p>
-        ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
-      </p>
-    </div>
+    <Box
+          sx={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: `linear-gradient(to bottom right, ${theme.colors.gradientStart}, ${theme.colors.gradientEnd})`,
+          }}
+        >
+          <FormLogin />
+        </Box>
+
   );
 };
 

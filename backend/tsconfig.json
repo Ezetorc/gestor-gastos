@@ -6,10 +6,12 @@
     "esModuleInterop": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "types": ["node"],
     "skipLibCheck": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": ".",
+    "isolatedModules": true
   },
-  "include": ["src"],
+  "include": ["src", "prisma"],
   "exclude": ["node_modules"]
 }

@@ -12,6 +12,6 @@
     "rootDir": ".",
     "isolatedModules": true
   },
-  "include": ["src", "prisma", "tests/unit/add.test.ts"],
+  "include": ["src", "prisma"],
   "exclude": ["node_modules"]
 }

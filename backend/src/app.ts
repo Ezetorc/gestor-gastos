@@ -14,9 +14,6 @@ app
   .disable("x-powered-by")
   .use(jsonMiddleware())
   .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput))
-
   .use("/expenses", ExpenseRouter)
   .use(errorHandlerMiddleware())
-
-
   .listen(PORT, () => console.log("✅ API is active"));

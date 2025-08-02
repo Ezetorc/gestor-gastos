@@ -26,6 +26,14 @@ const doc = {
           description: { type: 'string', example: 'Compra supermercado' },
         },
       },
+      LoginDto: {
+        "type": "object",
+        required: ["email", "password"],
+        properties: {
+          email: { type: "string", example: "tu@email.com" },
+          password: { type: "string", example: "tuContraSEÑA123!" },
+        } 
+      }
     },
   },
 };

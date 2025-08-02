@@ -4,20 +4,18 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "types": [
-      "node"
-    ],
-    "skipLibCheck": true,   
-    "isolatedModules": true
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false
   },
-  "include": [
-    "src",
-    "prisma"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

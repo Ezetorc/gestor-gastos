@@ -14,17 +14,22 @@ model Expense {
   category      String
   paymentMethod String   @map("payment_method")
   description   String
+  userId        Int      @map("user_id")
+
+  user User @relation(fields: [userId], references: [id])
 
   @@map("expenses")
 }
 
 model Income {
-  id            Int      @id @default(autoincrement())
-  amount        Int
-  date          DateTime
-  category      String
-  paymentMethod String   @map("payment_method")
-  description   String
+  id          Int      @id @default(autoincrement())
+  amount      Int
+  date        DateTime
+  category    String
+  description String
+  userId      Int      @map("user_id")
+
+  user User @relation(fields: [userId], references: [id])
 
   @@map("incomes")
 }
@@ -35,6 +40,9 @@ model User {
   password String
   email    String @unique
   image    String?
+
+  expenses Expense[]
+  incomes  Income[]
 
   @@map("users")
 }

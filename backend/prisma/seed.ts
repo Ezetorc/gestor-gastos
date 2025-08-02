@@ -2,7 +2,7 @@ import { prisma } from "../src/configuration/prisma.configuration";
 
 async function main() {
   // Usuarios
-  await prisma.user.upsert({
+  const alice = await prisma.user.upsert({
     where: { email: "alice@prisma.io" },
     update: {},
     create: {
@@ -19,8 +19,8 @@ async function main() {
       amount: 5000,
       date: new Date("2025-07-01"),
       category: "Salario",
-      paymentMethod: "Transferencia",
       description: "Sueldo mensual",
+      userId: alice.id,
     },
   });
 
@@ -32,6 +32,7 @@ async function main() {
       category: "Supermercado",
       paymentMethod: "Efectivo",
       description: "Compras de alimentos",
+      userId: alice.id,
     },
   });
 }

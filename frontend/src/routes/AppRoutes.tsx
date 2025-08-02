@@ -5,6 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import DashBoard from "@/pages/DashBoard";
+import Gastos from "@/pages/Gastos";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import { RouteProtected } from "./ProtectedRoute";
@@ -36,6 +37,15 @@ const AppRoutes = () => {
           element={
             <RouteProtected>
               <DashBoard />
+            </RouteProtected>
+          }
+        />
+
+        <Route
+          path="/gastos"
+          element={
+            <RouteProtected>
+              <Gastos />
             </RouteProtected>
           }
         />

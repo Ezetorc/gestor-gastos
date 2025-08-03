@@ -2,22 +2,20 @@ import { errorHandlerMiddleware } from "./middlewares/error-handler.middleware";
 import express, { json as jsonMiddleware } from "express";
 import { ExpenseRouter } from "./routers/expense.router";
 import { AuthRouter } from "./routers/auth.router";
+import { UserRouter } from "./routers/user.router";
 import { PORT } from "./configuration/env.configuration";
 import swaggerUi from "swagger-ui-express";
 import swaggerOutput from '../swagger_output.json';
 
-
-
-import authRouter from './routers/auth.router';
-
 export const app = express();
+
 app
   .disable("x-powered-by")
   .use(jsonMiddleware())
   .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput))
   .use("/expenses", ExpenseRouter)
+  .use("/user", UserRouter)
   .use("/auth", AuthRouter)
   .use(errorHandlerMiddleware())
-  .listen(PORT, () => console.log("✅ API is active"));
+  .listen(PORT, () => console.log(":white_check_mark: API is active"));
 
-app.use('/auth', authRouter);

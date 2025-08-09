@@ -43,11 +43,9 @@ export function FormLogin() {
       component="form"
       noValidate
       onSubmit={handleSubmit(onSubmit)}
-      sx={formStyle}
-    >
+      sx={formStyle}>
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-      >
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <Box
           mb={2}
           sx={{
@@ -57,8 +55,7 @@ export function FormLogin() {
             height: "60px",
             borderRadius: "100%",
             background: theme.colors.primary,
-          }}
-        >
+          }}>
           <Icon name="login" size={30} />
         </Box>
         <Typography
@@ -66,8 +63,7 @@ export function FormLogin() {
           color="white"
           fontWeight="bold"
           textAlign="center"
-          component="h1"
-        >
+          component="h1">
           Iniciar Sesión
         </Typography>
         <Typography color={theme.colors.muted} textAlign="center">
@@ -81,6 +77,8 @@ export function FormLogin() {
         defaultValue=""
         render={({ field }) => (
           <TextField
+            autoComplete="current-password"
+            placeholder="Email"
             margin="dense"
             fullWidth
             label="Email"
@@ -99,7 +97,9 @@ export function FormLogin() {
         defaultValue=""
         render={({ field }) => (
           <TextField
+            placeholder="Contraseña"
             margin="dense"
+            autoComplete="current-password"
             fullWidth
             type={showPassword ? "text" : "password"}
             label="Contraseña"
@@ -114,8 +114,7 @@ export function FormLogin() {
                   <InputAdornment position="end">
                     <IconButton
                       onClick={() => setShowPassword(!showPassword)}
-                      edge="end"
-                    >
+                      edge="end">
                       {showPassword ? (
                         <Icon name="visibilityOff" />
                       ) : (

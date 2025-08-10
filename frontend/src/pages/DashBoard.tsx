@@ -1,3 +1,4 @@
+import { Dashboard } from "@/components/w/Dashboard";
 import { Link } from "react-router-dom";
 
 const DashBoard = () => {
@@ -7,6 +8,7 @@ const DashBoard = () => {
       <nav>
         <Link to="/login">Login</Link> | <Link to="/register">Register</Link>
       </nav>
+      <Dashboard/>
     </div>
   );
 };

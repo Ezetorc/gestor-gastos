@@ -1,4 +1,6 @@
 import { Box, Card, CardContent, Typography } from '@mui/material';
+import { PieChartComponent } from './PieChart';
+import expenses from '../../mocks/expenses.mock.json';
 
 {
   /*const ratingsData = [
@@ -45,7 +47,7 @@ export const Dashboard = () => {
         >
           {/* Gasto Hoy */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%' }}>
+            <Card sx={{ height: '100%', borderRadius:'10px' }}>
               <CardContent>
                 <Typography variant="subtitle2">Gasto Hoy</Typography>
                 <Typography
@@ -61,7 +63,7 @@ export const Dashboard = () => {
 
           {/* Gasto Semana */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%' }}>
+            <Card sx={{ height: '100%', borderRadius:'10px' }}>
               <CardContent>
                 <Typography variant="subtitle2">Gasto Semana</Typography>
                 <Typography
@@ -77,7 +79,7 @@ export const Dashboard = () => {
 
           {/* Gasto Mes */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%' }}>
+            <Card sx={{ height: '100%', borderRadius:'10px' }}>
               <CardContent>
                 <Typography variant="subtitle2">Gasto Mes</Typography>
                 <Typography
@@ -93,7 +95,7 @@ export const Dashboard = () => {
 
           {/* Balance */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%' }}>
+            <Card sx={{ height: '100%', borderRadius:'10px' }}>
               <CardContent>
                 <Typography variant="subtitle2">Balance</Typography>
                 <Typography
@@ -120,9 +122,7 @@ export const Dashboard = () => {
           }}
         >
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card
-              sx={{
-                height: 200,
+            <Card sx={{ height: 200, borderRadius:'10px',
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
@@ -141,8 +141,9 @@ export const Dashboard = () => {
                       mb: 1,
                     }}
                   >
-                    <Typography variant="body2">{label}:</Typography>
+                    <Typography variant="h6">{label}:</Typography>
                     <Typography
+                    variant="h6"
                       sx={{
                         color: getColorByValue(value),
                         marginLeft: 'auto',
@@ -169,10 +170,11 @@ export const Dashboard = () => {
                   marginTop: 'auto', // Esto empuja el balance abajo del Card
                 }}
               >
-                <Typography variant="body2" fontWeight="bold">
+                <Typography variant="h5" fontWeight="bold">
                   Balance
                 </Typography>
                 <Typography
+                variant="h5"
                   sx={{
                     color: getColorByValue(balanceResumen),
                     marginLeft: 'auto',
@@ -187,15 +189,37 @@ export const Dashboard = () => {
 
           {/* Top categorías */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%' }}>
+            <Card sx={{ height: '100%', borderRadius:'10px' }}>
               <CardContent>
                 <Typography variant="subtitle2" gutterBottom>
                   Top categorías
                 </Typography>
-                <Typography>
-                  - Alimentos{' '}
-                  <b style={{ color: getColorByValue(100) }}>$100</b>
-                </Typography>
+                <Box>
+                {[
+                  { label: 'Alimentos', value: totalGastos },
+                  { label: 'Ocio', value: totalIngresos },
+                ].map(({ label, value }) => (
+                  <Box
+                    key={label}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      mb: 1,
+                    }}
+                  >
+                    <Typography variant="body2">- {label}</Typography>
+                    <Typography
+                      sx={{
+                        color: getColorByValue(value),
+                        marginLeft: 'auto',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      ${Math.abs(value).toFixed(2)}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
               </CardContent>
             </Card>
           </Box>
@@ -214,18 +238,7 @@ export const Dashboard = () => {
         >
           {/* Gráfico circular */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%' }}>
-              <Card
-                sx={{
-                  height: 200,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Typography>Gráfico circular aquí</Typography>
-              </Card>
-            </Card>
+            <PieChartComponent expenses={expenses} />
           </Box>
 
           {/* Gráfico de barras */}

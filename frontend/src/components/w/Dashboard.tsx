@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import { PieChartComponent } from './PieChart';
 import expenses from '../../mocks/expenses.mock.json';
+import DashedLineChart from './DashedLineChart';
 
 {
   /*const ratingsData = [
@@ -238,22 +239,15 @@ export const Dashboard = () => {
         >
           {/* Gráfico circular */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <PieChartComponent expenses={expenses} />
+            <Card sx={{ height: '100%' }}>
+             <PieChartComponent expenses={expenses} />
+            </Card>
           </Box>
 
           {/* Gráfico de barras */}
-          <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%' }}>
-              <Card
-                sx={{
-                  height: 200,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Typography>Gráfico de barras aquí</Typography>
-              </Card>
+          <Box sx={{ flex: { xs: '35%', md: '20%', color: 'white' } }}>
+           <Card sx={{ height: '100%' }}>
+             <DashedLineChart />
             </Card>
           </Box>
         </Box>

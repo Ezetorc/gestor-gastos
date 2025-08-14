@@ -2,16 +2,7 @@ import { Box, Card, CardContent, Typography } from '@mui/material';
 import { PieChartComponent } from './PieChart';
 import expenses from '../../mocks/expenses.mock.json';
 import DashedLineChart from './DashedLineChart';
-
-{
-  /*const ratingsData = [
-  { numero: 1, porcentaje: 15 },
-  { numero: 2, porcentaje: 10 },
-  { numero: 3, porcentaje: 5 },
-  { numero: 4, porcentaje: 25 },
-  { numero: 5, porcentaje: 20 },
-];*/
-}
+import { theme } from "@/constants/theme";
 
 // Función que devuelve el color según el valor numérico
 const getColorByValue = (value: number): string => {
@@ -48,7 +39,7 @@ export const Dashboard = () => {
         >
           {/* Gasto Hoy */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%', borderRadius:'10px' }}>
+            <Card sx={{ height: '100%', borderRadius:'10px', background: theme.colors.inputBg, color:'white' }}>
               <CardContent>
                 <Typography variant="subtitle2">Gasto Hoy</Typography>
                 <Typography
@@ -64,7 +55,7 @@ export const Dashboard = () => {
 
           {/* Gasto Semana */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%', borderRadius:'10px' }}>
+            <Card sx={{ height: '100%', borderRadius:'10px', background: theme.colors.inputBg, color:'white' }}>
               <CardContent>
                 <Typography variant="subtitle2">Gasto Semana</Typography>
                 <Typography
@@ -80,7 +71,7 @@ export const Dashboard = () => {
 
           {/* Gasto Mes */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%', borderRadius:'10px' }}>
+            <Card sx={{ height: '100%', borderRadius:'10px', background: theme.colors.inputBg, color:'white' }}>
               <CardContent>
                 <Typography variant="subtitle2">Gasto Mes</Typography>
                 <Typography
@@ -96,7 +87,7 @@ export const Dashboard = () => {
 
           {/* Balance */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%', borderRadius:'10px' }}>
+            <Card sx={{ height: '100%', borderRadius:'10px', background: theme.colors.inputBg, color:'white' }}>
               <CardContent>
                 <Typography variant="subtitle2">Balance</Typography>
                 <Typography
@@ -127,6 +118,7 @@ export const Dashboard = () => {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
+                background: theme.colors.inputBg, color:'white'
               }}
             >
               <Box>
@@ -190,7 +182,7 @@ export const Dashboard = () => {
 
           {/* Top categorías */}
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%', borderRadius:'10px' }}>
+            <Card sx={{ height: '100%', borderRadius:'10px', background: theme.colors.inputBg, color:'white' }}>
               <CardContent>
                 <Typography variant="subtitle2" gutterBottom>
                   Top categorías
@@ -229,24 +221,28 @@ export const Dashboard = () => {
         <Box
           sx={{
             display: 'flex',
-            flexWrap: 'wrap',
             gap: 2,
             width: '70%',
             p: 2,
             border: '1px solid violet',
             mt: 2,
+            flexDirection: { xs: 'column', md: 'row' },
           }}
         >
           {/* Gráfico circular */}
-          <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
-            <Card sx={{ height: '100%' }}>
+          <Box sx={{ 
+              width: { xs: '100%', md: '50%' },
+           }}>
+            <Card sx={{ height: '100%', background: theme.colors.inputBg, color:'white'}}>
              <PieChartComponent expenses={expenses} />
             </Card>
           </Box>
 
           {/* Gráfico de barras */}
-          <Box sx={{ flex: { xs: '35%', md: '20%', color: 'white' } }}>
-           <Card sx={{ height: '100%' }}>
+          <Box sx={{ 
+            width: { xs: '100%', md: '50%' },
+          }}>
+           <Card sx={{ height: '100%', background: theme.colors.inputBg, color:'white' }}>
              <DashedLineChart />
             </Card>
           </Box>

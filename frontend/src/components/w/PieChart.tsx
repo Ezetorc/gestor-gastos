@@ -1,5 +1,6 @@
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
-import { Card, Typography } from '@mui/material';
+import { Card, Typography, useMediaQuery } from '@mui/material';
+import { theme } from "@/constants/theme";
 
 interface Expense {
   amount: number;
@@ -11,6 +12,7 @@ interface PieChartProps {
 }
 
 export const PieChartComponent = ({ expenses }: PieChartProps) => {
+  const isSmallScreen = useMediaQuery('(max-width: 500px)');
   if (!expenses || expenses.length === 0) {
     return (
       <Card
@@ -43,11 +45,6 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
     label: category,
   }));
 
-  const size = {
-    width: 200,
-    height: 220,
-  };
-
   return (
     <>
     <Typography sx={{textAlign:'center', mt:2}}>Gasto por categoria</Typography>
@@ -57,6 +54,7 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        background: theme.colors.inputBg, color:'white'
       }}
     >
       <PieChart
@@ -66,7 +64,7 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
               `${((item.value / totalExpenses) * 100).toFixed(2)}%`, // cálculo de porcentaje aquí
             arcLabelMinAngle: 45,
             data: chartData,
-            valueFormatter: (item) => `$${item.value.toLocaleString()}`, // tooltip con monto real
+            valueFormatter: (item) => `${item.value.toLocaleString()}`, // tooltip con monto real
           },
         ]}
         sx={{
@@ -75,7 +73,8 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
             fontWeight: 'bold',
           },
         }}
-        {...size}
+        height={220}
+        hideLegend={isSmallScreen}
       />
     </Card>
     </>

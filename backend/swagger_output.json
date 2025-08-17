@@ -131,6 +131,131 @@
         }
       }
     },
+    "/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Registra un nuevo usuario en el sistema.",
+        "responses": {
+          "201": {
+            "description": "Usuario registrado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuario creado."
+                    },
+                    "userId": {
+                      "type": "string",
+                      "example": "507f1f77bcf86cd799439011"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "userId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos de registro inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "La contraseña debe tener al menos 8 caracteres."
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "El correo electrónico ya está registrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "El correo juan.perez@email.com ya está registrado."
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error inesperado del servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Unexpected error"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password",
+                  "image"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Juan Pérez"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "juan.perez@email.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "Password123!"
+                  },
+                  "image": {
+                    "type": "string",
+                    "example": "https://example.com/avatar.jpg"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/expenses": {
       "get": {
         "tags": [

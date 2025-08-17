@@ -1,6 +1,6 @@
 import {IsEmail, IsNotEmpty, MinLength, Matches} from 'class-validator';
 
-export class RegisterUserDto{
+export class RegisterDto{
     @IsNotEmpty({message: 'El nombre es obligatorio'})
     public name!: string;
 

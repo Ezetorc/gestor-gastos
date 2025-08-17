@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { RegisterUserDto } from "../dto/register-user.dto";
+import { RegisterDto } from "../models/register.dto.model";
 import { prisma } from "../configuration/prisma.configuration";
 
 export class UserRepository {
@@ -10,7 +10,7 @@ export class UserRepository {
   }
 
   // El método 'create' para registrar un nuevo usuario
-  static async create(data: Omit<RegisterUserDto, 'password'> & { password: string }): Promise<User> {
+  static async create(data: RegisterDto): Promise<User> {
     return await prisma.user.create({
       data: {
         name: data.name,

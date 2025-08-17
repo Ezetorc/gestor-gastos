@@ -1,6 +1,7 @@
 import { authServiceMock } from "./../mocks/auth.service.mock";
 import { AuthController } from "../../src/controllers/auth.controller";
 import { describe, expect, it, jest } from "@jest/globals";
+import { mockUser } from "../mocks/user.mock";
 
 jest.mock("../../src/services/auth.service");
 
@@ -25,6 +26,41 @@ describe("AuthController", () => {
       );
       expect(responseMock.status).toHaveBeenCalledWith(200);
       expect(responseMock.json).toHaveBeenCalledWith({ value: jwtTokenMock });
+    });
+  });
+});
+
+describe("registerUser", () => {
+  it("should respond with 201 and new user ID", async () => {
+
+    const requestMock = {
+      body: {
+        name: "Test User",
+        email: "test@example.com",
+        password: "password123",
+      },
+    } as any;
+
+    const responseMock = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as any;
+
+    const newUserMock = {
+      id: 1,
+    };
+
+    authServiceMock.register.mockResolvedValue(mockUser);
+
+    await AuthController.registerUser(requestMock, responseMock);
+
+    expect(authServiceMock.register).toHaveBeenCalledWith(requestMock.body);
+
+    expect(responseMock.status).toHaveBeenCalledWith(201);
+
+    expect(responseMock.json).toHaveBeenCalledWith({
+      message: "Usuario creado.",
+      userId: newUserMock.id,
     });
   });
 });

@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AuthController } from "../controllers/auth.controller";
 import { dtoValidationMiddleware } from "../middlewares/dto-validation.middleware";
 import { LoginDto } from "../models/login-dto.model";
+import { RegisterDto } from "../models/register.dto.model";
 
 export const AuthRouter = Router();
 
@@ -91,3 +92,90 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
   }
 */
   AuthController.login);
+
+  AuthRouter.post('/register', dtoValidationMiddleware(RegisterDto), 
+    /*
+    #swagger.path = '/register'
+    #swagger.tags = ['Auth']
+    #swagger.description = 'Registra un nuevo usuario en el sistema.'
+  
+    #swagger.requestBody = {
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            required: ['name', 'email', 'password', 'image'],
+            properties: {
+              name: { type: 'string', example: 'Juan Pérez' },
+              email: { type: 'string', example: 'juan.perez@email.com' },
+              password: { type: 'string', example: 'Password123!' },
+              image: { type: 'string', example: 'https://example.com/avatar.jpg' }
+            }
+          }
+        }
+      }
+    }
+  
+    #swagger.responses[201] = {
+      description: 'Usuario registrado exitosamente.',
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              message: { type: 'string', example: 'Usuario creado.' },
+              userId: { type: 'string', example: '507f1f77bcf86cd799439011' }
+            },
+            required: ['message', 'userId']
+          }
+        }
+      }
+    }
+  
+    #swagger.responses[400] = {
+      description: 'Datos de registro inválidos.',
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              error: { type: 'string', example: 'La contraseña debe tener al menos 8 caracteres.' }
+            },
+            required: ['error']
+          }
+        }
+      }
+    }
+  
+    #swagger.responses[409] = {
+      description: 'El correo electrónico ya está registrado.',
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              error: { type: 'string', example: 'El correo juan.perez@email.com ya está registrado.' }
+            },
+            required: ['error']
+          }
+        }
+      }
+    }
+  
+    #swagger.responses[500] = {
+      description: 'Error inesperado del servidor.',
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              error: { type: 'string', example: 'Unexpected error' }
+            },
+            required: ['error']
+          }
+        }
+      }
+    }
+    */
+   AuthController.registerUser);

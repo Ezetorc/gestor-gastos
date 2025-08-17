@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
+    "test": "jest",
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "start": "ts-node swagger.ts && npm run dev"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -23,6 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "prisma": "^6.11.0",
     "reflect-metadata": "^0.2.2",
+    "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },

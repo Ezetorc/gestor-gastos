@@ -30,9 +30,8 @@ describe("AuthController", () => {
   });
 });
 
-describe("registerUser", () => {
+describe("register", () => {
   it("should respond with 201 and new user ID", async () => {
-
     const requestMock = {
       body: {
         name: "Test User",
@@ -52,14 +51,12 @@ describe("registerUser", () => {
 
     authServiceMock.register.mockResolvedValue(mockUser);
 
-    await AuthController.registerUser(requestMock, responseMock);
+    await AuthController.register(requestMock, responseMock);
 
     expect(authServiceMock.register).toHaveBeenCalledWith(requestMock.body);
-
     expect(responseMock.status).toHaveBeenCalledWith(201);
-
     expect(responseMock.json).toHaveBeenCalledWith({
-      message: "Usuario creado.",
+      message: "Usuario creado",
       userId: newUserMock.id,
     });
   });

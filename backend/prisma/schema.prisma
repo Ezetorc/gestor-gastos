@@ -39,7 +39,7 @@ model User {
   name     String
   password String
   email    String @unique
-  image    String
+  image    String?
 
   expenses Expense[]
   incomes  Income[]

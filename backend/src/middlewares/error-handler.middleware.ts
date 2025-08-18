@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { getErrorMessage } from "../utilities/get-error-message.utility";
 import { CustomError } from "../models/custom-error.model";
+import { EmailAlreadyExistsError } from "../models/email-already-exists-error.model";
 
 export function errorHandlerMiddleware() {
   return async (

@@ -6,9 +6,6 @@ import { PORT } from "./configuration/env.configuration";
 import swaggerUi from "swagger-ui-express";
 import swaggerOutput from '../swagger_output.json';
 
-
-
-
 export const app = express();
 
 app

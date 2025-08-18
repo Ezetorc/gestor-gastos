@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-    "swagger": "ts-node swagger.ts"
+    "start": "ts-node swagger.ts && npm run dev",
+    "swagger": "ts-node swagger.ts",
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,10 +27,9 @@
     "jsonwebtoken": "^9.0.2",
     "prisma": "^6.11.0",
     "reflect-metadata": "^0.2.2",
+    "swagger-autogen": "^2.23.7",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
   },
   "devDependencies": {
     "@jest/globals": "^30.0.5",

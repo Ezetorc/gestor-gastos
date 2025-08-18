@@ -15,5 +15,4 @@ app
   .use("/expenses", ExpenseRouter)
   .use("/auth", AuthRouter)
   .use(errorHandlerMiddleware())
-  .listen(PORT, () => console.log(":white_check_mark: API is active"));
-
+  .listen(PORT, () => console.log( `✅ API is active in port ${PORT}`));

@@ -20,11 +20,6 @@ export function errorHandlerMiddleware() {
       return;
     }
 
-    if (error instanceof EmailAlreadyExistsError){
-      response.status(409).json({error: error.message});
-      return;
-    }
-
     response
       .status(500)
       .json({ error: getErrorMessage(error) || "Unexpected error" });

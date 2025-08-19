@@ -4,8 +4,8 @@ import {
   lineElementClasses,
   markElementClasses,
 } from '@mui/x-charts/LineChart';
-import expenses from '../../mocks/expenses.mock.json';
-import incomes from '../../mocks/incomes.mock.json';
+import expenses from '../../../mocks/expenses.mock.json';
+import incomes from '../../../mocks/incomes.mock.json';
 
 const margin = { right: 24 };
 

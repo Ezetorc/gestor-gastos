@@ -1,4 +1,4 @@
-import { Dashboard } from "@/components/w/Dashboard";
+import { Dashboard } from "@/components/Dashboard/Dashboard";
 import { Link } from "react-router-dom";
 
 const DashBoard = () => {

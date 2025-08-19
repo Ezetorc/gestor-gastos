@@ -6,7 +6,7 @@
     "test": "jest",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "start": "ts-node swagger.ts && npm run dev",
-    "swagger": "ts-node swagger.ts",
+    "swagger": "ts-node swagger.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

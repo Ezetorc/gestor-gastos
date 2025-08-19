@@ -1,11 +1,13 @@
 import { Router } from 'express'
 import { ExpenseController } from '../controllers/expense.controller'
+import { authMiddleware } from '../middlewares/auth.middleware';
 
 export const ExpenseRouter = Router()
 
 ExpenseRouter.get('/',
+  authMiddleware,
   /*
-  #swagger.path = '/expenses'
+  #swagger.path = '/-'
   #swagger.tags = ['Expenses']
   #swagger.description = 'Obtiene todos los gastos registrados'
 
@@ -49,6 +51,7 @@ ExpenseRouter.get('/',
     }
   }
   */
+  
   ExpenseController.getAll)
 
 

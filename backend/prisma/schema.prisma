@@ -7,42 +7,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Expense {
-  id            Int      @id @default(autoincrement())
+model Transaction {
+  id            Int             @id @default(autoincrement())
   amount        Int
   date          DateTime
+  name          String
   category      String
-  paymentMethod String   @map("payment_method")
+  paymentMethod String          @map("payment_method")
   description   String
-  userId        Int      @map("user_id")
+  userId        Int             @map("user_id")
+  type          TransactionType
 
   user User @relation(fields: [userId], references: [id])
 
-  @@map("expenses")
-}
-
-model Income {
-  id          Int      @id @default(autoincrement())
-  amount      Int
-  date        DateTime
-  category    String
-  description String
-  userId      Int      @map("user_id")
-
-  user User @relation(fields: [userId], references: [id])
-
-  @@map("incomes")
+  @@map("transactions")
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   name     String
   password String
-  email    String @unique
+  email    String  @unique
   image    String?
 
-  expenses Expense[]
-  incomes  Income[]
+  transactions Transaction[]
 
   @@map("users")
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
 }

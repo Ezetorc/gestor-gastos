@@ -1,7 +1,7 @@
 import { prisma } from "../configuration/prisma.configuration";
 
-export class ExpenseRepository {
+export class TransactionRepository {
   static async getAll() {
-    return prisma.expense.findMany();
+    return prisma.transaction.findMany();
   }
 }

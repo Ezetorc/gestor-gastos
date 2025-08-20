@@ -178,4 +178,4 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
       }
     }
     */
-   AuthController.registerUser);
+   AuthController.register);

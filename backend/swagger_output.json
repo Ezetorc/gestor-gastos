@@ -306,7 +306,7 @@
   },
   "components": {
     "schemas": {
-      "Expense": {
+      "Transaction": {
         "type": "object",
         "properties": {
           "type": {
@@ -321,7 +321,8 @@
               "date",
               "category",
               "paymentMethod",
-              "description"
+              "description",
+              "type"
             ],
             "items": {
               "type": "string"
@@ -409,6 +410,28 @@
                   "example": {
                     "type": "string",
                     "example": "Compra supermercado"
+                  }
+                }
+              },
+              "type": {
+                "type": "object",
+                "properties": {
+                  "enum": {
+                    "type": "object",
+                    "properties": {
+                      "INCOME": {
+                        "type": "string",
+                        "example": "INCOME"
+                      },
+                      "EXPENSE": {
+                        "type": "string",
+                        "example": "EXPENSE"
+                      }
+                    }
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "INCOME"
                   }
                 }
               }

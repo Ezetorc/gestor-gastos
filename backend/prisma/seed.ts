@@ -13,19 +13,20 @@ async function main() {
     },
   });
 
-  // Ingresos
-  await prisma.income.create({
+  // Transacciones
+  await prisma.transaction.create({
     data: {
       amount: 5000,
       date: new Date("2025-07-01"),
       category: "Salario",
       description: "Sueldo mensual",
+      paymentMethod: "Cuenta bancaria",
       userId: alice.id,
+      type: "INCOME",
     },
   });
 
-  // Gastos
-  await prisma.expense.create({
+  await prisma.transaction.create({
     data: {
       amount: 250,
       date: new Date("2025-07-03"),
@@ -33,6 +34,7 @@ async function main() {
       paymentMethod: "Efectivo",
       description: "Compras de alimentos",
       userId: alice.id,
+      type: "EXPENSE",
     },
   });
 }

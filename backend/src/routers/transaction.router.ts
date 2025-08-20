@@ -1,16 +1,16 @@
 import { Router } from 'express'
-import { ExpenseController } from '../controllers/expense.controller'
+import { TransactionController } from '../controllers/transaction.controller'
 
-export const ExpenseRouter = Router()
+export const TransactionRouter = Router()
 
-ExpenseRouter.get('/',
+TransactionRouter.get('/',
   /*
-  #swagger.path = '/expenses'
-  #swagger.tags = ['Expenses']
-  #swagger.description = 'Obtiene todos los gastos registrados'
+  #swagger.path = '/transactions'
+  #swagger.tags = ['Transactions']
+  #swagger.description = 'Obtiene todas las transacciones'
 
  #swagger.responses[200] = {
-  description: 'Lista de gastos',
+  description: 'Lista de transacciones',
   content: {
     'application/json': {
       schema: {
@@ -19,7 +19,7 @@ ExpenseRouter.get('/',
           value: {
             type: 'array',
             items: {
-              $ref: '#/components/schemas/Expense'
+              $ref: '#/components/schemas/Transaction'
             }
           }
         }
@@ -49,6 +49,6 @@ ExpenseRouter.get('/',
     }
   }
   */
-  ExpenseController.getAll)
+  TransactionController.getAll)
 
 

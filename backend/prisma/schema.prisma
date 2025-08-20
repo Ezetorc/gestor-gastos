@@ -11,6 +11,7 @@ model Transaction {
   id            Int             @id @default(autoincrement())
   amount        Int
   date          DateTime
+  name          String
   category      String
   paymentMethod String          @map("payment_method")
   description   String

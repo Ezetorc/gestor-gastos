@@ -15,17 +15,13 @@ export const Dashboard = () => {
           flexDirection: 'column',
           alignItems: 'center',
           gap: 2,
-          p: 2,
         }}
       >
         <Box
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: 2,
             width: '70%',
-            p: 2,
-            border: '1px solid yellowgreen',
           }}
         >
           <Summary />
@@ -34,11 +30,7 @@ export const Dashboard = () => {
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: 2,
             width: '70%',
-            p: 2,
-            border: '1px solid orange',
-            mt: 2,
           }}
         >
           <Totals />
@@ -48,8 +40,6 @@ export const Dashboard = () => {
             display: 'flex',
             gap: 2,
             width: '70%',
-            p: 2,
-            border: '1px solid violet',
             flexDirection: { xs: 'column', md: 'row' },
           }}
         >
@@ -57,7 +47,7 @@ export const Dashboard = () => {
           <Box sx={{ 
               width: { xs: '100%', md: '50%' },
            }}>
-            <Card sx={{ height: '100%', background: theme.colors.inputBg, color:'white'}}>
+            <Card sx={{ height: '100%', background: theme.colors.inputBg, color:'white', borderRadius:'10px'}}>
              <PieChartComponent expenses={expenses} />
             </Card>
           </Box>
@@ -66,7 +56,7 @@ export const Dashboard = () => {
           <Box sx={{ 
             width: { xs: '100%', md: '50%' },
           }}>
-           <Card sx={{ height: '100%', background: theme.colors.inputBg, color:'white' }}>
+           <Card sx={{ height: '100%', background: theme.colors.inputBg, color:'white', borderRadius:'10px' }}>
              <DashedLineChart />
             </Card>
           </Box>

@@ -1,13 +1,7 @@
 
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import { theme } from "@/constants/theme";
-
-// Función que devuelve el color según el valor numérico
-const getColorByValue = (value: number): string => {
-  if (value > 0) return 'success.main'; // verde
-  if (value < 0) return 'error.main'; // rojo
-  return 'text.primary'; // negro (color por defecto)
-};
+import { getDashboardColor } from '../../../utilities/dashboard-colors.utility';
 
 export const Totals = () => {
     const totalGastos = -100;
@@ -20,10 +14,7 @@ export const Totals = () => {
             display: 'flex',
             flexWrap: 'wrap',
             gap: 2,
-            width: '70%',
-            p: 2,
-            border: '1px solid orange',
-            mt: 2,
+            width: '100%',
           }}
         >
           <Box sx={{ flex: { xs: '35%', md: '20%' } }}>
@@ -51,7 +42,7 @@ export const Totals = () => {
                     <Typography
                     variant="h6"
                       sx={{
-                        color: getColorByValue(value),
+                        color: getDashboardColor(value),
                         marginLeft: 'auto',
                         fontWeight: 'bold',
                       }}
@@ -82,7 +73,7 @@ export const Totals = () => {
                 <Typography
                 variant="h5"
                   sx={{
-                    color: getColorByValue(balanceResumen),
+                    color: getDashboardColor(balanceResumen),
                     marginLeft: 'auto',
                     fontWeight: 'bold',
                   }}
@@ -116,7 +107,7 @@ export const Totals = () => {
                     <Typography variant="body2">- {label}</Typography>
                     <Typography
                       sx={{
-                        color: getColorByValue(value),
+                        color: getDashboardColor(value),
                         marginLeft: 'auto',
                         fontWeight: 'bold',
                       }}

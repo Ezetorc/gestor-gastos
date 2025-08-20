@@ -19,17 +19,22 @@ interface DataItem {
 }
 
 const processData = (expenses: DataItem[], incomes: DataItem[]) => {
-  const allDates = [...new Set([...expenses.map(e => e.date.split('T')[0]), ...incomes.map(i => i.date.split('T')[0])])].sort();
+  const allDates = [
+    ...new Set([
+      ...expenses.map((e) => e.date.split('T')[0]),
+      ...incomes.map((i) => i.date.split('T')[0]),
+    ]),
+  ].sort();
 
-  const dailyExpenses = allDates.map(date => {
+  const dailyExpenses = allDates.map((date) => {
     return expenses
-      .filter(e => e.date.split('T')[0] === date)
+      .filter((e) => e.date.split('T')[0] === date)
       .reduce((sum, e) => sum + e.amount, 0);
   });
 
-  const dailyIncomes = allDates.map(date => {
+  const dailyIncomes = allDates.map((date) => {
     return incomes
-      .filter(i => i.date.split('T')[0] === date)
+      .filter((i) => i.date.split('T')[0] === date)
       .reduce((sum, i) => sum + i.amount, 0);
   });
 
@@ -45,9 +50,7 @@ const chartData = processData(expenses, incomes);
 export default function DashedLineChart() {
   return (
     <>
-      <Typography sx={{ textAlign: 'center', mt: 2 }}>
-        Tendencia
-      </Typography>
+      <Typography sx={{ textAlign: 'center', mt: 2 }}>Tendencia</Typography>
       <LineChart
         height={300}
         series={[
@@ -68,10 +71,27 @@ export default function DashedLineChart() {
           },
           [`.${markElementClasses.root}:not(.${markElementClasses.highlighted})`]:
             {
-              fill: '#fff',
+              color: '#fff',
             },
           [`& .${markElementClasses.highlighted}`]: {
             stroke: 'none',
+          },
+          [`& .MuiChartsLegend-label`]: {
+            color: 'white',
+            fontWeight: 'bold',
+          },
+          '& .MuiChartsAxis-line': {
+            stroke: '#fff',
+          },
+          '& .MuiChartsAxis-tickLabel': {
+            fill: '#fff',
+          },
+          '& .MuiChartsAxis-tick': {
+            stroke: '#fff',
+          },
+          '& .MuiChartsAxis-gridLine': {
+            stroke: '#fff',
+            strokeOpacity: 0.3,
           },
         }}
         margin={margin}

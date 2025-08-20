@@ -1,6 +1,6 @@
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import { Card, Typography, useMediaQuery } from '@mui/material';
-import { theme } from "@/constants/theme";
+import { theme } from '@/constants/theme';
 
 interface Expense {
   amount: number;
@@ -28,7 +28,10 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
     );
   }
 
-  const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+  const totalExpenses = expenses.reduce(
+    (acc, expense) => acc + expense.amount,
+    0
+  );
 
   const dataByCategory = expenses.reduce((acc, expense) => {
     if (!acc[expense.category]) {
@@ -39,44 +42,53 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
   }, {} as Record<string, number>);
 
   // Aquí solo guardamos monto real
-  const chartData = Object.entries(dataByCategory).map(([category, amount], index) => ({
-    id: index,
-    value: amount, // monto real para tooltip
-    label: category,
-  }));
+  const chartData = Object.entries(dataByCategory).map(
+    ([category, amount], index) => ({
+      id: index,
+      value: amount, // monto real para tooltip
+      label: category,
+    })
+  );
 
   return (
     <>
-    <Typography sx={{textAlign:'center', mt:2}}>Gasto por categoria</Typography>
-    <Card
-      sx={{
-        height: '90%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: theme.colors.inputBg, color:'white'
-      }}
-    >
-      <PieChart
-        series={[
-          {
-            arcLabel: (item) =>
-              `${((item.value / totalExpenses) * 100).toFixed(2)}%`, // cálculo de porcentaje aquí
-            arcLabelMinAngle: 45,
-            data: chartData,
-            valueFormatter: (item) => `${item.value.toLocaleString()}`, // tooltip con monto real
-          },
-        ]}
+      <Typography sx={{ textAlign: 'center', mt: 2 }}>
+        Gasto por categoria
+      </Typography>
+      <Card
         sx={{
-          [`& .${pieArcLabelClasses.root}`]: {
-            fill: 'white',
-            fontWeight: 'bold',
-          },
+          height: '90%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: theme.colors.inputBg,
+          color: 'white',
         }}
-        height={220}
-        hideLegend={isSmallScreen}
-      />
-    </Card>
+      >
+        <PieChart
+          series={[
+            {
+              arcLabel: (item) =>
+                `${((item.value / totalExpenses) * 100).toFixed(2)}%`, // cálculo de porcentaje aquí
+              arcLabelMinAngle: 45,
+              data: chartData,
+              valueFormatter: (item) => `${item.value.toLocaleString()}`, // tooltip con monto real
+            },
+          ]}
+          sx={{
+            [`& .${pieArcLabelClasses.root}`]: {
+              fill: 'white',
+              fontWeight: 'bold',
+            },
+            [`& .MuiChartsLegend-label`]: {
+              color: 'white',
+              fontWeight: '100%',
+            },
+          }}
+          height={220}
+          hideLegend={isSmallScreen}
+        />
+      </Card>
     </>
   );
 };

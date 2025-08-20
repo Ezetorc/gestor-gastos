@@ -1,3 +1,4 @@
+import { TransactionType } from "@prisma/client";
 import { prisma } from "../src/configuration/prisma.configuration";
 
 async function main() {
@@ -22,7 +23,7 @@ async function main() {
       description: "Sueldo mensual",
       paymentMethod: "Cuenta bancaria",
       userId: alice.id,
-      type: "INCOME",
+      type: TransactionType.INCOME,
     },
   });
 
@@ -34,7 +35,7 @@ async function main() {
       paymentMethod: "Efectivo",
       description: "Compras de alimentos",
       userId: alice.id,
-      type: "EXPENSE",
+      type: TransactionType.EXPENSE,
     },
   });
 }

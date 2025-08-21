@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 import { UserRepository } from "../repositories/user.repository";
 import { JWT_SECRET } from "../configuration/env.configuration";
 import { NotFoundError } from "../models/not-found-error.model";
@@ -28,6 +28,7 @@ export class AuthService {
 
   static async register(data: RegisterDto): Promise<User> {
     const existingUser = await UserRepository.getByEmail(data.email);
+
     if (existingUser) {
       throw new EmailAlreadyExistsError(existingUser.email);
     }
@@ -37,7 +38,7 @@ export class AuthService {
       name: data.name,
       email: data.email,
       password: hashedPassword,
-      image: data.image
+      image: data.image,
     });
 
     return newUser;

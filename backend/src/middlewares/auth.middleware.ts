@@ -1,10 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import { JWT_SECRET } from '../configuration/env.configuration';
+import {AuthenticatedRequest} from '../models/authenticated-request.model'
 
-interface AuthenticatedRequest extends Request {
-  user?: { id: string };
-}
 
 export const authMiddleware = (
   req: AuthenticatedRequest,

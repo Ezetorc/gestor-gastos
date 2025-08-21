@@ -256,15 +256,24 @@
         }
       }
     },
-    "/expenses": {
+    "/transactions": {
       "get": {
         "tags": [
-          "Expenses"
+          "Transactions"
         ],
-        "description": "Obtiene todos los gastos registrados",
+        "description": "Obtiene todas las transacciones",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Lista de gastos",
+            "description": "Lista de transacciones",
             "content": {
               "application/json": {
                 "schema": {
@@ -273,13 +282,16 @@
                     "value": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Expense"
+                        "$ref": "#/components/schemas/Transaction"
                       }
                     }
                   }
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Error interno del servidor",

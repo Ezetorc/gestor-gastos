@@ -4,7 +4,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import DashBoard from "@/pages/DashBoard";
+import { DashboardPage } from "@/pages/DashboardPage";
 import Gastos from "@/pages/Gastos";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
@@ -36,7 +36,7 @@ const AppRoutes = () => {
           path="/"
           element={
             <RouteProtected>
-              <DashBoard />
+              <DashboardPage />
             </RouteProtected>
           }
         />

@@ -22,15 +22,11 @@
 --color-overlay: rgba(0, 0, 0, 0.6); /* Fondos oscuros semitransparentes */
 --border-radius: 0.75rem;
 }
- 
 
 html, body {
   margin: 0;
   padding: 0;
-  
-
-
-
+}
 
 body {
   background: var(--color-background);

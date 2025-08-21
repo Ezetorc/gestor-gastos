@@ -1,10 +1,16 @@
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import { Card, Typography, useMediaQuery } from '@mui/material';
 import { theme } from '@/constants/theme';
+import { useExpensesByCategory } from '../../../hooks/useExpensesByCategory';
 
 interface Expense {
+  id: number;
   amount: number;
+  date: string;
   category: string;
+  payment_method: string;
+  description: string;
+  user_id: number;
 }
 
 interface PieChartProps {
@@ -13,6 +19,10 @@ interface PieChartProps {
 
 export const PieChartComponent = ({ expenses }: PieChartProps) => {
   const isSmallScreen = useMediaQuery('(max-width: 500px)');
+  
+  // Usar el hook personalizado para procesar gastos por categoría
+  const { chartData, totalExpenses } = useExpensesByCategory(expenses);
+  
   if (!expenses || expenses.length === 0) {
     return (
       <Card
@@ -27,28 +37,6 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
       </Card>
     );
   }
-
-  const totalExpenses = expenses.reduce(
-    (acc, expense) => acc + expense.amount,
-    0
-  );
-
-  const dataByCategory = expenses.reduce((acc, expense) => {
-    if (!acc[expense.category]) {
-      acc[expense.category] = 0;
-    }
-    acc[expense.category] += expense.amount;
-    return acc;
-  }, {} as Record<string, number>);
-
-  // Aquí solo guardamos monto real
-  const chartData = Object.entries(dataByCategory).map(
-    ([category, amount], index) => ({
-      id: index,
-      value: amount, // monto real para tooltip
-      label: category,
-    })
-  );
 
   return (
     <>

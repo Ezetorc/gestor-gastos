@@ -6,8 +6,8 @@ export const useAuth = () => {
   const setUser = useUserStore((state) => state.setUser);
   // const logout = useUserStore((state) => state.logout);
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [loading, _setLoading] = useState(true);
+  const [error, _setError] = useState(false);
   const navigate = useNavigate();
 
   const login = (datosUsuario: {

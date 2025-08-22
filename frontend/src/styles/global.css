@@ -33,3 +33,7 @@ body {
   background: var(--color-background);
   color: var(--color-text);
 }
+
+.active {
+  background-color: #05182a;
+}

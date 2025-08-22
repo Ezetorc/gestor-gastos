@@ -19,7 +19,6 @@ interface PieChartProps {
 
 export const PieChartComponent = ({ expenses }: PieChartProps) => {
   const isSmallScreen = useMediaQuery('(max-width: 500px)');
-  
   // Usar el hook personalizado para procesar gastos por categoría
   const { chartData, totalExpenses } = useExpensesByCategory(expenses);
   
@@ -57,10 +56,10 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
           series={[
             {
               arcLabel: (item) =>
-                `${((item.value / totalExpenses) * 100).toFixed(2)}%`, // cálculo de porcentaje aquí
+                `${((item.value / totalExpenses) * 100).toFixed(2)}%`,
               arcLabelMinAngle: 45,
               data: chartData,
-              valueFormatter: (item) => `${item.value.toLocaleString()}`, // tooltip con monto real
+              valueFormatter: (item) => `${item.value.toLocaleString()}`,
             },
           ]}
           sx={{

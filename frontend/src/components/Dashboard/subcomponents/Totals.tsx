@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 import { TotalsBalanceCard } from './TotalsBalanceCard';
 import { TopCategoriesCard } from './TopCategoriesCard';
-
 interface Expense {
   id: number;
   amount: number;
@@ -11,13 +10,15 @@ interface Expense {
   description: string;
   user_id: number;
 }
-
 interface TotalsProps {
   totalGastos: number;
   totalIngresos: number;
   balance: number;
   expenses: Expense[];
 }
+
+const max = 5
+const t = "Top Categorías de Gasto"
 
 export const Totals = ({ totalGastos, totalIngresos, balance, expenses }: TotalsProps) => {
     const flexBasis = {xs: '35%', md: '20%'}
@@ -39,9 +40,9 @@ export const Totals = ({ totalGastos, totalIngresos, balance, expenses }: Totals
           </Box>
           <Box sx={{ flex: flexBasis }}>
             <TopCategoriesCard 
-              title="Top Categorías"
+              title={t}
               expenses={expenses}
-              maxCategories={3}
+              maxCategories={max}
             />
           </Box>
         </Box>

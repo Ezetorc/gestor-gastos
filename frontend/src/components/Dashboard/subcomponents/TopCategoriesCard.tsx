@@ -20,27 +20,42 @@ interface TopCategoriesCardProps {
 }
 
 export const TopCategoriesCard = ({ 
-	title = 'Top categorías de gasto', 
+	title = 'Top Categorías',
 	expenses, 
-	maxCategories = 5 
+	maxCategories = 5
 }: TopCategoriesCardProps) => {
 	// Usar el hook personalizado para procesar gastos por categoría
 	const { categories } = useExpensesByCategory(expenses);
 	
+	if (!expenses || expenses.length === 0) {
+		return (
+		  <Card
+			sx={{
+			  height: 200,
+			  display: 'flex',
+			  alignItems: 'center',
+			  justifyContent: 'center',
+			}}
+		  >
+			<Typography>No hay datos de gastos</Typography>
+		  </Card>
+		);
+	  }
 	// Tomar solo las primeras N categorías
 	const topCategories = categories.slice(0, maxCategories);
 	
 	return (
-		<Card sx={{ height: '100%', borderRadius:'10px', background: theme.colors.inputBg, color:'white' }}>
+		<Card sx={{ height: '100%', borderRadius: 3, background: theme.colors.inputBg, color:'white' }}>
 			<CardContent>
 				<Typography variant="subtitle2" gutterBottom>
 					{title}
 				</Typography>
+				<hr />
 				<Box>
 					{topCategories.map(({ label, value }) => ( //tambien podes usar el data 'percentage'
 						<Box key={label} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
 							<Typography variant="body2">- {label}</Typography>
-							<Typography sx={{ color: getDashboardColor(value), marginLeft: 'auto', fontWeight: 'bold' }}>
+							<Typography sx={{ color: getDashboardColor(-1), marginLeft: 'auto', fontWeight: 'bold' }}> {/*esto lo puse segun gasto por ahora usa el mismo que gasto por categoria*/}
 								${Math.abs(value).toLocaleString()}
 							</Typography>
 						</Box>
@@ -50,6 +65,3 @@ export const TopCategoriesCard = ({
 		</Card>
 	);
 }
-
-
-

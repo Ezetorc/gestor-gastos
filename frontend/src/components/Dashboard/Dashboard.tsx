@@ -100,7 +100,7 @@ export const Dashboard = () => {
               height: '100%',
               background: theme.colors.inputBg,
               color:'white',
-              borderRadius:'10px'
+              borderRadius: 3
             }}>
               <PieChartComponent expenses={dashboardData.expenses} />
             </Card>
@@ -112,7 +112,7 @@ export const Dashboard = () => {
               height: '100%',
               background: theme.colors.inputBg,
               color:'white',
-              borderRadius:'10px'
+              borderRadius: 3
             }}>
               <DashedLineChart 
                 expenses={dashboardData.expenses}

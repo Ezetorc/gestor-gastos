@@ -10,7 +10,7 @@ interface TotalsBalanceCardProps {
 
 export const TotalsBalanceCard = ({ totalGastos, totalIngresos, balance }: TotalsBalanceCardProps) => {
 	return (
-		<Card sx={{ height: 200, borderRadius:'10px', p: 2, display: 'flex', flexDirection: 'column', background: theme.colors.inputBg, color:'white' }}>
+		<Card sx={{ height: 200, borderRadius: 3, p: 2, display: 'flex', flexDirection: 'column', background: theme.colors.inputBg, color:'white' }}>
 			<Box>
 				{[
 					{ label: 'Total gastos', value: totalGastos },

@@ -1,17 +1,18 @@
-import {IsEmail, IsNotEmpty, MinLength, Matches} from 'class-validator';
+import { IsEmail, IsNotEmpty, MinLength, Matches } from "class-validator";
 
-export class RegisterDto{
-    @IsNotEmpty({message: 'El nombre es obligatorio'})
-    public name!: string;
+export class RegisterDto {
+  @IsNotEmpty({ message: "Name is missing" })
+  public name!: string;
 
-    @IsEmail({}, {message: 'El formato de correo no es válido.'})
-    public email!: string;
+  @IsEmail({}, { message: "Invalid emai" })
+  public email!: string;
 
-    @MinLength(8, {message: 'La contraseña debe tener al menos 8 caracteres.'})
-    @Matches(/^(?=.*[A-Z])(?=.*\d).{8,}$/, {
-        message: 'La contraseña debe tener al menos una mayúscula y un número.'
-    })
-    public password!: string;
-    
-    public image!: string;
+  @MinLength(8, { message: "The password must be at least 8 characters long" })
+  @Matches(/^(?=.*[A-Z])(?=.*\d).{8,}$/, {
+    message:
+      "The password must contain at least one uppercase letter and one number",
+  })
+  public password!: string;
+
+  public image!: string;
 }

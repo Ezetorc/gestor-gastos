@@ -18,7 +18,7 @@ const { error, value: envVars } = envValidation.validate(process.env, {
 })
 
 if (error) {
-  throw new Error(`Error en configuración: ${error.message}`)
+  throw new Error(`Configuration error: ${error.message}`)
 }
 
 // ✅ Exportar variables 

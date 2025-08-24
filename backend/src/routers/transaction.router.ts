@@ -10,10 +10,10 @@ TransactionRouter.get(
   /*
   #swagger.path = '/transactions'
   #swagger.tags = ['Transactions']
-  #swagger.description = 'Obtiene todas las transacciones'
+  #swagger.description = 'Returns all transactions'
 
   #swagger.responses[200] = {
-    description: 'Lista de transacciones',
+    description: 'List of transactions',
     content: {
       'application/json': {
         schema: {
@@ -32,7 +32,7 @@ TransactionRouter.get(
   }
 
   #swagger.responses[500] = {
-    description: 'Error interno del servidor',
+    description: 'Unexpected error',
     content: {
       'application/json': {
         schema: {

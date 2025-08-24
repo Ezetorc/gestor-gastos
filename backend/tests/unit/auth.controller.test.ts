@@ -56,7 +56,7 @@ describe("register", () => {
     expect(authServiceMock.register).toHaveBeenCalledWith(requestMock.body);
     expect(responseMock.status).toHaveBeenCalledWith(201);
     expect(responseMock.json).toHaveBeenCalledWith({
-      message: "Usuario creado",
+      message: "User created",
       userId: newUserMock.id,
     });
   });

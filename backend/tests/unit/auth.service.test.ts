@@ -17,7 +17,7 @@ describe("AuthService", () => {
       jest.clearAllMocks();
     });
 
-    it("debería retornar un token de autorización cuando las credenciales son válidas", async () => {
+    it("should return an authorization token when credentials are valid", async () => {
       userRepositoryMock.getByEmail.mockResolvedValue(mockUser);
       bcryptMock.compare.mockResolvedValue(true);
 
@@ -29,7 +29,7 @@ describe("AuthService", () => {
       expect(typeof authorization).toBe("string");
     });
 
-    it("debería tirar un error 'NotFoundError' cuando no se encuentra al usuario", async () => {
+    it("should throw a 'NotFoundError' when user not found", async () => {
       userRepositoryMock.getByEmail.mockResolvedValue(null);
 
       await expect(
@@ -37,7 +37,7 @@ describe("AuthService", () => {
       ).rejects.toThrow(NotFoundError);
     });
 
-    it("debería tirar un error 'BadRequestError' cuando la contraseña es incorrecta", async () => {
+    it("should throw a 'BadRequestError' when password is incorrect", async () => {
       userRepositoryMock.getByEmail.mockResolvedValue(mockUser);
       bcryptMock.compare.mockResolvedValue(false);
 
@@ -48,14 +48,14 @@ describe("AuthService", () => {
   });
 
   describe("getAuthorization", () => {
-    it("debería retornar un token JWT", async () => {
+    it("should return a JWT token", async () => {
       const userId = 1;
       const token = await AuthService.getAuthorization(userId);
 
       expect(typeof token).toBe("string");
     });
 
-    it("debería generar un tokén JWT válido con la id del usuario", async () => {
+    it("should return a valid JWT token with the user id", async () => {
       const userId = 1;
       const token = await AuthService.getAuthorization(userId);
       const decodedJwt = jwt.verify(token, JWT_SECRET) as JwtPayload;
@@ -68,7 +68,7 @@ describe("AuthService", () => {
   });
 
   describe("register", () => {
-    it("debería registrar un usuario correctamente", async () => {
+    it("should registry a user", async () => {
       const data = {
         name: "User",
         email: "user@test.com",

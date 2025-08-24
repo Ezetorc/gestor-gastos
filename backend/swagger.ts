@@ -5,12 +5,12 @@ const doc = {
   info: {
     version: "v1.0.0",
     title: "Gestor de gastos API",
-    description: "API para gestionar ingresos y gastos",
+    description: "API for managing incomes and expenses",
   },
   servers: [
     {
       url: "http://localhost:3000",
-      description: "Servidor local para desarrollo",
+      description: "Local server for development",
     },
   ],
   components: {
@@ -34,9 +34,9 @@ const doc = {
             format: "date-time",
             example: "2024-07-27T12:00:00Z",
           },
-          category: { type: "string", example: "Alimentación" },
-          paymentMethod: { type: "string", example: "Efectivo" },
-          description: { type: "string", example: "Compra supermercado" },
+          category: { type: "string", example: "Food" },
+          paymentMethod: { type: "string", example: "Cash" },
+          description: { type: "string", example: "Supermarket" },
           type: { enum: TransactionType, example: "INCOME" },
         },
       },
@@ -55,8 +55,4 @@ const doc = {
 const outputFile = "./swagger_output.json";
 const endpointsFiles = ["./src/routers/*.ts"];
 
-swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc).then(
-  () => {
-    console.log("Swagger generado.");
-  }
-);
+swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc)

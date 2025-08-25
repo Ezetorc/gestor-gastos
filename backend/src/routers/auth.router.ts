@@ -124,10 +124,9 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
           schema: {
             type: 'object',
             properties: {
-              message: { type: 'string', example: 'User created' },
-              userId: { type: 'string', example: '507f1f77bcf86cd799439011' }
+              value: { type: 'string', example: '507f1f77bcf86cd799439011' }
             },
-            required: ['message', 'userId']
+            required: ['value']
           }
         }
       }

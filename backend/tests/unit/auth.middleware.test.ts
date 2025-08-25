@@ -3,6 +3,7 @@ import { Response, NextFunction } from 'express';
 import { authMiddleware } from '../../src/middlewares/auth.middleware';
 
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
+import { UnauthorizedError } from "../../src/models/unauthorized-error.model";
 
 
 jest.mock('jsonwebtoken');
@@ -36,11 +37,12 @@ describe('Auth Middleware', () => {
 
   it('should return 401 if authorization header is missing', () => {
     const req: any = { headers: {} };
-    authMiddleware(req, res as Response, next);
+   
+     expect(() => authMiddleware(req, {} as any, next))
+  .toThrow(UnauthorizedError);
 
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({ message: 'No token provided' });
-    expect(next).not.toHaveBeenCalled();
+expect(() => authMiddleware(req, {} as any, next))
+  .toThrow("No token provided");
 
   });
 
@@ -50,14 +52,10 @@ describe('Auth Middleware', () => {
       throw new TokenExpiredError('Token expired', new Date());
     });
 
-    authMiddleware(req, res as Response, next);
-
-
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Token expired' });
-    expect(next).not.toHaveBeenCalled();
-
-
+      expect(() => authMiddleware(req, {} as any, next))
+    .toThrow( UnauthorizedError);
+  expect(() => authMiddleware(req, {} as any, next))
+  .toThrow("Token expired");
   });
 
   it("should return 401 if token is invalid", () => {
@@ -66,12 +64,11 @@ describe('Auth Middleware', () => {
       throw new Error("Invalid token");
     });
 
-    authMiddleware(req, res as Response, next);
+      expect(() => authMiddleware(req, {} as any, next))
+    .toThrow( UnauthorizedError);
+  expect(() => authMiddleware(req, {} as any, next))
+  .toThrow("Invalid token");
 
-
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Invalid token' });
-    expect(next).not.toHaveBeenCalled();
 
 
   });

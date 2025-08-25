@@ -1,3 +1,3 @@
-export function success(value: any) {
-  return { value };
+export function success(value: any, message?: string) {
+  return message ? { message, userId: value } : { value };
 }

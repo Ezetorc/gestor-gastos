@@ -17,6 +17,6 @@ export class AuthController {
     const userData: RegisterDto = request.body;
     const newUser = await AuthService.register(userData);
 
-    response.status(201).json(success(newUser.id));
+    response.status(201).json(success(newUser.id, "Usuario creado"));
   }
 }

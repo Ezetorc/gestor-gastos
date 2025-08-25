@@ -9,7 +9,6 @@ export class UserRepository {
     });
   }
 
-  // El método 'create' para registrar un nuevo usuario
   static async create(data: RegisterDto): Promise<User> {
     return await prisma.user.create({
       data: {

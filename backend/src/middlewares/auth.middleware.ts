@@ -1,33 +1,30 @@
-import { Response, NextFunction } from 'express';
-import jwt, { TokenExpiredError } from 'jsonwebtoken';
-import { JWT_SECRET } from '../configuration/env.configuration';
-import {AuthenticatedRequest} from '../models/authenticated-request.model'
-
+import { Response, NextFunction } from "express";
+import jwt, { TokenExpiredError } from "jsonwebtoken";
+import { JWT_SECRET } from "../configuration/env.configuration";
+import { AuthenticatedRequest } from "../models/authenticated-request.model";
+import { UnauthorizedError } from "../models/unauthorized-error.model";
 
 export const authMiddleware = (
-  req: AuthenticatedRequest,
-  res: Response,
+  request: AuthenticatedRequest,
+  _response: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.headers.authorization;
+  const authHeader = request.headers.authorization;
 
-  if (!authHeader) {
-    res.status(401).json({ message: 'No token provided' });
-    return; // solo para salir
-  }
+  if (!authHeader) throw new UnauthorizedError("No token provided");
 
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.split(" ")[1];
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-    req.user = { id: decoded.userId };
+
+    request.user = { id: decoded.userId };
     next();
   } catch (error) {
     if (error instanceof TokenExpiredError) {
-      res.status(401).json({ message: 'Token expired' });
-      return;
+      throw new UnauthorizedError("Token expired");
     }
-    res.status(401).json({ message: 'Invalid token' });
-    return;
+
+    throw new UnauthorizedError("Invalid token");
   }
 };

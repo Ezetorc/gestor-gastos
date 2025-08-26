@@ -10,6 +10,9 @@ import { bcryptMock } from "../mocks/bcrypt.mock";
 
 jest.mock("../../src/repositories/user.repository");
 jest.mock("bcrypt");
+jest.mock('../../src/configuration/env.configuration', () => ({
+  ...require('../mocks/env.mock').envMock
+}));
 
 describe("AuthService", () => {
   describe("login", () => {

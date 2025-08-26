@@ -15,12 +15,15 @@ interface TotalsProps {
   totalIngresos: number;
   balance: number;
   expenses: Expense[];
+  backgroundD: string;
+  colo: string;
+  display: object;
 }
 
 const max = 5
 const t = "Top Categorías de Gasto"
 
-export const Totals = ({ totalGastos, totalIngresos, balance, expenses }: TotalsProps) => {
+export const Totals = ({ totalGastos, totalIngresos, balance, expenses, backgroundD, colo, display }: TotalsProps) => {
     const flexBasis = {xs: '35%', md: '20%'}
 
     return (
@@ -36,6 +39,8 @@ export const Totals = ({ totalGastos, totalIngresos, balance, expenses }: Totals
               totalGastos={totalGastos}
               totalIngresos={totalIngresos}
               balance={balance}
+              backgroundD={backgroundD}
+              colo={colo}
             />
           </Box>
           <Box sx={{ flex: flexBasis }}>
@@ -43,6 +48,9 @@ export const Totals = ({ totalGastos, totalIngresos, balance, expenses }: Totals
               title={t}
               expenses={expenses}
               maxCategories={max}
+              display={display}
+              backgroundD={backgroundD}
+              colo={colo}
             />
           </Box>
         </Box>

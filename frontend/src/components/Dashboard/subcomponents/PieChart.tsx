@@ -1,6 +1,5 @@
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import { Card, Typography, useMediaQuery } from '@mui/material';
-import { theme } from '@/constants/theme';
 import { useExpensesByCategory } from '../../../hooks/useExpensesByCategory';
 
 interface Expense {
@@ -15,9 +14,14 @@ interface Expense {
 
 interface PieChartProps {
   expenses: Expense[];
+  backgroundD?: string;
+  colo?: string;
+  display?: object;
 }
 
-export const PieChartComponent = ({ expenses }: PieChartProps) => {
+export const PieChartComponent = ({ expenses, backgroundD, colo, display }: PieChartProps) => {
+
+  const d = {...display, justifyContent: 'center'};
   const isSmallScreen = useMediaQuery('(max-width: 500px)');
   // Usar el hook personalizado para procesar gastos por categoría
   const { chartData, totalExpenses } = useExpensesByCategory(expenses);
@@ -27,9 +31,7 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
       <Card
         sx={{
           height: 200,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          ...d,
         }}
       >
         <Typography>No hay datos de gastos</Typography>
@@ -45,11 +47,9 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
       <Card
         sx={{
           height: '90%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: theme.colors.inputBg,
-          color: 'white',
+          ...d,
+          background: backgroundD,
+          color: colo,
         }}
       >
         <PieChart
@@ -64,11 +64,11 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
           ]}
           sx={{
             [`& .${pieArcLabelClasses.root}`]: {
-              fill: 'white',
+              fill: colo,
               fontWeight: 'bold',
             },
             [`& .MuiChartsLegend-label`]: {
-              color: 'white',
+              color: colo,
               fontWeight: '100%',
             },
           }}

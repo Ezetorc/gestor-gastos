@@ -20,11 +20,12 @@ interface DataItem {
 interface DashedLineChartProps {
   expenses: DataItem[]; // Array de gastos
   incomes: DataItem[];  // Array de ingresos
+  colo: string;         // Color para personalizar el gráfico
 }
 
 const margin = { right: 24 }; // Margen derecho para evitar que la leyenda se corte
 
-export default function DashedLineChart({ expenses, incomes }: DashedLineChartProps) {
+export default function DashedLineChart({ expenses, incomes, colo }: DashedLineChartProps) {
   // Usar el hook para obtener los datos procesados
   const chartData = useDailyExpensesIncomes(expenses, incomes);
 
@@ -63,23 +64,23 @@ export default function DashedLineChart({ expenses, incomes }: DashedLineChartPr
             strokeDasharray: '3 4 5 2',
           },
           [`.${markElementClasses.root}:not(.${markElementClasses.highlighted})`]: {
-            color: '#fff',
+            color: colo,
           },
           [`& .${markElementClasses.highlighted}`]: {
-            stroke: '#fff',
+            stroke: colo,
           },
           [`& .MuiChartsLegend-label`]: {
-            color: '#fff',
+            color: colo,
             fontWeight: 'bold',
           },
           '& .MuiChartsAxis-line, & .MuiChartsAxis-tick, & .MuiChartsAxis-gridLine': {
-            stroke: '#fff',
-            fill: '#fff',
-            color: '#fff',
+            stroke: colo,
+            fill: colo,
+            color: colo,
           },
           '& .MuiChartsAxis-tickLabel': {
-            fill: '#fff',
-            color: '#fff',
+            fill: colo,
+            color: colo,
             fontWeight: 'normal',
           },
         }}

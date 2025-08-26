@@ -1,8 +1,5 @@
 // Importaciones de componentes de Material-UI para layout y diseño
-import { Box, Card } from '@mui/material';
-
-// Subcomponentes del dashboard que muestran diferentes visualizaciones
-import { theme } from "@/constants/theme"; // Tema personalizado con colores
+import { Box, Card, useTheme } from '@mui/material';
 import { Summary } from './subcomponents/Summary'; // Tarjetas de resumen con estadísticas rápidas
 import { Totals } from './subcomponents/Totals'; // Componente de totales y balance
 import { PieChartComponent } from './subcomponents/PieChart'; // Gráfico circular para gastos por categoría
@@ -13,14 +10,19 @@ import expenses from '../../mocks/expenses.mock.json'; // Array de gastos de eje
 import incomes from '../../mocks/incomes.mock.json'; // Array de ingresos de ejemplo
 
 export const Dashboard = () => {
+  const theme = useTheme(); // Hook para acceder al objeto del tema de MUI
+
   // CÁLCULOS AUTOMÁTICOS - Se ejecutan cada vez que el componente se renderiza
-  
+
   // Calcular total de gastos sumando todos los montos del array expenses
-  const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
-  
+  const totalExpenses = expenses.reduce(
+    (sum, expense) => sum + expense.amount,
+    0
+  );
+
   // Calcular total de ingresos sumando todos los montos del array incomes
   const totalIncomes = incomes.reduce((sum, income) => sum + income.amount, 0);
-  
+
   // Calcular balance (diferencia entre ingresos y gastos)
   const balance = totalIncomes - totalExpenses;
 
@@ -28,8 +30,8 @@ export const Dashboard = () => {
   const dashboardData = {
     // Datos originales sin modificar para los gráficos
     expenses, // Array completo de gastos para PieChart y DashedLineChart
-    incomes,  // Array completo de ingresos para DashedLineChart
-    
+    incomes, // Array completo de ingresos para DashedLineChart
+
     // Datos calculados para las tarjetas de resumen (Summary component)
     summary: {
       gastosHoy: -15000, // Valor simulado - en producción vendría de API filtrada por fecha
@@ -37,7 +39,7 @@ export const Dashboard = () => {
       gastoMes: -totalExpenses, // Calculado real: total de gastos del mes (negativo por convención)
       balance: balance, // Balance actual calculado (ingresos - gastos)
     },
-    
+
     // Datos calculados para el componente de totales (Totals component)
     totals: {
       totalGastos: -totalExpenses, // Total de gastos (negativo por convención contable)
@@ -46,77 +48,88 @@ export const Dashboard = () => {
     },
   };
 
+  const display = { display: 'flex', alignItems: 'center' };
+  const backgroundD = theme.palette.background.paper;
+  const Tcolor = theme.palette.text.primary;
+  const Box1Change = {
+    display: 'flex',
+    width: '70%',
+  };
+
+  const Box2Change = {
+    width: { xs: '100%', md: '50%' },
+  };
+  const CardChange = {
+    height: '100%',
+    background: backgroundD,
+    color: Tcolor,
+    borderRadius: 3,
+  };
   return (
     <>
       <Box
         sx={{
-          display: 'flex',
+          ...display,
           flexDirection: 'column',
-          alignItems: 'center',
           gap: 2,
           width: '100%',
         }}
       >
         <Box
           sx={{
-            display: 'flex',
+            ...Box1Change,
             flexWrap: 'wrap',
-            width: '70%',
           }}
         >
-          <Summary 
+          <Summary
             gastosHoy={dashboardData.summary.gastosHoy}
             gastoSemana={dashboardData.summary.gastoSemana}
             gastoMes={dashboardData.summary.gastoMes}
             balance={dashboardData.summary.balance}
+            backgroundD={backgroundD}
+            colo={Tcolor}
+            display={display}
           />
         </Box>
         <Box
           sx={{
-            display: 'flex',
+            ...Box1Change,
             flexWrap: 'wrap',
-            width: '70%',
           }}
         >
-          <Totals 
+          <Totals
             totalGastos={dashboardData.totals.totalGastos}
             totalIngresos={dashboardData.totals.totalIngresos}
             balance={dashboardData.totals.balanceResumen}
             expenses={dashboardData.expenses}
+            backgroundD={backgroundD}
+            colo={Tcolor}
+            display={display}
           />
         </Box>
         <Box
           sx={{
-            display: 'flex',
+            ...Box1Change,
             gap: 2,
-            width: '70%',
             flexDirection: { xs: 'column', md: 'row' },
           }}
         >
-          <Box sx={{ 
-              width: { xs: '100%', md: '50%' },
-           }}>
-            <Card sx={{ 
-              height: '100%',
-              background: theme.colors.inputBg,
-              color:'white',
-              borderRadius: 3
-            }}>
-              <PieChartComponent expenses={dashboardData.expenses} />
+          <Box sx={Box2Change}>
+            <Card sx={CardChange}>
+              <PieChartComponent
+                expenses={dashboardData.expenses}
+                backgroundD={backgroundD}
+                colo={Tcolor}
+                display={display}
+              />
             </Card>
           </Box>
-          <Box sx={{ 
-            width: { xs: '100%', md: '50%' },
-          }}>
-            <Card sx={{ 
-              height: '100%',
-              background: theme.colors.inputBg,
-              color:'white',
-              borderRadius: 3
-            }}>
-              <DashedLineChart 
+          <Box sx={Box2Change}>
+            <Card sx={CardChange}>
+              <DashedLineChart
                 expenses={dashboardData.expenses}
                 incomes={dashboardData.incomes}
+                colo={Tcolor}
               />
             </Card>
           </Box>

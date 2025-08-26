@@ -9,9 +9,12 @@ interface SummaryProps {
   gastoSemana: number;  // Gastos de la semana (valor negativo por convención)
   gastoMes: number;     // Gastos del mes completo (valor negativo por convención)
   balance: number;      // Balance total (puede ser positivo o negativo)
+  colo: string;         // Color del texto para los íconos y valores
+  backgroundD: string;
+  display: object;
 }
 
-export const Summary = ({ gastosHoy, gastoSemana, gastoMes, balance }: SummaryProps) => {
+export const Summary = ({ gastosHoy, gastoSemana, gastoMes, balance, colo, backgroundD, display }: SummaryProps) => {
     // Configuración responsive para el ancho de cada tarjeta
     const flexBasis = { xs: '50%', sm: '33%', md: '20%' }
 
@@ -29,6 +32,9 @@ export const Summary = ({ gastosHoy, gastoSemana, gastoMes, balance }: SummaryPr
               label="Gasto Hoy"
               value={gastosHoy}
               Icon={AccountBalanceWalletIcon}
+              colo={colo}
+              backgroundD={backgroundD}
+              display={display}
             />
           </Box>
           <Box sx={{ flex: flexBasis }}>
@@ -36,6 +42,9 @@ export const Summary = ({ gastosHoy, gastoSemana, gastoMes, balance }: SummaryPr
               label="Gasto Semana"
               value={gastoSemana}
               Icon={TrendingDownIcon}
+              colo={colo}
+              backgroundD={backgroundD}
+              display={display}
             />
           </Box>
           <Box sx={{ flex: flexBasis }}>
@@ -43,6 +52,9 @@ export const Summary = ({ gastosHoy, gastoSemana, gastoMes, balance }: SummaryPr
               label="Gasto Mes"
               value={gastoMes}
               Icon={TrendingDownIcon}
+              colo={colo}
+              backgroundD={backgroundD}
+              display={display}
             />
           </Box>
           <Box sx={{ flex: flexBasis }}>
@@ -50,6 +62,9 @@ export const Summary = ({ gastosHoy, gastoSemana, gastoMes, balance }: SummaryPr
               label="Balance"
               value={balance}
               Icon={TrendingUpIcon}
+              colo={colo}
+              backgroundD={backgroundD}
+              display={display}
             />
           </Box>
         </Box>

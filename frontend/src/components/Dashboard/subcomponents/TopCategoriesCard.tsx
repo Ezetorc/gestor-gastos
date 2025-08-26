@@ -1,5 +1,4 @@
 import { Box, Card, CardContent, Typography } from '@mui/material';
-import { theme } from '@/constants/theme';
 import { getDashboardColor } from '../../../utilities/dashboard-colors.utility';
 import { useExpensesByCategory } from '../../../hooks/useExpensesByCategory';
 
@@ -17,12 +16,18 @@ interface TopCategoriesCardProps {
 	title?: string;
 	expenses: Expense[];
 	maxCategories?: number;
+	display: object;
+	backgroundD: string;
+	colo: string;
 }
 
 export const TopCategoriesCard = ({ 
 	title = 'Top Categorías',
 	expenses, 
-	maxCategories = 5
+	maxCategories = 5,
+	display,
+	backgroundD,
+	colo
 }: TopCategoriesCardProps) => {
 	// Usar el hook personalizado para procesar gastos por categoría
 	const { categories } = useExpensesByCategory(expenses);
@@ -31,9 +36,8 @@ export const TopCategoriesCard = ({
 		return (
 		  <Card
 			sx={{
+			...display,
 			  height: 200,
-			  display: 'flex',
-			  alignItems: 'center',
 			  justifyContent: 'center',
 			}}
 		  >
@@ -45,7 +49,7 @@ export const TopCategoriesCard = ({
 	const topCategories = categories.slice(0, maxCategories);
 	
 	return (
-		<Card sx={{ height: '100%', borderRadius: 3, background: theme.colors.inputBg, color:'white' }}>
+		<Card sx={{ height: '100%', borderRadius: 3, background: backgroundD, color: colo }}>
 			<CardContent>
 				<Typography variant="subtitle2" gutterBottom>
 					{title}
@@ -53,7 +57,7 @@ export const TopCategoriesCard = ({
 				<hr />
 				<Box>
 					{topCategories.map(({ label, value }) => ( //tambien podes usar el data 'percentage'
-						<Box key={label} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+						<Box key={label} sx={{ ...display, mb: 1 }}>
 							<Typography variant="body2">- {label}</Typography>
 							<Typography sx={{ color: getDashboardColor(-1), marginLeft: 'auto', fontWeight: 'bold' }}> {/*esto lo puse segun gasto por ahora usa el mismo que gasto por categoria*/}
 								${Math.abs(value).toLocaleString()}

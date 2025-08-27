@@ -3,6 +3,7 @@ import jwt, { TokenExpiredError } from "jsonwebtoken";
 import { JWT_SECRET } from "../configuration/env.configuration";
 import { AuthenticatedRequest } from "../models/authenticated-request.model";
 import { UnauthorizedError } from "../models/unauthorized-error.model";
+import { BadRequestError } from "../models/bad-request-error.model";
 
 export const authMiddleware = (
   request: AuthenticatedRequest,
@@ -11,7 +12,7 @@ export const authMiddleware = (
 ) => {
   const authHeader = request.headers.authorization;
 
-  if (!authHeader) throw new UnauthorizedError("No token provided");
+  if (!authHeader) throw new BadRequestError("No token provided");
 
   const token = authHeader.split(" ")[1];
 

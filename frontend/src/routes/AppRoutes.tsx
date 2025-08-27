@@ -4,12 +4,11 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import DashboardPage from "@/pages/DashboardPage";
-import Gastos from "@/pages/Gastos";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
+import Login from "@/modules/auth/pages/Login";
+import Register from "@/modules/auth/pages/Register";
 import { RouteProtected } from "./ProtectedRoute";
 import { GuestRoute } from "./GuestRoute";
+import DashboardPage from "@/modules/Dashboard/Pages/DashboardPage";
 
 const AppRoutes = () => {
   return (
@@ -45,7 +44,7 @@ const AppRoutes = () => {
           path="/gastos"
           element={
             <RouteProtected>
-              <Gastos />
+              <div></div>
             </RouteProtected>
           }
         />

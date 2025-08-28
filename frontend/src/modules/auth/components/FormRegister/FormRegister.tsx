@@ -68,7 +68,7 @@ export function FormRegister() {
     <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={formSx}>
       <Box sx={headerBoxSx}>
         <Box sx={iconWrapperSx}>
-          <AccountCircleIcon sx={{fontSize:5}}/>
+          <AccountCircleIcon sx={(theme)=>({fontSize:35, color: theme.palette.background.paper})}/>
         </Box>
         <Typography variant="h5" color="white" fontWeight="bold" textAlign="center">
           Crear Cuenta

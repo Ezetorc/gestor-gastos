@@ -1,12 +1,10 @@
-import { Box, Container } from '@mui/material';
+import {  Container } from '@mui/material';
 import { Dashboard } from '../components/Dashboard/Dashboard';
 
 const DashboardPage = () => {
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ py: 4 }}>
+    <Container maxWidth="xl" sx={(theme)=>({background: theme.palette.secondary.main})}>
         <Dashboard />
-      </Box>
     </Container>
   );
 };

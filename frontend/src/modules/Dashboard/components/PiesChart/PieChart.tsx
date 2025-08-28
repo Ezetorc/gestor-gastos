@@ -2,7 +2,7 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import { Card, Typography, useMediaQuery } from '@mui/material';
 import type { PieChartProps } from '../../types/pichart';
 import { useExpensesByCategory } from '@/hooks/useExpensesByCategory';
-import { cardSx, flexStyles, pieChartSx } from './PieChart.styles';
+import { cardSx, pieChartSx } from './PieChart.styles';
 
 export const PieChartComponent = ({ expenses }: PieChartProps) => {
    const { chartData, totalExpenses } = useExpensesByCategory(expenses);
@@ -14,7 +14,6 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
       <Card
         sx={{
           height: 200,
-          ...flexStyles,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

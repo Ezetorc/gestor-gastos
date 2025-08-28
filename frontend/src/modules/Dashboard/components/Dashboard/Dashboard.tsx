@@ -9,7 +9,6 @@ import incomes from "../../../../mocks/incomes.mock.json";
 import { 
   dashboardContainerSx, 
   dashboardSectionSx, 
-  dashboardBoxSx, 
   dashboardCardSx 
 } from "./Dashboard.styles";
 import { PieChartComponent } from "../PiesChart/PieChart";
@@ -55,18 +54,14 @@ export const Dashboard = () => {
         />
       </Box>
 
-      <Box sx={{ ...dashboardSectionSx, gap: 2, flexDirection: { xs: "column", md: "row" } }}>
-        <Box sx={dashboardBoxSx}>
+      <Box sx={dashboardSectionSx}>
           <Card sx={dashboardCardSx}>
             <PieChartComponent expenses={dashboardData.expenses} />
           </Card>
-        </Box>
 
-        <Box sx={dashboardBoxSx}>
           <Card sx={dashboardCardSx}>
             <DashedLineChart expenses={dashboardData.expenses} incomes={dashboardData.incomes} />
           </Card>
-        </Box>
       </Box>
     </Box>
   );

@@ -5,7 +5,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { cardContentSx, containerSx, iconSx, iconWrapperSx, labelSx, valueSx } from "./SummaryStatCard.styles";
+import { containerSx, iconSx, iconWrapperSx, labelSx, valueSx } from "./SummaryStatCard.styles";
 
 interface SummaryStatCardProps {
   label: string;
@@ -20,7 +20,7 @@ export const SummaryStatCard: React.FC<SummaryStatCardProps> = ({
 }) => {
   return (
     <Card sx={containerSx}>
-      <CardContent sx={cardContentSx}>
+      <CardContent>
         <Box sx={{ justifyContent: "center", mb: 2 }}>
           <Box sx={iconWrapperSx}>
             <Icon sx={iconSx} />

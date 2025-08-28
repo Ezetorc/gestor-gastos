@@ -45,3 +45,26 @@ import type { SxProps, Theme } from "@mui/material";
   borderColor: theme.palette.divider,
   boxShadow: theme.shadows[3],
 });
+
+
+  export const iconWrapperSx: SxProps<Theme> =(theme)=> ({
+    display: "grid",
+    placeContent: "center",
+    width: 60,
+    height: 60,
+    borderRadius: "50%",
+    background: theme.palette.primary.main,
+    mb: 2,
+  });
+
+  export const headerBoxSx: SxProps<Theme> = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    mb: 2,
+  };
+
+  export const mutedTextSx: SxProps<Theme> = (theme)=>({
+    color: theme.palette.text.secondary,
+    textAlign: "center",
+  });

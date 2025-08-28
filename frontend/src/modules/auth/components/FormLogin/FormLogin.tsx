@@ -8,21 +8,22 @@ import {
   InputAdornment,
   TextField,
   Typography,
-  type SxProps,
-  type Theme,
-  useTheme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { loginSchema } from "@/schemas/login.schema";
 import type { LoginFormData } from "@/types/login.type";
 import { useAuth } from "@/hooks/useAuth";
-import AccessibilityIcon from '@mui/icons-material/Accessibility';
-import { buttonSubmitSx, formSx, inputSx } from "./FormLogin.styles";
-
+import AccessibilityIcon from "@mui/icons-material/Accessibility";
+import {
+  buttonSubmitSx,
+  formSx,
+  headerBoxSx,
+  iconWrapperSx,
+  inputSx,
+  mutedTextSx,
+} from "./FormLogin.styles";
 
 export function FormLogin() {
-  const theme = useTheme();
-
   const {
     handleSubmit,
     control,
@@ -43,35 +44,29 @@ export function FormLogin() {
     login(usuario);
   };
 
-  const iconWrapperSx: SxProps<Theme> = {
-    display: "grid",
-    placeContent: "center",
-    width: 60,
-    height: 60,
-    borderRadius: "50%",
-    background: theme.palette.primary.main,
-    mb: 2,
-  };
-
-  const headerBoxSx: SxProps<Theme> = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    mb: 2,
-  };
-
-  const mutedTextSx: SxProps<Theme> = {
-    color: theme.palette.text.secondary,
-    textAlign: "center",
-  };
-
   return (
-    <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={formSx}>
+    <Box
+      component="form"
+      noValidate
+      onSubmit={handleSubmit(onSubmit)}
+      sx={formSx}
+    >
       <Box sx={headerBoxSx}>
         <Box sx={iconWrapperSx}>
-         <AccessibilityIcon sx={{fontSize: 5}}/>
+          <AccessibilityIcon
+            sx={(theme) => ({
+              fontSize: 35,
+              color: theme.palette.background.paper,
+            })}
+          />
         </Box>
-        <Typography variant="h5" color="white" fontWeight="bold" textAlign="center" component="h1">
+        <Typography
+          variant="h5"
+          color="white"
+          fontWeight="bold"
+          textAlign="center"
+          component="h1"
+        >
           Iniciar Sesión
         </Typography>
         <Typography sx={mutedTextSx}>Accede a tu cuenta de gastos</Typography>
@@ -113,7 +108,10 @@ export function FormLogin() {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
                     {/*<Icon name={showPassword ? "visibilityOff" : "visibility"} />*/}
                   </IconButton>
                 </InputAdornment>

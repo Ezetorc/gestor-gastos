@@ -7,11 +7,6 @@ export const containerSx: SxProps<Theme> = (theme) => ({
   color: theme.palette.text.primary,
 });
 
-export const cardContentSx: SxProps<Theme> = {
-  textAlign: "center",
-  p: 3,
-};
-
 export const iconWrapperSx: SxProps<Theme> =(theme)=> ({
   justifyContent: "center",
   backgroundColor: "#fff",
@@ -26,13 +21,12 @@ export const iconSx: SxProps<Theme> = {
 };
 
 export const labelSx :SxProps<Theme>=(theme)=> ({
-  color: theme.palette.text.primary,
-  mb: 1,
-  fontSize: "0.875rem",
+  color: theme.palette.text.secondary,
+  fontSize: 16,
 });
 
-export const valueSx: SxProps<Theme> = {
-  color: "#fff",
+export const valueSx: SxProps<Theme> = (theme)=>({
+  color: theme.palette.text.primary,
   fontWeight: "bold",
   fontSize: "1.5rem",
-};
+});

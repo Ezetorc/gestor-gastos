@@ -3,7 +3,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { SummaryStatCard } from "../SummaryStatCard/SummaryStatCard";
-import { containerSx, itemSx } from "./Summary.styles";
+import { containerSx } from "./Summary.styles";
 
 interface SummaryProps {
   gastosHoy: number;
@@ -20,28 +20,28 @@ export const Summary = ({
 }: SummaryProps) => {
   return (
     <Box sx={containerSx}>
-      <Box sx={itemSx}>
+      <Box >
         <SummaryStatCard
           label="Gasto Hoy"
           value={gastosHoy}
           Icon={AccountBalanceWalletIcon}
         />
       </Box>
-      <Box sx={itemSx}>
+      <Box >
         <SummaryStatCard
           label="Gasto Semana"
           value={gastoSemana}
           Icon={TrendingDownIcon}
         />
       </Box>
-      <Box sx={itemSx}>
+      <Box >
         <SummaryStatCard
           label="Gasto Mes"
           value={gastoMes}
           Icon={TrendingDownIcon}
         />
       </Box>
-      <Box sx={itemSx}>
+      <Box >
         <SummaryStatCard
           label="Balance"
           value={balance}

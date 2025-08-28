@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { ListNav } from "./ListNav";
+import { ListNav } from "../ListNav/ListNav";
 import { Outlet } from "react-router-dom";
 import { useDashboardLayout } from "@/hooks/useDashboardLayout";
 import {
@@ -17,18 +17,22 @@ import {
   DrawerHeader,
   iconMenuSx,
   titleGastosSx,
-} from "./DashboardLayout.styles";
+} from "./SideBar.styles";
 
-export default function DashboardLayout() {
+export default function SideBar() {
   const theme = useTheme();
   const { handleDrawerOpen, handleDrawerClose, open } = useDashboardLayout();
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
+   
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader>
+          <Box component="p" sx={titleGastosSx(open)}>
+            Control de Gastos
+          </Box>
+            <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -36,20 +40,7 @@ export default function DashboardLayout() {
             sx={iconMenuSx(open)}>
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ marginLeft: { xs: 2, sm: 0 } }}>
-            Hola, Bienvenido
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <Box component="p" sx={titleGastosSx(open)}>
-            Control de Gastos
-          </Box>
+       
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />

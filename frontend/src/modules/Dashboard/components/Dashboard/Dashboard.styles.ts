@@ -5,6 +5,7 @@ export const dashboardContainerSx: SxProps<Theme> = {
   alignItems: "center",
   flexDirection: "column",
   gap: 2,
+  p:2
 };
 
 export const dashboardSectionSx: SxProps<Theme> = {

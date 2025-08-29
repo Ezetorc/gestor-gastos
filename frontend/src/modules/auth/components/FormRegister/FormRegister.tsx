@@ -14,9 +14,9 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { registerSchema } from "@/schemas/register.schema";
-import type { RegisterFormData } from "@/types/register.type";
-import { useAuth } from "@/hooks/useAuth";
+import { registerSchema } from "@/modules/auth/schemas/register.schema";
+import type { RegisterFormData } from "@/modules/auth/types/register.type";
+import { useAuth } from "@/modules/auth/hooks/useAuth";
 import { buttonSubmitSx, formSx, inputSx } from "./FormRegister.styles";
 
 export function FormRegister() {

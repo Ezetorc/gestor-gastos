@@ -10,9 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { loginSchema } from "@/schemas/login.schema";
-import type { LoginFormData } from "@/types/login.type";
-import { useAuth } from "@/hooks/useAuth";
+import { loginSchema } from "@/modules/auth/schemas/login.schema";
+import type { LoginFormData } from "@/modules/auth/types/login.type";
+import { useAuth } from "@/modules/auth/hooks/useAuth";
 import AccessibilityIcon from "@mui/icons-material/Accessibility";
 import {
   buttonSubmitSx,

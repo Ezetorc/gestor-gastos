@@ -1,4 +1,4 @@
-import { useExpensesByCategory } from "@/hooks/useExpensesByCategory";
+import { useExpensesByCategory } from "@/modules/Dashboard/hooks/useExpensesByCategory";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import type { Expense } from "../../types/expense";
 import {

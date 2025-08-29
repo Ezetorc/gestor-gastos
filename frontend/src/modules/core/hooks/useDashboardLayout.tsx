@@ -2,22 +2,16 @@ import { useEffect, useState } from "react";
 
 export const useDashboardLayout = () => {
   const [open, setOpen] = useState(true);
+  const [width, setWidth] = useState(window.innerWidth);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const [width, setWidth] = useState(0);
+  const toggleDrawer = () => setOpen((prev) => !prev);
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
 
-    setOpen(window.innerWidth <= 600 == false);
+    // Si es mobile (<600px), lo cerramos por defecto
+    setOpen(window.innerWidth > 600);
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -25,8 +19,7 @@ export const useDashboardLayout = () => {
   }, [width]);
 
   return {
-    handleDrawerOpen,
-    handleDrawerClose,
     open,
+    toggleDrawer,
   };
 };

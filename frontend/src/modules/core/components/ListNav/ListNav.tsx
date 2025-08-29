@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import type { DashBoardIcons } from "@/types/dashboard-icons";
+import type { DashBoardIcons } from "@/modules/Dashboard/types/dashboard-icons";
 import { listItemButton, listItemIcon } from "../SideBar/SideBar.styles";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 

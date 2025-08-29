@@ -4,7 +4,7 @@ import {
   lineElementClasses,
   markElementClasses,
 } from '@mui/x-charts/LineChart';
-import { useDailyExpensesIncomes } from '../../../hooks/useDailyExpensesIncomes';
+import { useDailyExpensesIncomes } from '../hooks/useDailyExpensesIncomes';
 import type { DashedLineChartProps } from '../types/dashed';
 
 

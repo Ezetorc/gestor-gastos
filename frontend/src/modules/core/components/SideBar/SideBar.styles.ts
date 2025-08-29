@@ -87,15 +87,10 @@ export const Drawer = styled(MuiDrawer, {
   ],
 }));
 
-//Estilos css Dashboard
-export const iconMenuSx = (open: boolean): SxProps<Theme> => ({
-  marginRight: 5,
-  display: { xs: "none", sm: open ? "none" : "block" },
-});
 
 export const titleGastosSx = (open: boolean): SxProps<Theme> => ({
   display: open ? "flex" : "none",
-  justifyContent: "center",
+  justifyContent: "start",
   fontWeight: "bold",
 });
 

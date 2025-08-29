@@ -1,9 +1,8 @@
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 import { Response, NextFunction } from "express";
 import { authMiddleware } from "../../src/middlewares/auth.middleware";
-
 import jwt, { TokenExpiredError } from "jsonwebtoken";
-import { UnauthorizedError } from "../../src/models/unauthorized-error.model";
+import { UnauthorizedError } from "../../src/models/errors/unauthorized.error";
 
 jest.mock("jsonwebtoken");
 jest.mock("../../src/configuration/env.configuration", () => ({

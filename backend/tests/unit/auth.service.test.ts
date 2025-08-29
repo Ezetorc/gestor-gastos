@@ -1,17 +1,17 @@
-import { BadRequestError } from "../../src/models/bad-request-error.model";
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import { NotFoundError } from "../../src/models/not-found-error.model";
 import { JWT_SECRET } from "../../src/configuration/env.configuration";
 import { userRepositoryMock } from "../mocks/user.repository.mock";
 import { AuthService } from "../../src/services/auth.service";
 import { mockUser } from "./../mocks/user.mock";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { bcryptMock } from "../mocks/bcrypt.mock";
+import { NotFoundError } from "../../src/models/errors/not-found.error";
+import { BadRequestError } from "../../src/models/errors/bad-request.error";
 
 jest.mock("../../src/repositories/user.repository");
 jest.mock("bcrypt");
-jest.mock('../../src/configuration/env.configuration', () => ({
-  ...require('../mocks/env.mock').envMock
+jest.mock("../../src/configuration/env.configuration", () => ({
+  ...require("../mocks/env.mock").envMock,
 }));
 
 describe("AuthService", () => {

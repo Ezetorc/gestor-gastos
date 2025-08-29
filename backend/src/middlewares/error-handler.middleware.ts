@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { getErrorMessage } from "../utilities/get-error-message.utility";
-import { CustomError } from "../models/custom-error.model";
+import { CustomError } from "../models/errors/custom-error.error";
 import { failure } from "../utilities/failure.utility";
-import { InternalServerError } from "../models/internal-server-error.model";
+import { InternalServerError } from "../models/errors/internal-server.error";
 
 export function errorHandlerMiddleware() {
   return async (

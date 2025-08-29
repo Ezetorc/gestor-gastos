@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { AuthController } from "../controllers/auth.controller";
 import { dtoValidationMiddleware } from "../middlewares/dto-validation.middleware";
-import { LoginDto } from "../models/login-dto.model";
-import { RegisterDto } from "../models/register.dto.model";
+import { LoginDto } from "../models/dtos/login.dto";
+import { RegisterDto } from "../models/dtos/register.dto";
 
 export const AuthRouter = Router();
 

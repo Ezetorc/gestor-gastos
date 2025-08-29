@@ -1,7 +1,7 @@
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { NextFunction, Request, Response } from "express";
-import { BadRequestError } from "../models/bad-request-error.model";
+import { BadRequestError } from "../models/errors/bad-request.error";
 import { getErrorMessage } from "../utilities/get-error-message.utility";
 import { failure } from "../utilities/failure.utility";
 

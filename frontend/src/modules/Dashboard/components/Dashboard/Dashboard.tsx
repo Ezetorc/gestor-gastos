@@ -6,15 +6,18 @@ import DashedLineChart from "../DashedLineChart";
 import expenses from "../../../../mocks/expenses.mock.json";
 import incomes from "../../../../mocks/incomes.mock.json";
 
-import { 
-  dashboardContainerSx, 
-  dashboardSectionSx, 
-  dashboardCardSx 
+import {
+  dashboardContainerSx,
+  dashboardSectionSx,
+  dashboardCardSx,
 } from "./Dashboard.styles";
 import { PieChartComponent } from "../PiesChart/PieChart";
 
 export const Dashboard = () => {
-  const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+  const totalExpenses = expenses.reduce(
+    (sum, expense) => sum + expense.amount,
+    0
+  );
   const totalIncomes = incomes.reduce((sum, income) => sum + income.amount, 0);
   const balance = totalIncomes - totalExpenses;
 
@@ -36,32 +39,31 @@ export const Dashboard = () => {
 
   return (
     <Box sx={dashboardContainerSx}>
-      <Box sx={dashboardSectionSx}>
-        <Summary
-          gastosHoy={dashboardData.summary.gastosHoy}
-          gastoSemana={dashboardData.summary.gastoSemana}
-          gastoMes={dashboardData.summary.gastoMes}
-          balance={dashboardData.summary.balance}
-        />
-      </Box>
+      <Summary
+        gastosHoy={dashboardData.summary.gastosHoy}
+        gastoSemana={dashboardData.summary.gastoSemana}
+        gastoMes={dashboardData.summary.gastoMes}
+        balance={dashboardData.summary.balance}
+      />
+
+      <Totals
+        totalGastos={dashboardData.totals.totalGastos}
+        totalIngresos={dashboardData.totals.totalIngresos}
+        balance={dashboardData.totals.balanceResumen}
+        expenses={dashboardData.expenses}
+      />
 
       <Box sx={dashboardSectionSx}>
-        <Totals
-          totalGastos={dashboardData.totals.totalGastos}
-          totalIngresos={dashboardData.totals.totalIngresos}
-          balance={dashboardData.totals.balanceResumen}
-          expenses={dashboardData.expenses}
-        />
-      </Box>
+        <Card sx={dashboardCardSx}>
+          <PieChartComponent expenses={dashboardData.expenses} />
+        </Card>
 
-      <Box sx={dashboardSectionSx}>
-          <Card sx={dashboardCardSx}>
-            <PieChartComponent expenses={dashboardData.expenses} />
-          </Card>
-
-          <Card sx={dashboardCardSx}>
-            <DashedLineChart expenses={dashboardData.expenses} incomes={dashboardData.incomes} />
-          </Card>
+        <Card sx={dashboardCardSx}>
+          <DashedLineChart
+            expenses={dashboardData.expenses}
+            incomes={dashboardData.incomes}
+          />
+        </Card>
       </Box>
     </Box>
   );

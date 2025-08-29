@@ -1,23 +1,26 @@
 import type { SxProps, Theme } from "@mui/material";
 
 export const dashboardContainerSx: SxProps<Theme> = {
+  width: "100%",
+  Height: "100%",
   display: "flex",
-  alignItems: "center",
   flexDirection: "column",
   gap: 2,
-  p:2
+  py:2
 };
 
 export const dashboardSectionSx: SxProps<Theme> = {
-  display: "flex",
-  gap: 2, 
-  flexDirection: { xs: "column", md: "row" }
+  width:"100%",
+ display: "grid",
+  gap: 2,
+  gridTemplateColumns: {
+    xs: "repeat(1, 1fr)",
+    md: "repeat(2, 1fr)",
+  },
 };
 
 
 export const dashboardCardSx: SxProps<Theme> = (theme) => ({
-  height: "100%",
-  width: "100%",
   background: theme.palette.background.paper,
   color: theme.palette.text.primary,
   borderRadius: 3,

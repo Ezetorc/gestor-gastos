@@ -11,7 +11,7 @@ export const useDashboardLayout = () => {
     window.addEventListener("resize", handleResize);
 
     // Si es mobile (<600px), lo cerramos por defecto
-    setOpen(window.innerWidth > 600);
+    setOpen(window.innerWidth > 800);
 
     return () => {
       window.removeEventListener("resize", handleResize);

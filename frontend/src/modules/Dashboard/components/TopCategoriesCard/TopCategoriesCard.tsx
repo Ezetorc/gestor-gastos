@@ -1,5 +1,12 @@
 import { useExpensesByCategory } from "@/modules/Dashboard/hooks/useExpensesByCategory";
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
 import type { Expense } from "../../types/expense";
 import {
   cardSx,
@@ -7,6 +14,7 @@ import {
   categoryValueSx,
   emptyCardSx,
 } from "./TopCategoriesCard.styles";
+import { Circle } from "@mui/icons-material";
 
 interface TopCategoriesCardProps {
   title?: string;
@@ -41,16 +49,19 @@ export const TopCategoriesCard = ({
           {title}
         </Typography>
         <hr />
-        <Box>
+        <List>
           {topCategories.map(({ label, value }) => (
-            <Box key={label} sx={categoryItemSx}>
-              <Typography variant="body2">- {label}</Typography>
+            <ListItem key={label} sx={categoryItemSx}>
+              <Box sx={{ display: "flex", justifyContent: "center", alignItems:"center", gap:2 }}>
+                  <Circle sx={{ fontSize: "10px" }} />
+                <Typography variant="body2">{label}</Typography>
+              </Box>
               <Typography sx={categoryValueSx}>
                 ${Math.abs(value).toLocaleString()}
               </Typography>
-            </Box>
+            </ListItem>
           ))}
-        </Box>
+        </List>
       </CardContent>
     </Card>
   );

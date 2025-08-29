@@ -13,7 +13,6 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
     return (
       <Card
         sx={{
-          height: 200,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -41,10 +40,11 @@ export const PieChartComponent = ({ expenses }: PieChartProps) => {
             },
           ]}
           sx={pieChartSx}
-          height={220}
+          height={250}
           hideLegend={isSmallScreen}
-        />
+        /> 
+        
       </Card>
-    </>
+    </> 
   );
 };

@@ -7,8 +7,6 @@ import {
 import { useDailyExpensesIncomes } from '../hooks/useDailyExpensesIncomes';
 import type { DashedLineChartProps } from '../types/dashed';
 
-
-
 const chartMargin = { right: 24 };
 
 const getLineChartSx = (color: string): SxProps<Theme> => ({

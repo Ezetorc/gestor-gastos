@@ -2,28 +2,30 @@ import { Box, Card, Typography, type SxProps, type Theme } from '@mui/material';
 import type { TotalsBalanceCardProps } from '../types/balance';
 
 
-const cardSx: SxProps<Theme> = {
-  height: 200,
+const cardSx: SxProps<Theme> = (theme)=>({
+  height: "100%",
   borderRadius: 3,
   p: 2,
   display: 'flex',
   flexDirection: 'column',
-};
+  background: theme.palette.background.paper
+});
 
 const rowSx: SxProps<Theme> = {
   display: 'flex',
   alignItems: 'center',
-  mb: 1,
+  mb: 2,
+  pb:1,
+  borderBottom: '1px solid #ccc5',
 };
 
 const valueSx:  SxProps<Theme> = (theme)=> ({
   marginLeft: 'auto',
   fontWeight: 'bold',
-  color: theme.palette.background.paper,
+  color: theme.palette.text.secondary,
 });
 
 const dividerSx: SxProps<Theme> = {
-  borderBottom: '1px solid #ccc',
   my: 1,
   marginTop: 'auto',
 };
@@ -49,7 +51,8 @@ export const TotalsBalanceCard = ({ totalGastos, totalIngresos, balance }: Total
 
       <Box sx={dividerSx} />
 
-      <Box sx={{ ...rowSx, marginTop: 'auto' }}>
+      <Box sx={{   borderTop: '1px solid #ccc5', marginTop: 'auto',   display: 'flex',
+  alignItems: 'center', pt:2 }}>
         <Typography variant="h5" fontWeight="bold">Balance</Typography>
         <Typography variant="h5" sx={valueSx}>
           ${Math.abs(balance).toFixed(2)}

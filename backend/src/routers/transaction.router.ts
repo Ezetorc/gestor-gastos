@@ -10,10 +10,10 @@ TransactionRouter.get(
   /*
   #swagger.path = '/transactions'
   #swagger.tags = ['Transactions']
-  #swagger.description = 'Returns all transactions'
+  #swagger.description = 'Returns your transactions'
 
   #swagger.responses[200] = {
-    description: 'List of transactions',
+    description: 'List of your transactions',
     content: {
       'application/json': {
         schema: {

@@ -5,4 +5,8 @@ export class TransactionRepository {
   static async getAll(): Promise<Transaction[]> {
     return prisma.transaction.findMany();
   }
+
+  static async getAllOfUser(userId: number): Promise<Transaction[]> {
+    return prisma.transaction.findMany({ where: { userId } });
+  }
 }

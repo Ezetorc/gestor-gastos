@@ -1,13 +1,13 @@
 import bcrypt from "bcrypt";
 import { UserRepository } from "../repositories/user.repository";
 import { JWT_SECRET } from "../configuration/env.configuration";
-import { NotFoundError } from "../models/not-found-error.model";
-import { BadRequestError } from "../models/bad-request-error.model";
+import { NotFoundError } from "../models/errors/not-found.error";
+import { BadRequestError } from "../models/errors/bad-request.error";
 import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
-import { RegisterDto } from "../models/register.dto.model";
+import { RegisterDto } from "../models/dtos/register.dto";
 import { User } from "@prisma/client";
-import { EmailAlreadyExistsError } from "../models/email-already-exists-error.model";
+import { EmailAlreadyExistsError } from "../models/errors/email-already-exists.error";
 
 export class AuthService {
   static async login(email: string, password: string) {

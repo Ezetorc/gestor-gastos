@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
-import { LoginDto } from "../models/login-dto.model";
-import { RegisterDto } from "../models/register.dto.model";
+import { LoginDto } from "../models/dtos/login.dto";
+import { RegisterDto } from "../models/dtos/register.dto";
 import { success } from "../utilities/success.utility";
 
 export class AuthController {

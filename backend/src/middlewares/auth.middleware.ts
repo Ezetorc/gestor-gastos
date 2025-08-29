@@ -1,14 +1,13 @@
-import { Response, NextFunction } from "express";
+import { Response, Request, NextFunction } from "express";
 import jwt, { TokenExpiredError } from "jsonwebtoken";
 import { JWT_SECRET } from "../configuration/env.configuration";
-import { AuthenticatedRequest } from "../models/authenticated-request.model";
-import { UnauthorizedError } from "../models/unauthorized-error.model";
+import { UnauthorizedError } from "../models/errors/unauthorized.error";
 
 export const authMiddleware = (
-  request: AuthenticatedRequest,
+  request: Request,
   _response: Response,
   next: NextFunction
-) => {
+) => { 
   const authHeader = request.headers.authorization;
 
   if (!authHeader) throw new UnauthorizedError("No token provided");
@@ -16,7 +15,7 @@ export const authMiddleware = (
   const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: number };
 
     request.user = { id: decoded.userId };
     next();

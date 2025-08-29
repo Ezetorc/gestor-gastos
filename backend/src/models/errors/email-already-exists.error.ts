@@ -1,4 +1,4 @@
-import { CustomError } from "./custom-error.model";
+import { CustomError } from "./custom-error.error";
 
 export class EmailAlreadyExistsError extends CustomError {
     constructor(email: string){

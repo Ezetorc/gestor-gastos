@@ -12,6 +12,20 @@ TransactionRouter.get(
   #swagger.tags = ['Transactions']
   #swagger.description = 'Returns your transactions'
 
+  #swagger.parameters['page'] = {
+    in: 'query',
+    description: 'Page number (starts at 1)',
+    required: false,
+    schema: { type: 'integer', example: 1 }
+  }
+
+  #swagger.parameters['amount'] = {
+    in: 'query',
+    description: 'Number of transactions per page',
+    required: false,
+    schema: { type: 'integer', example: 8 }
+  }
+
   #swagger.responses[200] = {
     description: 'Paginated list of your transactions',
     content: {

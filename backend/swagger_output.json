@@ -275,19 +275,35 @@
         ],
         "responses": {
           "200": {
-            "description": "List of your transactions",
+            "description": "Paginated list of your transactions",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "value": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Transaction"
-                      }
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Transaction"
+                          }
+                        },
+                        "hasNextPage": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      },
+                      "required": [
+                        "data",
+                        "hasNextPage"
+                      ]
                     }
-                  }
+                  },
+                  "required": [
+                    "value"
+                  ]
                 }
               }
             }
@@ -303,7 +319,10 @@
                       "type": "string",
                       "example": "Unexpected error"
                     }
-                  }
+                  },
+                  "required": [
+                    "error"
+                  ]
                 },
                 "example": {
                   "error": "Unexpected error"
@@ -533,6 +552,19 @@
                   "example": {
                     "type": "string",
                     "example": "Juan Pérez"
+                  }
+                }
+              },
+              "password": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "myPassWORD123!"
                   }
                 }
               },

@@ -1,11 +1,11 @@
-import { Router } from 'express'
-import { TransactionController } from '../controllers/transaction.controller'
-import { authMiddleware } from '../middlewares/auth.middleware'
+import { Router } from "express";
+import { TransactionController } from "../controllers/transaction.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
-export const TransactionRouter = Router()
+export const TransactionRouter = Router();
 
 TransactionRouter.get(
-  '/',
+  "/",
   authMiddleware,
   /*
   #swagger.path = '/transactions'
@@ -13,19 +13,28 @@ TransactionRouter.get(
   #swagger.description = 'Returns your transactions'
 
   #swagger.responses[200] = {
-    description: 'List of your transactions',
+    description: 'Paginated list of your transactions',
     content: {
       'application/json': {
         schema: {
           type: 'object',
           properties: {
             value: {
-              type: 'array',
-              items: {
-                $ref: '#/components/schemas/Transaction'
-              }
+              type: 'object',
+              properties: {
+                data: {
+                  type: 'array',
+                  items: { $ref: '#/components/schemas/Transaction' }
+                },
+                hasNextPage: {
+                  type: 'boolean',
+                  example: true
+                }
+              },
+              required: ['data', 'hasNextPage']
             }
-          }
+          },
+          required: ['value']
         }
       }
     }
@@ -38,18 +47,14 @@ TransactionRouter.get(
         schema: {
           type: 'object',
           properties: {
-            error: {
-              type: 'string',
-              example: 'Unexpected error'
-            }
-          }
+            error: { type: 'string', example: 'Unexpected error' }
+          },
+          required: ['error']
         },
-        example: {
-          error: 'Unexpected error'
-        }
+        example: { error: 'Unexpected error' }
       }
     }
   }
   */
   TransactionController.getAll
-)
+);

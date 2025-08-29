@@ -8,15 +8,15 @@ export class AuthController {
   static async login(request: Request, response: Response): Promise<void> {
     const { email, password } = request.body as LoginDto;
 
-    const authorization = await AuthService.login(email, password);
+    const loginData = await AuthService.login(email, password);
 
-    response.status(200).json(success(authorization));
+    response.status(200).json(success(loginData));
   }
 
   static async register(request: Request, response: Response): Promise<void> {
     const userData: RegisterDto = request.body;
-    const newUser = await AuthService.register(userData);
+    const registerData = await AuthService.register(userData);
 
-    response.status(201).json(success(newUser.id));
+    response.status(201).json(success(registerData));
   }
 }

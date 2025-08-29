@@ -19,14 +19,16 @@ export class AuthService {
 
     if (!passwordsMatches) throw new BadRequestError("Invalid password");
 
-    return this.getAuthorization(user.id);
+    const authorization = await this.getAuthorization(user.id);
+
+    return { authorization, user };
   }
 
   static async getAuthorization(userId: number | string) {
     return jwt.sign({ userId }, JWT_SECRET, { expiresIn: "1h" });
   }
 
-  static async register(data: RegisterDto): Promise<User> {
+  static async register(data: RegisterDto) {
     const existingUser = await UserRepository.getByEmail(data.email);
 
     if (existingUser) {
@@ -41,6 +43,8 @@ export class AuthService {
       image: data.image,
     });
 
-    return newUser;
+    const authorization = await this.getAuthorization(newUser.id);
+
+    return { authorization, user: newUser };
   }
 }

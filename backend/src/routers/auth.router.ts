@@ -10,7 +10,7 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
   /*
   #swagger.path = '/login'
   #swagger.tags = ['Auth']
-  #swagger.description = 'Autentica un usuario y devuelve un token de autorización.'
+  #swagger.description = 'Authenticates a user and returns an authorization token'
 
   #swagger.requestBody = {
     required: true,
@@ -29,7 +29,7 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
   }
 
   #swagger.responses[200] = {
-    description: 'Autenticación exitosa, retorna token JWT.',
+    description: 'Returns JWT toke',
     content: {
       'application/json': {
         schema: {
@@ -44,7 +44,7 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
   }
 
   #swagger.responses[400] = {
-    description: 'Datos de login inválidos.',
+    description: 'Invalid credentials',
     content: {
       'application/json': {
         schema: {
@@ -60,7 +60,7 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
   }
 
   #swagger.responses[500] = {
-    description: 'Error inesperado',
+    description: 'Unexpected error',
     content: {
       'application/json': {
         schema: {
@@ -76,7 +76,7 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
   }
 
   #swagger.responses[404] = {
-    description: 'Usuario no encontrado',
+    description: 'User not found',
     content: {
       'application/json': {
         schema: {
@@ -97,7 +97,7 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
     /*
     #swagger.path = '/register'
     #swagger.tags = ['Auth']
-    #swagger.description = 'Registra un nuevo usuario en el sistema.'
+    #swagger.description = 'Creates new user'
   
     #swagger.requestBody = {
       required: true,
@@ -118,7 +118,7 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
     }
   
     #swagger.responses[201] = {
-      description: 'Usuario registrado exitosamente.',
+      description: 'User successfully created',
       content: {
         'application/json': {
           schema: {
@@ -133,13 +133,13 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
     }
   
     #swagger.responses[400] = {
-      description: 'Datos de registro inválidos.',
+      description: 'Invalid credentials',
       content: {
         'application/json': {
           schema: {
             type: 'object',
             properties: {
-              error: { type: 'string', example: 'La contraseña debe tener al menos 8 caracteres.' }
+              error: { type: 'string', example: 'The password must be at least 8 characters long' }
             },
             required: ['error']
           }
@@ -148,13 +148,13 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
     }
   
     #swagger.responses[409] = {
-      description: 'El correo electrónico ya está registrado.',
+      description: 'Email already registered',
       content: {
         'application/json': {
           schema: {
             type: 'object',
             properties: {
-              error: { type: 'string', example: 'El correo juan.perez@email.com ya está registrado.' }
+              error: { type: 'string', example: 'Email juan.perez@email.com is already registered' }
             },
             required: ['error']
           }
@@ -163,7 +163,7 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
     }
   
     #swagger.responses[500] = {
-      description: 'Error inesperado del servidor.',
+      description: 'Unexpected error',
       content: {
         'application/json': {
           schema: {

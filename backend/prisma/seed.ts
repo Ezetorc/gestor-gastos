@@ -2,7 +2,7 @@ import { TransactionType } from "@prisma/client";
 import { prisma } from "../src/configuration/prisma.configuration";
 
 async function main() {
-  // Usuarios
+  // Users
   const alice = await prisma.user.upsert({
     where: { email: "alice@prisma.io" },
     update: {},
@@ -14,16 +14,16 @@ async function main() {
     },
   });
 
-  // Transacciones
+  // Transactions
   await prisma.transaction.create({
     data: {
       amount: 5000,
       date: new Date("2025-07-01"),
-      category: "Salario",
-      description: "Sueldo mensual... del mes",
-      paymentMethod: "Cuenta bancaria",
+      category: "Salary",
+      description: "Monthly salary... for the month",
+      paymentMethod: "Bank account",
       userId: alice.id,
-      name: "Sueldo",
+      name: "Salary",
       type: TransactionType.INCOME,
     },
   });
@@ -32,10 +32,10 @@ async function main() {
     data: {
       amount: 250,
       date: new Date("2025-07-03"),
-      category: "Alimento",
-      paymentMethod: "Efectivo",
-      description: "Tomates, lechuga, papas, y mucho más",
-      name: "Comida del mes",
+      category: "Food",
+      paymentMethod: "Cash",
+      description: "Tomatoes, lettuce, potatoes, and much more",
+      name: "Monthly groceries",
       userId: alice.id,
       type: TransactionType.EXPENSE,
     },

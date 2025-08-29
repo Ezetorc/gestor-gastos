@@ -17,10 +17,10 @@
         "tags": [
           "Auth"
         ],
-        "description": "Autentica un usuario y devuelve un token de autorización.",
+        "description": "Authenticates a user and returns an authorization token",
         "responses": {
           "200": {
-            "description": "Autenticación exitosa, retorna token JWT.",
+            "description": "Returns JWT toke",
             "content": {
               "application/json": {
                 "schema": {
@@ -39,7 +39,7 @@
             }
           },
           "400": {
-            "description": "Datos de login inválidos.",
+            "description": "Invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -61,7 +61,7 @@
             }
           },
           "404": {
-            "description": "Usuario no encontrado",
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -83,7 +83,7 @@
             }
           },
           "500": {
-            "description": "Error inesperado",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -136,10 +136,10 @@
         "tags": [
           "Auth"
         ],
-        "description": "Registra un nuevo usuario en el sistema.",
+        "description": "Creates new user",
         "responses": {
           "201": {
-            "description": "Usuario registrado exitosamente.",
+            "description": "User successfully created",
             "content": {
               "application/json": {
                 "schema": {
@@ -147,7 +147,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Usuario creado."
+                      "example": "User created"
                     },
                     "userId": {
                       "type": "string",
@@ -163,7 +163,7 @@
             }
           },
           "400": {
-            "description": "Datos de registro inválidos.",
+            "description": "Invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -171,7 +171,7 @@
                   "properties": {
                     "error": {
                       "type": "string",
-                      "example": "La contraseña debe tener al menos 8 caracteres."
+                      "example": "The password must be at least 8 characters long"
                     }
                   },
                   "required": [
@@ -182,7 +182,7 @@
             }
           },
           "409": {
-            "description": "El correo electrónico ya está registrado.",
+            "description": "Email already registered",
             "content": {
               "application/json": {
                 "schema": {
@@ -190,7 +190,7 @@
                   "properties": {
                     "error": {
                       "type": "string",
-                      "example": "El correo juan.perez@email.com ya está registrado."
+                      "example": "Email juan.perez@email.com is already registered"
                     }
                   },
                   "required": [
@@ -201,7 +201,7 @@
             }
           },
           "500": {
-            "description": "Error inesperado del servidor.",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -261,7 +261,7 @@
         "tags": [
           "Transactions"
         ],
-        "description": "Obtiene todas las transacciones",
+        "description": "Returns all transactions",
         "parameters": [
           {
             "name": "authorization",
@@ -273,7 +273,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de transacciones",
+            "description": "List of transactions",
             "content": {
               "application/json": {
                 "schema": {
@@ -294,7 +294,7 @@
             "description": "Unauthorized"
           },
           "500": {
-            "description": "Error interno del servidor",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {

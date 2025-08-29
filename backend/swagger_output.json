@@ -3,12 +3,12 @@
   "info": {
     "version": "v1.0.0",
     "title": "Gestor de gastos API",
-    "description": "API para gestionar ingresos y gastos"
+    "description": "API for managing incomes and expenses"
   },
   "servers": [
     {
       "url": "http://localhost:3000",
-      "description": "Servidor local para desarrollo"
+      "description": "Local server for development"
     }
   ],
   "paths": {
@@ -20,19 +20,23 @@
         "description": "Authenticates a user and returns an authorization token",
         "responses": {
           "200": {
-            "description": "Returns JWT toke",
+            "description": "Returns JWT token and user data",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "value": {
+                    "authorization": {
                       "type": "string",
                       "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/User"
                     }
                   },
                   "required": [
-                    "accessToken"
+                    "authorization",
+                    "user"
                   ]
                 }
               }
@@ -136,34 +140,33 @@
         "tags": [
           "Auth"
         ],
-        "description": "Creates new user",
+        "description": "Creates new user and returns an authorization token",
         "responses": {
           "201": {
-            "description": "User successfully created",
+            "description": "User successfully created and authenticated",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
+                    "authorization": {
                       "type": "string",
-                      "example": "User created"
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                     },
-                    "userId": {
-                      "type": "string",
-                      "example": "507f1f77bcf86cd799439011"
+                    "user": {
+                      "$ref": "#/components/schemas/User"
                     }
                   },
                   "required": [
-                    "message",
-                    "userId"
+                    "authorization",
+                    "user"
                   ]
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid credentials",
+            "description": "Invalid input",
             "content": {
               "application/json": {
                 "schema": {
@@ -229,8 +232,7 @@
                 "required": [
                   "name",
                   "email",
-                  "password",
-                  "image"
+                  "password"
                 ],
                 "properties": {
                   "name": {
@@ -261,7 +263,7 @@
         "tags": [
           "Transactions"
         ],
-        "description": "Returns all transactions",
+        "description": "Returns your transactions",
         "parameters": [
           {
             "name": "authorization",
@@ -273,7 +275,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of transactions",
+            "description": "List of your transactions",
             "content": {
               "application/json": {
                 "schema": {
@@ -289,9 +291,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "500": {
             "description": "Unexpected error",
@@ -395,7 +394,7 @@
                   },
                   "example": {
                     "type": "string",
-                    "example": "Alimentación"
+                    "example": "Food"
                   }
                 }
               },
@@ -408,7 +407,7 @@
                   },
                   "example": {
                     "type": "string",
-                    "example": "Efectivo"
+                    "example": "Cash"
                   }
                 }
               },
@@ -421,7 +420,7 @@
                   },
                   "example": {
                     "type": "string",
-                    "example": "Compra supermercado"
+                    "example": "Supermarket"
                   }
                 }
               },
@@ -497,6 +496,83 @@
                   }
                 }
               }
+            }
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 1
+                  }
+                }
+              },
+              "name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Juan Pérez"
+                  }
+                }
+              },
+              "email": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "juan.perez@email.com"
+                  }
+                }
+              },
+              "image": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "https://example.com/avatar.jpg"
+                  }
+                }
+              }
+            }
+          },
+          "required": {
+            "type": "array",
+            "example": [
+              "id",
+              "name",
+              "email"
+            ],
+            "items": {
+              "type": "string"
             }
           }
         }

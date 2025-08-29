@@ -6,7 +6,9 @@ import { RegisterDto } from "../models/dtos/register.dto";
 
 export const AuthRouter = Router();
 
-AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
+AuthRouter.post(
+  "/login",
+  dtoValidationMiddleware(LoginDto),
   /*
   #swagger.path = '/login'
   #swagger.tags = ['Auth']
@@ -29,15 +31,16 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
   }
 
   #swagger.responses[200] = {
-    description: 'Returns JWT toke',
+    description: 'Returns JWT token and user data',
     content: {
       'application/json': {
         schema: {
           type: 'object',
           properties: {
-            value: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' }
+            authorization: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
+            user: { $ref: '#/components/schemas/User' }
           },
-          required: ['accessToken']
+          required: ['authorization', 'user']
         }
       }
     }
@@ -47,30 +50,8 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
     description: 'Invalid credentials',
     content: {
       'application/json': {
-        schema: {
-          type: 'object',
-          properties: {
-            error: { type: 'string', example: 'Invalid password' }
-          },
-          required: ['error']
-        },
+        schema: { type: 'object', properties: { error: { type: 'string', example: 'Invalid password' } }, required: ['error'] },
         example: { error: 'Invalid password' }
-      }
-    }
-  }
-
-  #swagger.responses[500] = {
-    description: 'Unexpected error',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'object',
-          properties: {
-            error: { type: 'string', example: 'Unexpected error' }
-          },
-          required: ['error']
-        },
-        example: { error: 'Unexpected error' }
       }
     }
   }
@@ -79,102 +60,93 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
     description: 'User not found',
     content: {
       'application/json': {
-        schema: {
-          type: 'object',
-          properties: {
-            error: { type: 'string', example: 'User not found' }
-          },
-          required: ['error']
-        },
+        schema: { type: 'object', properties: { error: { type: 'string', example: 'User not found' } }, required: ['error'] },
         example: { error: 'User not found' }
       }
     }
   }
-*/
-  AuthController.login);
 
-  AuthRouter.post('/register', dtoValidationMiddleware(RegisterDto), 
-    /*
-    #swagger.path = '/register'
-    #swagger.tags = ['Auth']
-    #swagger.description = 'Creates new user'
-  
-    #swagger.requestBody = {
-      required: true,
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            required: ['name', 'email', 'password', 'image'],
-            properties: {
-              name: { type: 'string', example: 'Juan Pérez' },
-              email: { type: 'string', example: 'juan.perez@email.com' },
-              password: { type: 'string', example: 'Password123!' },
-              image: { type: 'string', example: 'https://example.com/avatar.jpg' }
-            }
+  #swagger.responses[500] = {
+    description: 'Unexpected error',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string', example: 'Unexpected error' } }, required: ['error'] },
+        example: { error: 'Unexpected error' }
+      }
+    }
+  }
+  */
+  AuthController.login
+);
+
+AuthRouter.post(
+  "/register",
+  dtoValidationMiddleware(RegisterDto),
+  /*
+  #swagger.path = '/register'
+  #swagger.tags = ['Auth']
+  #swagger.description = 'Creates new user and returns an authorization token'
+
+  #swagger.requestBody = {
+    required: true,
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          required: ['name', 'email', 'password'],
+          properties: {
+            name: { type: 'string', example: 'Juan Pérez' },
+            email: { type: 'string', example: 'juan.perez@email.com' },
+            password: { type: 'string', example: 'Password123!' },
+            image: { type: 'string', example: 'https://example.com/avatar.jpg' }
           }
         }
       }
     }
-  
-    #swagger.responses[201] = {
-      description: 'User successfully created',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              value: { type: 'string', example: '507f1f77bcf86cd799439011' }
-            },
-            required: ['value']
-          }
+  }
+
+  #swagger.responses[201] = {
+    description: 'User successfully created and authenticated',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            authorization: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
+            user: { $ref: '#/components/schemas/User' }
+          },
+          required: ['authorization', 'user']
         }
       }
     }
-  
-    #swagger.responses[400] = {
-      description: 'Invalid credentials',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              error: { type: 'string', example: 'The password must be at least 8 characters long' }
-            },
-            required: ['error']
-          }
-        }
+  }
+
+  #swagger.responses[400] = {
+    description: 'Invalid input',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string', example: 'The password must be at least 8 characters long' } }, required: ['error'] }
       }
     }
-  
-    #swagger.responses[409] = {
-      description: 'Email already registered',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              error: { type: 'string', example: 'Email juan.perez@email.com is already registered' }
-            },
-            required: ['error']
-          }
-        }
+  }
+
+  #swagger.responses[409] = {
+    description: 'Email already registered',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string', example: 'Email juan.perez@email.com is already registered' } }, required: ['error'] }
       }
     }
-  
-    #swagger.responses[500] = {
-      description: 'Unexpected error',
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            properties: {
-              error: { type: 'string', example: 'Unexpected error' }
-            },
-            required: ['error']
-          }
-        }
+  }
+
+  #swagger.responses[500] = {
+    description: 'Unexpected error',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string', example: 'Unexpected error' } }, required: ['error'] }
       }
     }
-    */
-   AuthController.register);
+  }
+  */
+  AuthController.register
+);

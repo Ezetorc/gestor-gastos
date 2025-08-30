@@ -28,34 +28,30 @@ describe("AuthController", () => {
       expect(responseMock.json).toHaveBeenCalledWith({ value: expected });
     });
   });
-});
 
-describe("register", () => {
-  it("should respond with 201 and new user ID", async () => {
-    const expected = { authorization: "fake-jwt-token", user: mockUser };
-    const requestMock = {
-      body: {
-        name: "Test User",
-        email: "test@example.com",
-        password: "password123",
-      },
-    } as any;
+  describe("register", () => {
+    it("should respond with 201 and new user ID", async () => {
+      const expected = { authorization: "fake-jwt-token", user: mockUser };
+      const requestMock = {
+        body: {
+          name: "Test User",
+          email: "test@example.com",
+          password: "password123",
+        },
+      } as any;
 
-    const responseMock = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    } as any;
+      const responseMock = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      } as any;
 
-    const newUserMock = {
-      id: 1,
-    };
+      authServiceMock.register.mockResolvedValue(expected);
 
-    authServiceMock.register.mockResolvedValue(expected);
+      await AuthController.register(requestMock, responseMock);
 
-    await AuthController.register(requestMock, responseMock);
-
-    expect(authServiceMock.register).toHaveBeenCalledWith(requestMock.body);
-    expect(responseMock.status).toHaveBeenCalledWith(201);
-    expect(responseMock.json).toHaveBeenCalledWith({ value: expected });
+      expect(authServiceMock.register).toHaveBeenCalledWith(requestMock.body);
+      expect(responseMock.status).toHaveBeenCalledWith(201);
+      expect(responseMock.json).toHaveBeenCalledWith({ value: expected });
+    });
   });
 });

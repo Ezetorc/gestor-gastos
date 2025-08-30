@@ -70,5 +70,5 @@ TransactionRouter.get(
     }
   }
   */
-  TransactionController.getAll
+  TransactionController.getAllOfUser
 );

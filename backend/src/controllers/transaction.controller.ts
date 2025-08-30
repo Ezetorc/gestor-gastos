@@ -5,7 +5,7 @@ import { AuthenticatedRequest } from "../models/authenticated-request.model";
 import { parsePaginationQuery } from "../utilities/parse-pagination-query.utility";
 
 export class TransactionController {
-  static async getAll(request: Request, response: Response): Promise<void> {
+  static async getAllOfUser(request: Request, response: Response): Promise<void> {
     const { page, amount } = parsePaginationQuery(request.query);
     const authenticatedRequest = request as AuthenticatedRequest;
     const userId = authenticatedRequest.user.id;

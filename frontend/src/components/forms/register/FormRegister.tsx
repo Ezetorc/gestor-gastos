@@ -44,11 +44,9 @@ export function FormRegister() {
       component="form"
       noValidate
       onSubmit={handleSubmit(onSubmit)}
-      sx={formStyle}
-    >
+      sx={formStyle}>
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-      >
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <Box
           mb={2}
           sx={{
@@ -58,16 +56,14 @@ export function FormRegister() {
             height: "60px",
             borderRadius: "100%",
             background: theme.colors.primary,
-          }}
-        >
+          }}>
           <Icon name="register" size={30} />
         </Box>
         <Typography
           variant="h5"
           color="white"
           fontWeight="bold"
-          textAlign="center"
-        >
+          textAlign="center">
           Crear Cuenta
         </Typography>
         <Typography color={theme.colors.muted} textAlign="center">
@@ -114,6 +110,7 @@ export function FormRegister() {
         defaultValue=""
         render={({ field }) => (
           <TextField
+            autoComplete="current-password"
             margin="dense"
             fullWidth
             type={showPassword ? "text" : "password"}
@@ -124,13 +121,15 @@ export function FormRegister() {
             helperText={errors.password?.message}
             sx={inputStyles.root}
             slotProps={{
+              htmlInput: {
+                "data-testid": "contraseña-input",
+              },
               input: {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
                       onClick={() => setShowPassword(!showPassword)}
-                      edge="end"
-                    >
+                      edge="end">
                       {showPassword ? (
                         <Icon name="visibilityOff" />
                       ) : (
@@ -151,6 +150,7 @@ export function FormRegister() {
         defaultValue=""
         render={({ field }) => (
           <TextField
+            autoComplete="current-password"
             margin="dense"
             fullWidth
             type={showPassword ? "text" : "password"}
@@ -166,8 +166,7 @@ export function FormRegister() {
                   <InputAdornment position="end">
                     <IconButton
                       onClick={() => setShowPassword(!showPassword)}
-                      edge="end"
-                    >
+                      edge="end">
                       {showPassword ? (
                         <Icon name="visibilityOff" />
                       ) : (

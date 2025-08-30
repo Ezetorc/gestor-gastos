@@ -53,8 +53,8 @@ export const TotalsBalanceCard = ({ totalGastos, totalIngresos, balance }: Total
 
       <Box sx={{   borderTop: '1px solid #ccc5', marginTop: 'auto',   display: 'flex',
   alignItems: 'center', pt:2 }}>
-        <Typography variant="h5" fontWeight="bold">Balance</Typography>
-        <Typography variant="h5" sx={valueSx}>
+        <Typography variant="h6" fontWeight="bold">Balance</Typography>
+        <Typography variant="h6" sx={valueSx}>
           ${Math.abs(balance).toFixed(2)}
         </Typography>
       </Box>

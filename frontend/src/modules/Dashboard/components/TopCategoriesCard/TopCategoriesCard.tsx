@@ -7,7 +7,6 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
-import type { Expense } from "../../types/expense";
 import {
   cardSx,
   categoryItemSx,
@@ -15,12 +14,7 @@ import {
   emptyCardSx,
 } from "./TopCategoriesCard.styles";
 import { Circle } from "@mui/icons-material";
-
-interface TopCategoriesCardProps {
-  title?: string;
-  expenses: Expense[];
-  maxCategories?: number;
-}
+import type { TopCategoriesCardProps } from "../../types/topCategories";
 
 const DEFAULT_TITLE = "Top Categorías";
 const DEFAULT_MAX_CATEGORIES = 5;
@@ -56,7 +50,7 @@ export const TopCategoriesCard = ({
                   <Circle sx={{ fontSize: "10px" }} />
                 <Typography variant="body2">{label}</Typography>
               </Box>
-              <Typography sx={categoryValueSx}>
+              <Typography variant="h6" sx={categoryValueSx}>
                 ${Math.abs(value).toLocaleString()}
               </Typography>
             </ListItem>

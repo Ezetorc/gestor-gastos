@@ -1,4 +1,4 @@
-import type { SxProps, Theme } from "@mui/material";
+import {  type SxProps, type Theme } from "@mui/material";
 
 export const containerSx: SxProps<Theme> = (theme) => ({
   height: "100%",
@@ -9,11 +9,9 @@ export const containerSx: SxProps<Theme> = (theme) => ({
 
 export const iconWrapperSx: SxProps<Theme> =(theme)=> ({
   justifyContent: "center",
-  backgroundColor: "#fff",
   color: theme.palette.text.primary,
+  p:1,
   borderRadius: 2,
-  width: 56,
-  height: 56,
 });
 
 export const iconSx: SxProps<Theme> = {

@@ -1,4 +1,4 @@
-import { useExpensesByCategory } from "@/modules/Dashboard/hooks/useExpensesByCategory";
+import { useExpensesByCategory } from "@/modules/dashboard/hooks/useExpensesByCategory";
 import {
   Box,
   Card,

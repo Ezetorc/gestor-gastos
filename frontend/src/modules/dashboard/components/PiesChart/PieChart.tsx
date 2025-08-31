@@ -1,7 +1,7 @@
 import { PieChart } from '@mui/x-charts/PieChart';
 import { Card, Typography, useMediaQuery } from '@mui/material';
 import type { PieChartProps } from '../../types/pichart';
-import { useExpensesByCategory } from '@/modules/Dashboard/hooks/useExpensesByCategory';
+import { useExpensesByCategory } from '@/modules/dashboard/hooks/useExpensesByCategory';
 import { cardSx, pieChartSx } from './PieChart.styles';
 
 export const PieChartComponent = ({ expenses }: PieChartProps) => {

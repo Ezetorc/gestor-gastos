@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import type { DashBoardIcons } from "@/modules/Dashboard/types/dashboard-icons";
+import type { DashBoardIcons } from "@/modules/dashboard/types/dashboard-icons";
 import { listItemButton, listItemIcon } from "../SideBar/SideBar.styles";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 
@@ -21,13 +21,13 @@ export const ListNav = ({ open }: Props) => {
       id: "1",
       name: "DashBoard",
       icon: <DashboardIcon />,
-      link: "/dashboard",
+      link: "/",
     },
     {
       id: "2",
-      name: "Gastos",
+      name: "Transacciones",
       icon: <CurrencyExchangeIcon />,
-      link: "/gastos",
+      link: "/transacciones",
     },
   ];
 

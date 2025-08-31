@@ -8,7 +8,8 @@ import Login from "@/modules/auth/pages/Login";
 import Register from "@/modules/auth/pages/Register";
 import { RouteProtected } from "./ProtectedRoute";
 import { GuestRoute } from "./GuestRoute";
-import DashboardPage from "@/modules/Dashboard/Pages/DashboardPage";
+import DashboardPage from "@/modules/dashboard/Pages/DashboardPage";
+import TransactionsPage from "@/modules/transactions/pages/TransactionsPage";
 
 const AppRoutes = () => {
   return (
@@ -41,14 +42,14 @@ const AppRoutes = () => {
         />
 
         <Route
-          path="/gastos"
+          path="/transacciones"
           element={
             <RouteProtected>
-              <div></div>
+              <TransactionsPage />
             </RouteProtected>
           }
         />
-
+       
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

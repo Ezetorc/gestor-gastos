@@ -10,4 +10,4 @@ const DashboardPage = () => {
     </Container>
   );
 };
-export default DashboardPage
+export default DashboardPage 

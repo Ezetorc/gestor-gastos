@@ -3,8 +3,8 @@ import { Summary } from "../Summary/Summary";
 import { Totals } from "../Totals";
 import DashedLineChart from "../DashedLineChart";
 
-import expenses from "../../../../mocks/expenses.mock.json";
-import incomes from "../../../../mocks/incomes.mock.json";
+import expenses from "../../mocks/expenses.mock.json";
+import incomes from "../../mocks/incomes.mock.json";
 
 import {
   dashboardContainerSx,

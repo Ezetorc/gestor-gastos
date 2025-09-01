@@ -4,13 +4,12 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Gastos from "@/pages/Gastos";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
+import Login from "@/modules/auth/pages/Login";
+import Register from "@/modules/auth/pages/Register";
 import { RouteProtected } from "./ProtectedRoute";
 import { GuestRoute } from "./GuestRoute";
-import DashboardLayout from "@/components/header/DashboardLayout";
-import DashBoard from "@/pages/DashBoard";
+import DashboardPage from "@/modules/dashboard/Pages/DashboardPage";
+import TransactionsPage from "@/modules/transactions/pages/TransactionsPage";
 
 const AppRoutes = () => {
   return (
@@ -37,14 +36,20 @@ const AppRoutes = () => {
           path="/"
           element={
             <RouteProtected>
-              <DashboardLayout />
+              <DashboardPage />
             </RouteProtected>
-          }>
-          <Route index element={<Navigate to="dashboard" replace />} />
-          <Route path="dashboard" element={<DashBoard />} />
-          <Route path="gastos" element={<Gastos />} />
-        </Route>
+          }
+        />
 
+        <Route
+          path="/transacciones"
+          element={
+            <RouteProtected>
+              <TransactionsPage />
+            </RouteProtected>
+          }
+        />
+       
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

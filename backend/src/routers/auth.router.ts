@@ -13,7 +13,8 @@ AuthRouter.post(
   #swagger.path = '/login'
   #swagger.tags = ['Auth']
   #swagger.description = 'Authenticates a user and returns an authorization token'
-
+   #swagger.method = 'post'
+   
   #swagger.requestBody = {
     required: true,
     content: {

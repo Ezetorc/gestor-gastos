@@ -48,3 +48,4 @@ export class AuthService {
     return { authorization, user: newUser };
   }
 }
+

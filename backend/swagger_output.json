@@ -149,17 +149,13 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "authorization": {
+                    "value": {
                       "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                    },
-                    "user": {
-                      "$ref": "#/components/schemas/User"
+                      "example": "507f1f77bcf86cd799439011"
                     }
                   },
                   "required": [
-                    "authorization",
-                    "user"
+                    "value"
                   ]
                 }
               }
@@ -357,13 +353,194 @@
                       "type": "string",
                       "example": "Unexpected error"
                     }
-                  },
-                  "required": [
-                    "error"
-                  ]
+                  }
                 },
                 "example": {
                   "error": "Unexpected error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "amount",
+                  "date",
+                  "category",
+                  "paymentMethod",
+                  "description",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Pago luz"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "example": 5000
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-31T12:00:00Z"
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "Servicios"
+                  },
+                  "paymentMethod": {
+                    "type": "string",
+                    "example": "Tarjeta"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Pago mensual de electricidad"
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "EXPENSE"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "Creates a new transaction for the authenticated user",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Transaction successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "$ref": "#/components/schemas/Transaction"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ]
+                },
+                "example": {
+                  "value": {
+                    "id": 1,
+                    "name": "Pago luz",
+                    "amount": 5000,
+                    "date": "2025-08-31T12:00:00Z",
+                    "category": "Servicios",
+                    "paymentMethod": "Tarjeta",
+                    "description": "Pago mensual de electricidad",
+                    "type": "EXPENSE",
+                    "userId": 1
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid transaction data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Amount must be greater than 0"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Unexpected error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "amount",
+                  "date",
+                  "category",
+                  "paymentMethod",
+                  "description",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Pago luz"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "example": 5000
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-31T12:00:00Z"
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "Servicios"
+                  },
+                  "paymentMethod": {
+                    "type": "string",
+                    "example": "Tarjeta"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Pago mensual de electricidad"
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "EXPENSE"
+                  }
                 }
               }
             }

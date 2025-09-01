@@ -5,13 +5,28 @@ import '@fontsource/roboto/700.css';
 import AppRoutes from './routes/AppRoutes';
 
 
-function App() {
+import { useMemo } from "react";
+import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+export default function App() {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? "dark" : "light",
+        },
+      }),
+    [prefersDarkMode],
+  );
 
   return (
-    <>
-    <AppRoutes />
-    </>
-  )
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppRoutes />
+    </ThemeProvider>
+  );
 }
 
-export default App

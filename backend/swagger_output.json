@@ -3,12 +3,12 @@
   "info": {
     "version": "v1.0.0",
     "title": "Gestor de gastos API",
-    "description": "API para gestionar ingresos y gastos"
+    "description": "API for managing incomes and expenses"
   },
   "servers": [
     {
       "url": "http://localhost:3000",
-      "description": "Servidor local para desarrollo"
+      "description": "Local server for development"
     }
   ],
   "paths": {
@@ -145,18 +145,13 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "User created"
-                    },
-                    "userId": {
+                    "value": {
                       "type": "string",
                       "example": "507f1f77bcf86cd799439011"
                     }
                   },
                   "required": [
-                    "message",
-                    "userId"
+                    "value"
                   ]
                 }
               }
@@ -290,9 +285,6 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Unexpected error",
             "content": {
@@ -308,6 +300,140 @@
                 },
                 "example": {
                   "error": "Unexpected error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "Creates a new transaction for the authenticated user",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Transaction successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "$ref": "#/components/schemas/Transaction"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ]
+                },
+                "example": {
+                  "value": {
+                    "id": 1,
+                    "name": "Pago luz",
+                    "amount": 5000,
+                    "date": "2025-08-31T12:00:00Z",
+                    "category": "Servicios",
+                    "paymentMethod": "Tarjeta",
+                    "description": "Pago mensual de electricidad",
+                    "type": "EXPENSE",
+                    "userId": 1
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid transaction data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Amount must be greater than 0"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Unexpected error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "amount",
+                  "date",
+                  "category",
+                  "paymentMethod",
+                  "description",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Pago luz"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "example": 5000
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-31T12:00:00Z"
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "Servicios"
+                  },
+                  "paymentMethod": {
+                    "type": "string",
+                    "example": "Tarjeta"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Pago mensual de electricidad"
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "EXPENSE"
+                  }
                 }
               }
             }
@@ -395,7 +521,7 @@
                   },
                   "example": {
                     "type": "string",
-                    "example": "Alimentación"
+                    "example": "Food"
                   }
                 }
               },
@@ -408,7 +534,7 @@
                   },
                   "example": {
                     "type": "string",
-                    "example": "Efectivo"
+                    "example": "Cash"
                   }
                 }
               },
@@ -421,7 +547,7 @@
                   },
                   "example": {
                     "type": "string",
-                    "example": "Compra supermercado"
+                    "example": "Supermarket"
                   }
                 }
               },

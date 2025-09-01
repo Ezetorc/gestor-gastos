@@ -11,7 +11,8 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
   #swagger.path = '/login'
   #swagger.tags = ['Auth']
   #swagger.description = 'Authenticates a user and returns an authorization token'
-
+   #swagger.method = 'post'
+   
   #swagger.requestBody = {
     required: true,
     content: {
@@ -98,6 +99,7 @@ AuthRouter.post("/login", dtoValidationMiddleware(LoginDto),
     #swagger.path = '/register'
     #swagger.tags = ['Auth']
     #swagger.description = 'Creates new user'
+     #swagger.method = 'post'
   
     #swagger.requestBody = {
       required: true,

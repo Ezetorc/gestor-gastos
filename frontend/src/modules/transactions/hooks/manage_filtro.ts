@@ -1,50 +1,62 @@
 import { useEffect, useState } from 'react';
-import { INITIAL_FILTERS } from '@/constants/Filter';
-import { MATERIAS_SISTEMAS } from '@/data/materias';
-import { normalizeText } from '@/utils/normalizeText';
-import type { Filter } from '@/types/filter';
+import { INITIAL_TRANSACTION_FILTERS } from '../constants/transactionFilters';
+import { normalizeText } from '../utils/normalizeText';
+import type { Transaction, TransactionFilters } from '../types/transaction';
 
-const PAGE_SIZE = 9;
+export const useTransactionFilters = (transactions: Transaction[]) => {
+  // Estado para los filtros aplicados
+  const [filters, setFilters] = useState<TransactionFilters>(INITIAL_TRANSACTION_FILTERS);
+  
+  // Estado para las transacciones filtradas
+  const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
 
-export const useSubjects = () => {
-  const [filters, setFilters] = useState<Filter>(INITIAL_FILTERS);
-  const [filteredSubjects, setFilteredSubjects] = useState<typeof MATERIAS_SISTEMAS>([]);
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  const [loading, setLoading] = useState(true);
-
+  // Efecto que se ejecuta cuando cambian los filtros o las transacciones
   useEffect(() => {
-    setLoading(true);
+    // Aplicar todos los filtros a las transacciones
+    let result = transactions.filter((transaction) => {
+      // Filtro por búsqueda: busca en descripción y categoría (sin distinción de mayúsculas/minúsculas)
+      const matchesSearch = !filters.search || 
+        normalizeText(transaction.description).includes(normalizeText(filters.search)) ||
+        normalizeText(transaction.category).includes(normalizeText(filters.search));
 
-    const timer = setTimeout(() => {
-      const result = MATERIAS_SISTEMAS.filter((s) =>
-        normalizeText(s.title).includes(normalizeText(filters.search))
-      )
-        .filter((s) => (filters.year === 0 ? true : s.year === filters.year))
-        .filter((s) => (filters.quadmester === 0 ? true : s.quadmester === filters.quadmester))
-        .sort((a, b) => a.title.localeCompare(b.title));
+      // Filtro por categoría específica
+      const matchesCategory = !filters.category || transaction.category === filters.category;
 
-      setFilteredSubjects(result);
-      setVisibleCount(PAGE_SIZE); // Reset visible count al cambiar filtros
-      setLoading(false);
-    }, 500);
+      // Filtro por método de pago (efectivo, tarjeta, etc.)
+      const matchesPaymentMethod = !filters.payment_method || 
+        transaction.payment_method === filters.payment_method;
 
-    return () => clearTimeout(timer);
-  }, [filters]);
+      // Filtro por tipo de transacción (ingreso, gasto o todos)
+      const matchesType = filters.type === 'all' || transaction.type === filters.type;
 
-  const visibleSubjects = filteredSubjects.slice(0, visibleCount);
+      // Filtro por fecha desde (inicio del rango)
+      const matchesDateFrom = !filters.date_from || 
+        new Date(transaction.date) >= new Date(filters.date_from);
+      
+      // Filtro por fecha hasta (fin del rango)
+      const matchesDateTo = !filters.date_to || 
+        new Date(transaction.date) <= new Date(filters.date_to);
 
-  const showMore = () => {
-    setVisibleCount((prev) => prev + PAGE_SIZE);
+      // La transacción pasa el filtro si cumple TODAS las condiciones
+      return matchesSearch && matchesCategory && matchesPaymentMethod && 
+             matchesType && matchesDateFrom && matchesDateTo;
+    });
+
+    // Ordenar por fecha (más recientes primero)
+    result = result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    // Actualizar el estado con las transacciones filtradas
+    setFilteredTransactions(result);
+  }, [filters, transactions]);
+
+  const clearFilters = () => {
+    setFilters(INITIAL_TRANSACTION_FILTERS);
   };
 
-  const hasMore = visibleCount < filteredSubjects.length;
-
   return {
-    filters,
-    setFilters,
-    filteredSubjects: visibleSubjects,
-    loading,
-    showMore,
-    hasMore,
+    filters,                    // Filtros actuales
+    setFilters,                // Función para actualizar filtros
+    filteredTransactions,      // Todas las transacciones filtradas
+    clearFilters,              // Función para limpiar filtros
   };
 };

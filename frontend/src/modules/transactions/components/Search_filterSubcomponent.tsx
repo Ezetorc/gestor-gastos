@@ -1,78 +1,125 @@
-import { useState } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
+import { Box, TextField, InputAdornment, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import type { TransactionFilters } from '../types/transaction';
+import { SearchFilterLogic as useSearchFilterLogic } from './SearchFilterLogic';
 
-export const Search_filterSubcomponent = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [select1, setSelect1] = useState('');
-  const [select2, setSelect2] = useState('');
-  const [select3, setSelect3] = useState('');
+interface SearchFilterSubcomponentProps {
+  filters: TransactionFilters;
+  onFiltersChange: (filters: TransactionFilters) => void;
+  onClearFilters: () => void;
+}
+
+export const Search_filterSubcomponent = ({ 
+  filters, 
+  onFiltersChange, 
+  onClearFilters 
+}: SearchFilterSubcomponentProps) => {
+  const {
+    handleFilterChange,
+    selectFilters,
+    dateFilters,
+    estilosBoxes,
+    estilosSelect
+  } = useSearchFilterLogic(filters, onFiltersChange);
 
   return (
-    <Box sx={{ border: '1px solid #ccc', borderRadius: 2, p: 2 }}>
-      <TextField
-        fullWidth
-        variant="outlined"
-        placeholder="Buscar..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <IconButton>
-                <SearchIcon />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-      <Box mt={2} display="flex" gap={2}>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel id="select1-label">Opción 1</InputLabel>
-          <Select
-            labelId="select1-label"
-            value={select1}
-            label="Opción 1"
-            onChange={(e) => setSelect1(e.target.value)}
+    <Box sx={{ 
+      backgroundColor: '#1a1a1a', 
+      borderRadius: 3, 
+      p: 3,
+      border: '1px solid #333'
+    }}>
+      <Box mb={3}>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Buscar gastos/ingresos"
+          value={filters.search}
+          onChange={(e) => handleFilterChange('search', e.target.value)}
+          sx={estilosBoxes}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon sx={{ color: '#aaa' }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+
+      <Box display="flex" gap={2} flexWrap="wrap" alignItems="flex-end">
+        {selectFilters.map((filter: any) => (
+          <FormControl 
+            key={filter.key} 
+            variant="outlined" 
+            sx={{ 
+              ...estilosBoxes,
+              minWidth: 180,
+              flex: 1,
+            }}
           >
-            <MenuItem value={''}><em>None</em></MenuItem>
-            <MenuItem value={'option1A'}>Option 1A</MenuItem>
-            <MenuItem value={'option1B'}>Option 1B</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel id="select2-label">Opción 2</InputLabel>
-          <Select
-            labelId="select2-label"
-            value={select2}
-            label="Opción 2"
-            onChange={(e) => setSelect2(e.target.value)}
-          >
-            <MenuItem value={''}><em>None</em></MenuItem>
-            <MenuItem value={'option2A'}>Option 2A</MenuItem>
-            <MenuItem value={'option2B'}>Option 2B</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel id="select3-label">Opción 3</InputLabel>
-          <Select
-            labelId="select3-label"
-            value={select3}
-            label="Opción 3"
-            onChange={(e) => setSelect3(e.target.value)}
-          >
-            <MenuItem value={''}><em>None</em></MenuItem>
-            <MenuItem value={'option3A'}>Option 3A</MenuItem>
-            <MenuItem value={'option3B'}>Option 3B</MenuItem>
-          </Select>
-        </FormControl>
+            <InputLabel id={filter.labelId}>{filter.label}</InputLabel>
+            <Select
+              labelId={filter.labelId}
+              value={filter.value}
+              label={filter.label}
+              onChange={(e) => handleFilterChange(filter.key, e.target.value)}
+              sx={{
+                '& .MuiSelect-icon': {
+                  color: '#aaa',
+                },
+              }}
+              MenuProps={{ PaperProps: { sx: estilosSelect }}}>
+              {filter.options.map((option: any) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.value === '' ? (
+                    <em>{option.label}</em>
+                  ) : (
+                    option.label
+                  )}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ))}
+        
+        {dateFilters.map((filter: any) => (
+          <TextField
+            key={filter.key}
+            variant="outlined"
+            label={filter.label}
+            type="date"
+            value={filter.value}
+            onChange={(e) => handleFilterChange(filter.key, e.target.value)}
+            slotProps={{
+              inputLabel: { shrink: true }
+            }}
+            sx={{
+              minWidth: 100,
+              flex: 1,
+              ...estilosBoxes,
+            }}
+          />
+        ))}
+        
+        <Button
+          variant="contained"
+          onClick={onClearFilters}
+          sx={{
+            backgroundColor: '#9c27b0',
+            borderRadius: 2,
+            px: 3,
+            py: 1.5,
+            minWidth: 'auto',
+            height: 'fit-content',
+            flexShrink: 0,
+            '&:hover': {
+              backgroundColor: '#8e24aa',
+            },
+          }}
+        >
+          Limpiar Filtros
+        </Button>
       </Box>
     </Box>
   );

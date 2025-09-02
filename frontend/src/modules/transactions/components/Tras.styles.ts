@@ -13,5 +13,6 @@ export const TrasContainerSx: SxProps<Theme> = {
 export const TrasCardSx: SxProps<Theme> = (theme) => ({
   background: theme.palette.background.paper,
   color: theme.palette.text.primary,
+  subcolor: theme.palette.text.secondary,
   borderRadius: 3,
 });

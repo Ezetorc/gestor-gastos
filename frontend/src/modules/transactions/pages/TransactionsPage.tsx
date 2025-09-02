@@ -9,10 +9,11 @@ const TransactionsPage = () => {
       sx={(theme) => ({
         display: "flex",
         background: theme.palette.secondary.main,
+        minHeight: "100vh",
       })}
     >
       <SideBar />
-      <TransactionComponent/> {/* aca va el el contenedor con todos los filtros y demas */}
+      <TransactionComponent/>
     </Container>
   );
 };

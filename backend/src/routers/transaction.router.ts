@@ -1,13 +1,13 @@
-import { Router } from 'express'
-import { TransactionController } from '../controllers/transaction.controller'
-import { authMiddleware } from '../middlewares/auth.middleware'
-import { TransactionDto } from '../models/dtos/transaction.dto'
-import { dtoValidationMiddleware } from '../middlewares/dto-validation.middleware'
+import { Router } from "express";
+import { TransactionController } from "../controllers/transaction.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { TransactionDto } from "../models/dtos/transaction.dto";
+import { dtoValidationMiddleware } from "../middlewares/dto-validation.middleware";
 
-export const TransactionRouter = Router()
+export const TransactionRouter = Router();
 
 TransactionRouter.get(
-  '/',
+  "/",
   authMiddleware,
   /*
   #swagger.path = '/transactions'
@@ -54,10 +54,10 @@ TransactionRouter.get(
   }
   */
   TransactionController.getAll
-)
+);
 
 TransactionRouter.post(
-  '/',
+  "/",
   authMiddleware,
   dtoValidationMiddleware(TransactionDto),
   /*
@@ -136,4 +136,10 @@ TransactionRouter.post(
   }
   */
   TransactionController.create
+);
+
+TransactionRouter.delete(
+  "/:transactionId",
+  authMiddleware,
+  TransactionController.delete
 );

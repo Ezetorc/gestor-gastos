@@ -21,7 +21,7 @@ export class AuthService {
 
     const authorization = await this.getAuthorization(user.id);
 
-    return { authorization, user };
+    return { user, authorization };
   }
 
   static async getAuthorization(userId: number | string) {
@@ -45,7 +45,6 @@ export class AuthService {
 
     const authorization = await this.getAuthorization(newUser.id);
 
-    return { authorization, user: newUser };
+    return { user: newUser, authorization };
   }
 }
-

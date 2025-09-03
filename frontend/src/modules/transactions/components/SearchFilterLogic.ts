@@ -1,5 +1,6 @@
 import { useAvailableFilters } from '../constants/transactionFilters';
 import type { TransactionFilters } from '../types/transaction';
+import type { SxProps, Theme } from "@mui/material";
 
 export const SearchFilterLogic = (
   filters: TransactionFilters,
@@ -58,6 +59,18 @@ export const SearchFilterLogic = (
     }
   ];
 
+  const gridSectionSx: SxProps<Theme> = {
+    width:"100%",
+    display: "grid",
+    gap: 2,
+    gridTemplateColumns: {
+      sm: "repeat(1, 1fr)",
+      xs: "repeat(2, 1fr)",
+      md: "repeat(3, 1fr)",
+    },
+    flexWrap:"wrap", alignItems: "center", justifyContent: "flex-end"
+  };
+
   const estilosBoxes = {
     '& .MuiOutlinedInput-root': {
       backgroundColor: '#2d2d2d',
@@ -108,6 +121,7 @@ export const SearchFilterLogic = (
     selectFilters,
     dateFilters,
     estilosBoxes,
-    estilosSelect
+    estilosSelect,
+    gridSectionSx
   };
 };

@@ -1,4 +1,5 @@
 import { Box, TextField, InputAdornment, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import type { TransactionFilters } from '../types/transaction';
 import { SearchFilterLogic as useSearchFilterLogic } from './SearchFilterLogic';
@@ -12,19 +13,21 @@ interface SearchFilterSubcomponentProps {
 export const Search_filterSubcomponent = ({ 
   filters, 
   onFiltersChange, 
-  onClearFilters 
+  onClearFilters
 }: SearchFilterSubcomponentProps) => {
+  const theme = useTheme();
   const {
     handleFilterChange,
     selectFilters,
     dateFilters,
     estilosBoxes,
-    estilosSelect
+    estilosSelect,
+    gridSectionSx
   } = useSearchFilterLogic(filters, onFiltersChange);
 
   return (
     <Box sx={{ 
-      backgroundColor: '#1a1a1a', 
+      backgroundColor: theme.palette.background.paper, 
       borderRadius: 3, 
       p: 3,
       border: '1px solid #333'
@@ -40,14 +43,14 @@ export const Search_filterSubcomponent = ({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon sx={{ color: '#aaa' }} />
+                <SearchIcon sx={{ color: theme.palette.grey[500] }} />
               </InputAdornment>
             ),
           }}
         />
       </Box>
 
-      <Box display="flex" gap={2} flexWrap="wrap" alignItems="flex-end">
+      <Box sx={gridSectionSx} gap={2}>
         {selectFilters.map((filter: any) => (
           <FormControl 
             key={filter.key} 
@@ -66,17 +69,14 @@ export const Search_filterSubcomponent = ({
               onChange={(e) => handleFilterChange(filter.key, e.target.value)}
               sx={{
                 '& .MuiSelect-icon': {
-                  color: '#aaa',
+                  color: theme.palette.grey[500]
                 },
               }}
-              MenuProps={{ PaperProps: { sx: estilosSelect }}}>
+              MenuProps={{ PaperProps: { sx: estilosSelect } }}
+            >
               {filter.options.map((option: any) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.value === '' ? (
-                    <em>{option.label}</em>
-                  ) : (
-                    option.label
-                  )}
+                  {option.value === '' ? <em>{option.label}</em> : option.label}
                 </MenuItem>
               ))}
             </Select>
@@ -91,9 +91,7 @@ export const Search_filterSubcomponent = ({
             type="date"
             value={filter.value}
             onChange={(e) => handleFilterChange(filter.key, e.target.value)}
-            slotProps={{
-              inputLabel: { shrink: true }
-            }}
+            InputLabelProps={{ shrink: true }}
             sx={{
               minWidth: 100,
               flex: 1,

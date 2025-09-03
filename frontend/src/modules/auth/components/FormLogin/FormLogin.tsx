@@ -36,12 +36,7 @@ export function FormLogin() {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: LoginFormData) => {
-    const usuario = {
-      id: "a",
-      nombre: "pedro",
-      email: data.email,
-    };
-    login(usuario);
+    login(data)
   };
 
   return (

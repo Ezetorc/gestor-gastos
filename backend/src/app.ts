@@ -5,12 +5,17 @@ import { PORT } from "./configuration/env.configuration";
 import swaggerUi from "swagger-ui-express";
 import swaggerOutput from "../swagger_output.json";
 import { TransactionRouter } from "./routers/transaction.router";
+import cors from "cors";
 
 export const app = express();
 
 app
   .disable("x-powered-by")
   .use(jsonMiddleware())
+   .use(
+    cors({
+      origin: `http://localhost:5173`, 
+    }))
   .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOutput))
   .use("/transactions", TransactionRouter)
   .use("/auth", AuthRouter)

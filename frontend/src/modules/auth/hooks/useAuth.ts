@@ -1,38 +1,93 @@
-import { useNavigate } from "react-router-dom";
 import { useUserStore } from "@/modules/auth/stores/useUserStore";
-import { useState } from "react";
+import { useFetchApi } from "@/modules/core/hooks/useFetchApi";
+import { useNavigate } from "react-router-dom";
+import type { RegisterFormData } from "../types/register.type";
+import { useCallback, useEffect } from "react";
+
+type Credentials = {
+  email: string;
+  password: string;
+};
+
+type ApiResponse = {
+  value: string;
+};
+
 export const useAuth = () => {
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
-  // const logout = useUserStore((state) => state.logout);
+  const logoutStore = useUserStore((state) => state.logout);
 
-  const [loading, _setLoading] = useState(true);
-  const [error, _setError] = useState(false);
+  const { request, loading, error } = useFetchApi<ApiResponse>();
+
   const navigate = useNavigate();
 
-  const login = (datosUsuario: {
-    id: string;
-    nombre: string;
-    email: string;
-  }) => {
-    // Acá va la lógica para llamar a la API de login (en el mismo se usa setError y setLoading)
-    setUser(datosUsuario);
-    navigate("/");
-  };
-
-  const register = (datosUsuario: {
-    id: string;
-    nombre: string;
-    email: string;
-  }) => {
-    // Acá va la lógica para llamar a la API de registro (en el mismo se usa setError y setLoading)
-    setUser(datosUsuario);
-    navigate("/");
-  };
-
-  const handleLogout = () => {
-    //logout();
+  const logout = useCallback(() => {
+    localStorage.removeItem("token");
+    logoutStore();
     navigate("/login");
+  }, [logoutStore, navigate]); // Dependencias: solo cambia si estas cambian
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        setUser({ email: "ada", id: token, nombre: "aa" });
+        /*
+        try {
+          const data = await request("http://localhost:3000/auth/validate", {
+            method: "GET",
+            token: token, // Envía el token en los headers
+          });
+
+          setUser(data.user);
+        } catch (err) {
+          logout();
+        }
+        */
+      }
+    };
+
+    checkToken();
+  }, [request, setUser, logout]); // Dependencias del efecto
+
+  const login = async (credentials: Credentials) => {
+    try {
+      const data = await request("http://localhost:3000/auth/login", {
+        method: "POST",
+        body: credentials,
+      });
+
+      localStorage.setItem("token", data.value);
+      setUser({ email: "ada", id: data.value, nombre: "aa" });
+
+      navigate("/");
+    } catch (err) {
+      console.error("Login error:", err);
+      throw err;
+    }
+  };
+
+  const register = async (formData: RegisterFormData) => {
+    try {
+      const data = await request("http://localhost:3000/auth/register", {
+        method: "POST",
+        body: {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          image: "https://example.com/avatar.jpg",
+        },
+      });
+
+      localStorage.setItem("token", data.value);
+      setUser({ email: "ada", id: data.value, nombre: "aa" });
+
+      navigate("/");
+    } catch (err) {
+      console.error("Register error:", err);
+      throw err;
+    }
   };
 
   return {
@@ -40,8 +95,8 @@ export const useAuth = () => {
     isAuthenticated: !!user,
     login,
     register,
-    logout: handleLogout,
-    error,
+    logout,
     loading,
+    error,
   };
 };

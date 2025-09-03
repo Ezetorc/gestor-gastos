@@ -1,8 +1,8 @@
 import { useAvailableFilters } from '../constants/transactionFilters';
-import type { TransactionFilters } from '../types/transaction';
+import type { TransactionFilters, TransactionSelectFilter } from '../types/filter';
 import type { SxProps, Theme } from "@mui/material";
 
-export const SearchFilterLogic = (
+export const useSearchFilterLogic = (
   filters: TransactionFilters,
   onFiltersChange: (filters: TransactionFilters) => void
 ) => {
@@ -12,7 +12,7 @@ export const SearchFilterLogic = (
     onFiltersChange({ ...filters, [key]: value });
   };
 
-  const selectFilters = [
+  const selectFilters: TransactionSelectFilter[] = [
     {
       key: 'category' as keyof TransactionFilters,
       label: 'Categoría',
@@ -64,8 +64,8 @@ export const SearchFilterLogic = (
     display: "grid",
     gap: 2,
     gridTemplateColumns: {
-      sm: "repeat(1, 1fr)",
-      xs: "repeat(2, 1fr)",
+      xs: "repeat(1, 1fr)",
+      sm: "repeat(2, 1fr)",
       md: "repeat(3, 1fr)",
     },
     flexWrap:"wrap", alignItems: "center", justifyContent: "flex-end"

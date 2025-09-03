@@ -19,7 +19,7 @@ export default function SideBar() {
     <>
       <CssBaseline />
 
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} sx={{display:{xs:"none", sm:"block"}}}>
         <DrawerHeader sx={{display: "flex", justifyContent:open? "start": "center", gap:2, px:2.5}}>
           <Box component="p" sx={titleGastosSx(open)}>
             Control de Gastos

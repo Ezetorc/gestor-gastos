@@ -1,6 +1,6 @@
 import type { TransactionFilters } from '../types/transaction';
 import { useMemo } from 'react';
-import { useManageData } from '../hooks/manage_data';
+import { useManageData } from '../hooks/useManageData';
 
 export const INITIAL_TRANSACTION_FILTERS: TransactionFilters = {
   search: '',

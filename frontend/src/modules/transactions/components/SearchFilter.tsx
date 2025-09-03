@@ -1,8 +1,8 @@
 import { Box, TextField, InputAdornment, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
-import type { TransactionFilters } from '../types/transaction';
-import { SearchFilterLogic as useSearchFilterLogic } from './SearchFilterLogic';
+import {  useSearchFilterLogic } from '../hooks/useSearchFilterLogic';
+import type { SelectOption, TransactionDateFilter, TransactionFilters, TransactionSelectFilter } from '../types/filter';
 
 interface SearchFilterSubcomponentProps {
   filters: TransactionFilters;
@@ -51,7 +51,7 @@ export const Search_filterSubcomponent = ({
       </Box>
 
       <Box sx={gridSectionSx} gap={2}>
-        {selectFilters.map((filter: any) => (
+        {selectFilters.map((filter: TransactionSelectFilter) => (
           <FormControl 
             key={filter.key} 
             variant="outlined" 
@@ -74,7 +74,7 @@ export const Search_filterSubcomponent = ({
               }}
               MenuProps={{ PaperProps: { sx: estilosSelect } }}
             >
-              {filter.options.map((option: any) => (
+              {filter.options.map((option: SelectOption) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.value === '' ? <em>{option.label}</em> : option.label}
                 </MenuItem>
@@ -83,7 +83,7 @@ export const Search_filterSubcomponent = ({
           </FormControl>
         ))}
         
-        {dateFilters.map((filter: any) => (
+        {dateFilters.map((filter: TransactionDateFilter) => (
           <TextField
             key={filter.key}
             variant="outlined"

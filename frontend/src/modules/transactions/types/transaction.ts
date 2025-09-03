@@ -9,12 +9,4 @@ export interface Transaction {
   type: 'income' | 'expense';
 }
 
-export interface TransactionFilters {
-  search: string;
-  category: string;
-  payment_method: string;
-  type: 'all' | 'income' | 'expense';
-  date_from?: string;
-  date_to?: string;
-}
 

@@ -2,17 +2,13 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { TableVirtuoso } from 'react-virtuoso';
-import type { Transaction } from '../types/transaction';
-import { 
-  VirtuosoTableComponents,
-  fixedHeaderContent,
-  rowContent,
-  type TrasSubcomponetProps
-} from './ListaLogic.tsx';
-
-export const Lista = ({ 
+import type { Transaction } from '../types/transaction.ts';
+import { HeaderTable } from './HeaderTable.tsx';
+import { TableContent } from './TableContent.tsx';
+import { RowContent } from './RowContent.tsx';
+export const ListTransactions = ({ 
   transactions
-}: TrasSubcomponetProps) => {
+}: { transactions: Transaction[];}) => {
   if (!transactions || transactions.length === 0) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height={400}>
@@ -24,13 +20,13 @@ export const Lista = ({
   }
 
   return (
-    <Paper sx={{ height: 520, width: '100%', borderRadius: '8px', overflow: 'hidden' }}>
+   <Paper sx={{height:520,    borderRadius: 3, }}>
       <TableVirtuoso<Transaction>
       data={transactions}
-      components={VirtuosoTableComponents}
-      fixedHeaderContent={fixedHeaderContent}
-      itemContent={rowContent}
+      components={TableContent}
+      fixedHeaderContent={HeaderTable}
+      itemContent={RowContent}
       />
-    </Paper>
+</Paper>
   );
 };

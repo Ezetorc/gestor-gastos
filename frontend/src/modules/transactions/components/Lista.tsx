@@ -24,7 +24,7 @@ export const Lista = ({
   }
 
   return (
-    <Paper sx={{ height: 400, width: '100%', borderRadius: '8px', overflow: 'hidden' }}>
+    <Paper sx={{ height: 520, width: '100%', borderRadius: '8px', overflow: 'hidden' }}>
       <TableVirtuoso<Transaction>
       data={transactions}
       components={VirtuosoTableComponents}

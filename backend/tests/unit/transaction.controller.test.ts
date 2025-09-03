@@ -9,7 +9,7 @@ describe("TransactionController", () => {
     it("should delete the transaction and respond with 204 and no content", async () => {
       const requestMock = {
         user: { id: 1 },
-        params: { transactionId: 1 },
+        params: { id: 1 },
       } as any;
       const responseMock = {
         status: jest.fn().mockReturnThis(),
@@ -20,7 +20,7 @@ describe("TransactionController", () => {
       await TransactionController.delete(requestMock, responseMock);
 
       expect(transactionServiceMock.delete).toHaveBeenCalledWith(
-        requestMock.params.transactionId,
+        requestMock.params.id,
         requestMock.user.id
       );
       expect(responseMock.status).toHaveBeenCalledWith(204);

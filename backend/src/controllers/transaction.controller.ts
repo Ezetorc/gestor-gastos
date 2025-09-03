@@ -23,10 +23,10 @@ export class TransactionController {
 
   static async delete(request: Request, response: Response): Promise<void> {
     const { user } = request as AuthenticatedRequest;
-    const { transactionId } = request.params;
-    const id = parseInt(transactionId);
+    const { id } = request.params;
+    const transactionId = parseInt(id);
 
-    await TransactionService.delete(id, user.id);
+    await TransactionService.delete(transactionId, user.id);
 
     response.status(204).end();
   }

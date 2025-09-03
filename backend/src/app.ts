@@ -1,3 +1,4 @@
+import cors from "cors";
 import { errorHandlerMiddleware } from "./middlewares/error-handler.middleware";
 import express, { json as jsonMiddleware } from "express";
 import { AuthRouter } from "./routers/auth.router";
@@ -10,6 +11,13 @@ export const app = express();
 
 app
   .disable("x-powered-by")
+  .use(
+    cors({
+      origin: ["http://localhost:5173"],
+      methods: ["GET", "POST", "PATCH", "DELETE"],
+      credentials: true,
+    })
+  )
   .use(jsonMiddleware())
   .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOutput))
   .use("/transactions", TransactionRouter)

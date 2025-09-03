@@ -25,10 +25,10 @@ export const HeaderTable = () => {
       {headers.map((header, index) => (
         <TableCell
           key={index}
-          sx={(theme) => ({
+          sx={() => ({
             width:"100%",
             fontWeight: "bold",
-            backgroundColor: theme.palette.grey[500],
+            backgroundColor: '#5e076dff',
           })}
         >
           {header}

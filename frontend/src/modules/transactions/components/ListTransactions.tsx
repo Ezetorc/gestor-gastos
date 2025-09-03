@@ -20,13 +20,21 @@ export const ListTransactions = ({
   }
 
   return (
-   <Paper sx={{height:520,    borderRadius: 3, }}>
-      <TableVirtuoso<Transaction>
-      data={transactions}
-      components={TableContent}
-      fixedHeaderContent={HeaderTable}
-      itemContent={RowContent}
-      />
+<Paper
+  sx={{
+    height: 500,
+    borderRadius: 3,
+    overflow: "auto",
+    scrollbarWidth: "thin",
+    scrollbarColor: "#bb40d1ff #222",
+  }}
+>
+  <TableVirtuoso<Transaction>
+    data={transactions}
+    components={TableContent}
+    fixedHeaderContent={HeaderTable}
+    itemContent={RowContent}
+  />
 </Paper>
   );
 };

@@ -10,6 +10,7 @@ const TransactionsPage = () => {
         display: "flex",
         background: theme.palette.secondary.main,
         minHeight: "100vh",
+        minWidth: "100%",
       })}
     >
       <SideBar />

@@ -6,13 +6,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ListNav } from "../ListNav/ListNav";
 import { useDashboardLayout } from "@/modules/core/hooks/useDashboardLayout";
-import {
-  Drawer,
-  DrawerHeader,
-  titleGastosSx,
-} from "./SideBar.styles";
+import { Drawer, DrawerHeader, titleGastosSx } from "./SideBar.styles";
 
-export default function SideBar() {
+export default function SideBar({ children }) {
   const { toggleDrawer, open } = useDashboardLayout();
 
   return (
@@ -20,7 +16,13 @@ export default function SideBar() {
       <CssBaseline />
 
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader sx={{display: "flex", justifyContent:open? "start": "center", gap:2, px:2.5}}>
+        <DrawerHeader
+          sx={{
+            display: "flex",
+            justifyContent: open ? "start" : "center",
+            gap: 2,
+            px: 2.5,
+          }}>
           <Box component="p" sx={titleGastosSx(open)}>
             Control de Gastos
           </Box>
@@ -30,18 +32,14 @@ export default function SideBar() {
             aria-label="toggle drawer"
             onClick={toggleDrawer}
             edge="start"
-            sx={{margin: open? "": "auto"}}
-          >
-            {!open ? (
-               <ChevronRightIcon /> 
-            ) : (
-              <ChevronLeftIcon />
-            )}
+            sx={{ margin: open ? "" : "auto" }}>
+            {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
 
         <Divider />
         <ListNav open={open} />
+        {children}
       </Drawer>
     </>
   );

@@ -49,7 +49,7 @@ const AppRoutes = () => {
             </RouteProtected>
           }
         />
-       
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

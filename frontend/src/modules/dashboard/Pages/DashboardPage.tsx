@@ -11,6 +11,7 @@ const DashboardPage = () => {
         background: theme.palette.secondary.main,
         minHeight: '100vh',
         minWidth: '100%',
+        pt: {xs:10,sm:0}
       })}
     >
       <SideBar />

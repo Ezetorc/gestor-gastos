@@ -27,8 +27,8 @@ const TransactionComponent = () => {
   return (
     <Box sx={containerSx}>
       <Box display="flex" alignItems="center" gap={1}>
-        <FilterAltOutlinedIcon sx={{ fontSize: "2.5em" }} />
-        <Typography variant="h4">Transacciones Filtradas:</Typography>
+        <FilterAltOutlinedIcon sx={{ fontSize: "20px" }} />
+        <Typography variant="h5">Transacciones Filtradas:</Typography>
       </Box>
 
       <Search_filterSubcomponent

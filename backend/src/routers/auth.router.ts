@@ -38,10 +38,10 @@ AuthRouter.post(
         schema: {
           type: 'object',
           properties: {
-            authorization: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
+            token: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
             user: { $ref: '#/components/schemas/User' }
           },
-          required: ['authorization', 'user']
+          required: ['token', 'user']
         }
       }
     }
@@ -113,10 +113,10 @@ AuthRouter.post(
         schema: {
           type: 'object',
           properties: {
-            authorization: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
+            token: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
             user: { $ref: '#/components/schemas/User' }
           },
-          required: ['authorization', 'user']
+          required: ['token', 'user']
         }
       }
     }

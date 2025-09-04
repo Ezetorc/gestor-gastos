@@ -1,14 +1,10 @@
 import { create } from "zustand";
+import type { UserT } from "../types/user";
 
-interface User {
-  id: string;
-  nombre: string;
-  email: string;
-}
 
 interface UserStore {
-  user: User | null;
-  setUser: (user: User) => void;
+  user: UserT | null;
+  setUser: (user: UserT) => void;
   logout: () => void;
 }
 

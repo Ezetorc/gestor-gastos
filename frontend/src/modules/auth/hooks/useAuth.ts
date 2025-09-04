@@ -3,6 +3,7 @@ import { useFetchApi } from "@/modules/core/hooks/useFetchApi";
 import { useNavigate } from "react-router-dom";
 import type { RegisterFormData } from "../types/register.type";
 import { useCallback, useEffect } from "react";
+import type { UserT } from "../types/user";
 
 type Credentials = {
   email: string;
@@ -10,7 +11,10 @@ type Credentials = {
 };
 
 type ApiResponse = {
-  value: string;
+  value: {
+    token: string;
+    user: UserT;
+  };
 };
 
 export const useAuth = () => {
@@ -26,13 +30,13 @@ export const useAuth = () => {
     localStorage.removeItem("token");
     logoutStore();
     navigate("/login");
-  }, [logoutStore, navigate]); // Dependencias: solo cambia si estas cambian
+  }, [logoutStore, navigate]); 
 
   useEffect(() => {
     const checkToken = async () => {
       const token = localStorage.getItem("token");
       if (token) {
-        setUser({ email: "ada", id: token, nombre: "aa" });
+        setUser({email:"asd",id:2,image:"asd",name:"asda",password:"sda"});
         /*
         try {
           const data = await request("http://localhost:3000/auth/validate", {
@@ -49,7 +53,7 @@ export const useAuth = () => {
     };
 
     checkToken();
-  }, [request, setUser, logout]); // Dependencias del efecto
+  }, [request, setUser, logout]); 
 
   const login = async (credentials: Credentials) => {
     try {
@@ -57,9 +61,10 @@ export const useAuth = () => {
         method: "POST",
         body: credentials,
       });
+      console.log(data);
 
-      localStorage.setItem("token", data.value);
-      setUser({ email: "ada", id: data.value, nombre: "aa" });
+      localStorage.setItem("token", data.value.token);
+      setUser(data.value.user);
 
       navigate("/");
     } catch (err) {
@@ -79,9 +84,9 @@ export const useAuth = () => {
           image: "https://example.com/avatar.jpg",
         },
       });
-
-      localStorage.setItem("token", data.value);
-      setUser({ email: "ada", id: data.value, nombre: "aa" });
+      console.log(data);
+      localStorage.setItem("token", data.value.token);
+      setUser(data.value.user);
 
       navigate("/");
     } catch (err) {

@@ -6,9 +6,16 @@ import type { Transaction } from '../types/transaction.ts';
 import { HeaderTable } from './HeaderTable.tsx';
 import { TableContent } from './TableContent.tsx';
 import { RowContent } from './RowContent.tsx';
+
 export const ListTransactions = ({ 
-  transactions
-}: { transactions: Transaction[];}) => {
+  transactions,
+  handleDelete,
+  handleUpdate,
+}: { 
+  transactions: Transaction[];
+  handleDelete: (id: number) => void;
+  handleUpdate: (transaction: Transaction) => void;
+}) => {
   if (!transactions || transactions.length === 0) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height={400}>
@@ -20,21 +27,28 @@ export const ListTransactions = ({
   }
 
   return (
-<Paper
-  sx={{
-    height: 500,
-    borderRadius: 3,
-    overflow: "auto",
-    scrollbarWidth: "thin",
-    scrollbarColor: "#bb40d1ff #222",
-  }}
->
-  <TableVirtuoso<Transaction>
-    data={transactions}
-    components={TableContent}
-    fixedHeaderContent={HeaderTable}
-    itemContent={RowContent}
-  />
-</Paper>
+    <Paper
+      sx={{
+        height: 500,
+        borderRadius: 3,
+        overflow: "auto",
+        scrollbarWidth: "thin",
+        scrollbarColor: "#bb40d1ff #222",
+      }}
+    >
+      <TableVirtuoso<Transaction>
+        data={transactions}
+        components={TableContent}
+        fixedHeaderContent={HeaderTable}
+        itemContent={(index, transaction) => (
+          <RowContent 
+            index={index}
+            transaction={transaction} 
+            handleDelete={handleDelete} 
+            handleUpdate={handleUpdate} 
+          />
+        )}
+      />
+    </Paper>
   );
 };

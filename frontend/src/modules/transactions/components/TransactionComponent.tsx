@@ -5,7 +5,6 @@ import { ListTransactions } from "./ListTransactions";
 import { Search_filterSubcomponent } from "./SearchFilter";
 import { useManageData } from "../hooks/useManageData";
 import { useTransactionFilters } from "../hooks/useTransactionFilters";
-import type { Transaction } from "../types/transaction";
 
 const containerSx: SxProps<Theme> = {
   width: "100%",
@@ -17,9 +16,7 @@ const containerSx: SxProps<Theme> = {
 };
 
 const TransactionComponent = () => {
-  const { data: rawData } = useManageData();
-
-  const transactions: Transaction[] = rawData as Transaction[];
+  const { transactions, handleDelete, handleUpdate } = useManageData();
 
   const { filters, setFilters, filteredTransactions, clearFilters } =
     useTransactionFilters(transactions);
@@ -37,7 +34,11 @@ const TransactionComponent = () => {
         onClearFilters={clearFilters}
       />
 
-      <ListTransactions transactions={filteredTransactions} />
+      <ListTransactions 
+        transactions={filteredTransactions} 
+        handleDelete={handleDelete} 
+        handleUpdate={handleUpdate} 
+      />
     </Box>
   );
 };

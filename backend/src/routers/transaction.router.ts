@@ -1,13 +1,13 @@
-import { Router } from 'express'
-import { TransactionController } from '../controllers/transaction.controller'
-import { authMiddleware } from '../middlewares/auth.middleware'
-import { TransactionDto } from '../models/dtos/transaction.dto'
-import { dtoValidationMiddleware } from '../middlewares/dto-validation.middleware'
+import { Router } from "express";
+import { TransactionController } from "../controllers/transaction.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { TransactionDto } from "../models/dtos/transaction.dto";
+import { dtoValidationMiddleware } from "../middlewares/dto-validation.middleware";
 
-export const TransactionRouter = Router()
+export const TransactionRouter = Router();
 
 TransactionRouter.get(
-  '/',
+  "/",
   authMiddleware,
   /*
   #swagger.path = '/transactions'
@@ -54,10 +54,10 @@ TransactionRouter.get(
   }
   */
   TransactionController.getAll
-)
+);
 
 TransactionRouter.post(
-  '/',
+  "/",
   authMiddleware,
   dtoValidationMiddleware(TransactionDto),
   /*
@@ -136,4 +136,41 @@ TransactionRouter.post(
   }
   */
   TransactionController.create
+);
+
+TransactionRouter.delete(
+  "/:id",
+  authMiddleware,
+  /*
+  #swagger.path = '/transactions/:id'
+  #swagger.tags = ['Transactions']
+  #swagger.description = 'Deletes a transaction'
+  
+  #swagger.parameters['id'] = { description: 'Id of the transaction to delete' }
+
+  #swagger.responses[204] = {
+    description: 'Transaction successfully deleted'
+  }
+
+  #swagger.responses[404] = {
+    description: 'Transaction not found',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Transaction not found' }
+      }
+    }
+  }
+
+  #swagger.responses[401] = {
+    description: 'Unauthorized',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Unauthorized' }
+      }
+    }
+  }
+  */
+  TransactionController.delete
 );

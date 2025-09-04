@@ -21,10 +21,12 @@ export class AuthService {
 
     const token = await this.getAuthorization(user.id);
 
+
      // Usa sanitizeUser para eliminar password
     const safeUser = sanitizeUser(user);
 
     return { user: safeUser, token };
+
   }
 
   static async getAuthorization(userId: number | string) {
@@ -46,8 +48,10 @@ export class AuthService {
       
     });
 
+
     const token= await this.getAuthorization(newUser.id);
 
     return { user: sanitizeUser(newUser), token };
+
   }
 }

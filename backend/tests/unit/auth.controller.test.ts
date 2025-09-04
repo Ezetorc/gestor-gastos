@@ -8,7 +8,7 @@ jest.mock("../../src/services/auth.service");
 describe("AuthController", () => {
   describe("login", () => {
     it("should respond with 200 and token", async () => {
-      const expected = { authorization: "fake-jwt-token", user: mockUser };
+      const expected = { token: "fake-jwt-token", user: mockUser };
       const requestMock = {
         body: { email: "test@example.com", password: "123456" },
       } as any;
@@ -31,7 +31,7 @@ describe("AuthController", () => {
 
   describe("register", () => {
     it("should respond with 201 and new user ID", async () => {
-      const expected = { authorization: "fake-jwt-token", user: mockUser };
+      const expected = { token: "fake-jwt-token", user: mockUser };
       const requestMock = {
         body: {
           name: "Test User",

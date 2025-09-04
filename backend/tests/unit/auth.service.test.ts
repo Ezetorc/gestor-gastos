@@ -30,7 +30,7 @@ describe("AuthService", () => {
       );
 
       expect(typeof result).toBe("object");
-      expect(result).toHaveProperty("authorization");
+      expect(result).toHaveProperty("token");
       expect(result).toHaveProperty("user");
     });
 
@@ -99,7 +99,7 @@ describe("AuthService", () => {
         password: "hashedPassword123",
         image: data.image,
       });
-      expect(result).toHaveProperty("authorization");
+      expect(result).toHaveProperty("token");
       expect(result).toHaveProperty("user");
       expect(result.user.password).toBe("hashedPassword123");
     });

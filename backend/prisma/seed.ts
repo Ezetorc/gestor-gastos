@@ -10,7 +10,7 @@ async function main() {
       email: "alice@prisma.io",
       name: "Alice",
       password: "securepassword123",
-      image: "https://example.com/alice.jpg",
+     
     },
   });
 

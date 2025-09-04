@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/login": {
+    "/auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -20,19 +20,23 @@
         "description": "Authenticates a user and returns an authorization token",
         "responses": {
           "200": {
-            "description": "Returns JWT toke",
+            "description": "Returns JWT token and user data",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "value": {
+                    "authorization": {
                       "type": "string",
                       "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/User"
                     }
                   },
                   "required": [
-                    "accessToken"
+                    "authorization",
+                    "user"
                   ]
                 }
               }
@@ -131,34 +135,38 @@
         }
       }
     },
-    "/register": {
+    "/auth/register": {
       "post": {
         "tags": [
           "Auth"
         ],
-        "description": "Creates new user",
+        "description": "Creates new user and returns an authorization token",
         "responses": {
           "201": {
-            "description": "User successfully created",
+            "description": "User successfully created and authenticated",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "value": {
+                    "authorization": {
                       "type": "string",
-                      "example": "507f1f77bcf86cd799439011"
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/User"
                     }
                   },
                   "required": [
-                    "value"
+                    "authorization",
+                    "user"
                   ]
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid credentials",
+            "description": "Invalid input",
             "content": {
               "application/json": {
                 "schema": {
@@ -224,8 +232,7 @@
                 "required": [
                   "name",
                   "email",
-                  "password",
-                  "image"
+                  "password"
                 ],
                 "properties": {
                   "name": {
@@ -239,10 +246,6 @@
                   "password": {
                     "type": "string",
                     "example": "Password123!"
-                  },
-                  "image": {
-                    "type": "string",
-                    "example": "https://example.com/avatar.jpg"
                   }
                 }
               }

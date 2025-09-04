@@ -1,15 +1,14 @@
-import { useMemo } from 'react';
-import transactions from '../mocks/transactions.mock.json';
-
 import { useEffect, useState } from "react";
-import { Transaction } from "../types/transaction";
+import type { Transaction } from "../types/transaction";
 import transactionsData from "../mocks/transactions.mock.json";
+
+const typedTransactions: Transaction[] = transactionsData as Transaction[];
 
 export const useManageData = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
-    setTransactions(transactionsData);
+    setTransactions(typedTransactions);
   }, []);
 
   const handleDelete = (id: number) => {
@@ -24,6 +23,5 @@ export const useManageData = () => {
     );
   };
 
-
-  return { transactions, handleDelete, handleUpdate };
+  return { data: transactions, handleDelete, handleUpdate };
 };

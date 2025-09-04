@@ -1,4 +1,4 @@
-import type { TransactionFilters } from '../types/transaction';
+import type { Transaction, TransactionFilters } from '../types/transaction';
 import { useMemo } from 'react';
 import { useManageData } from '../hooks/useManageData';
 
@@ -18,7 +18,7 @@ export const useAvailableFilters = () => {
     const categoriesSet = new Set<string>();
     const paymentMethodsSet = new Set<string>();
 
-    data.forEach((transaction: any) => {
+    data.forEach((transaction: Transaction) => {
       if (transaction.category) categoriesSet.add(transaction.category);
       if (transaction.payment_method) paymentMethodsSet.add(transaction.payment_method);
     });

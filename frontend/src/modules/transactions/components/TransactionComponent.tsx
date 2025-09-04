@@ -16,7 +16,7 @@ const containerSx: SxProps<Theme> = {
 };
 
 const TransactionComponent = () => {
-  const { transactions, handleDelete, handleUpdate } = useManageData();
+  const { data: transactions, handleDelete, handleUpdate } = useManageData();
 
   const { filters, setFilters, filteredTransactions, clearFilters } =
     useTransactionFilters(transactions);

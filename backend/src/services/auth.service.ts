@@ -19,9 +19,9 @@ export class AuthService {
 
     if (!passwordsMatches) throw new BadRequestError("Invalid password");
 
-    const authorization = await this.getAuthorization(user.id);
+    const token = await this.getAuthorization(user.id);
 
-    return { user, authorization };
+    return { user, token };
   }
 
   static async getAuthorization(userId: number | string) {
@@ -43,8 +43,8 @@ export class AuthService {
       image: data.image,
     });
 
-    const authorization = await this.getAuthorization(newUser.id);
+    const token = await this.getAuthorization(newUser.id);
 
-    return { user: newUser, authorization };
+    return { user: newUser, token };
   }
 }

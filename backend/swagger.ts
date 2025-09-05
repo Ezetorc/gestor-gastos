@@ -48,6 +48,16 @@ const doc = {
           password: { type: "string", example: "tuContraSEÑA123!" },
         },
       },
+
+      User: {
+        type: "object",
+        required: ["id", "name", "email"],
+        properties: {
+          id: { type: "integer", example: 1 },
+          name: { type: "string", example: "Mabel" },
+          email: { type: "string", example: "mabel@example.com" },
+        },
+      },
     },
   },
 };
@@ -55,4 +65,4 @@ const doc = {
 const outputFile = "./swagger_output.json";
 const endpointsFiles = ["./src/routers/*.ts"];
 
-swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc)
+swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc);

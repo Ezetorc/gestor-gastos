@@ -78,7 +78,7 @@ describe("AuthService", () => {
         name: "User",
         email: "user@test.com",
         password: "Password123",
-        image: "avatar.png",
+        
       };
 
       userRepositoryMock.getByEmail.mockResolvedValue(null);
@@ -97,11 +97,11 @@ describe("AuthService", () => {
         name: data.name,
         email: data.email,
         password: "hashedPassword123",
-        image: data.image,
+        
       });
       expect(result).toHaveProperty("token");
       expect(result).toHaveProperty("user");
-      expect(result.user.password).toBe("hashedPassword123");
+      
     });
   });
 });

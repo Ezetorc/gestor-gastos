@@ -37,7 +37,10 @@ export const ListNav = ({ open }: Props) => {
         <NavLink
           key={items.id}
           to={items.link}
-          style={{ textDecoration: "none", color: "inherit" }}>
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+          }}>
           {({ isActive }) => (
             <ListItem disablePadding sx={{ display: "block" }}>
               <ListItemButton sx={listItemButton(open, isActive)}>

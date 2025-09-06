@@ -8,7 +8,11 @@ import { ListNav } from "../ListNav/ListNav";
 import { useDashboardLayout } from "@/modules/core/hooks/useDashboardLayout";
 import { Drawer, DrawerHeader, titleGastosSx } from "./SideBar.styles";
 
-export default function SideBar({ children }) {
+interface Props {
+  children: React.ReactNode;
+}
+
+export default function SideBar({ children }: Props) {
   const { toggleDrawer, open } = useDashboardLayout();
 
   return (
@@ -38,8 +42,16 @@ export default function SideBar({ children }) {
         </DrawerHeader>
 
         <Divider />
-        <ListNav open={open} />
-        {children}
+        <Box
+          sx={{
+            height: "100dvh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}>
+          <ListNav open={open} />
+          {children}
+        </Box>
       </Drawer>
     </>
   );

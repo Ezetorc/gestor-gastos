@@ -1,9 +1,7 @@
 import * as yup from "yup";
 
-export const transactionSchema = yup.object({
-  typeTransaccion: yup
-    .string()
-    .required("El tipo de transacción es obligatorio"),
+export const incomeSchema = yup.object({
+  typeTransaccion: yup.string().default("ingreso"),
   amount: yup
     .number()
     .typeError("El monto debe ser un número")
@@ -12,7 +10,6 @@ export const transactionSchema = yup.object({
     .required("El monto es obligatorio"),
   date: yup.date().required("La fecha es obligatoria"),
   category: yup.string().required("Selecciona una categoría"),
-  pay: yup.string().required("Selecciona un método de pago"),
   description: yup
     .string()
     .max(200, "La descripción maxima es de 200 caracteres")

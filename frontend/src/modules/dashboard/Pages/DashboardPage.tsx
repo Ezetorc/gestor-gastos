@@ -3,7 +3,9 @@ import { Dashboard } from "../components/Dashboard/Dashboard";
 import SideBar from "@/modules/core/components/SideBar/Sidebar";
 import Button from "@mui/material/Button";
 import React from "react";
-import Modal from "./Modal/Modal";
+import ModalDual from "./Modal/ModalDual";
+import { SnackbarProvider } from "notistack";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const DashboardPage = () => {
   const [open, setOpen] = React.useState(false);
@@ -17,11 +19,20 @@ const DashboardPage = () => {
         display: "flex",
         background: theme.palette.secondary.main,
       })}>
-      <SideBar>
-        <Button onClick={handleOpen}>Abrir Modal</Button>
-      </SideBar>
-      <Dashboard />
-      <Modal open={open} handleOpen={handleOpen} handleClose={handleClose} />
+      <SnackbarProvider>
+        <SideBar>
+          <Button
+            onClick={handleOpen}
+            sx={{
+              minHeight: 48,
+              color: "white",
+            }}>
+            <AddCircleOutlineIcon sx={{ fontSize: 30 }} />
+          </Button>
+        </SideBar>
+        <Dashboard />
+        <ModalDual open={open} handleClose={handleClose} />
+      </SnackbarProvider>
     </Container>
   );
 };

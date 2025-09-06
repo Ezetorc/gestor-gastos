@@ -38,8 +38,7 @@ const AppRoutes = () => {
             <RouteProtected>
               <DashboardPage />
             </RouteProtected>
-          }
-        />
+          }></Route>
 
         <Route
           path="/transacciones"

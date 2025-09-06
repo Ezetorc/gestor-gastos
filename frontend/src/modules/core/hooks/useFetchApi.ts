@@ -34,7 +34,7 @@ export function useFetchApi<TData = unknown, TBody = unknown>() {
         setState({ data, loading: false, error: null });
         return data;
       } catch (err: any) {
-        setState({ data: null, loading: false, error: err.message });
+        setState({ data: null, loading: false, error: err });
         throw err;
       }
     },

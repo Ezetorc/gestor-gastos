@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { UserT } from "../types/user";
+import type { UserT } from "../types/auth";
 
 
 interface UserStore {

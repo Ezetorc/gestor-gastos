@@ -2,20 +2,8 @@ import { useUserStore } from "@/modules/auth/stores/useUserStore";
 import { useFetchApi } from "@/modules/core/hooks/useFetchApi";
 import { useNavigate } from "react-router-dom";
 import type { RegisterFormData } from "../types/register.type";
+import type { ApiResponse, Credentials } from "../types/auth";
 import { useCallback, useEffect } from "react";
-import type { UserT } from "../types/user";
-
-type Credentials = {
-  email: string;
-  password: string;
-};
-
-type ApiResponse = {
-  value: {
-    token: string;
-    user: UserT;
-  };
-};
 
 export const useAuth = () => {
   const user = useUserStore((state) => state.user);
@@ -23,7 +11,7 @@ export const useAuth = () => {
   const logoutStore = useUserStore((state) => state.logout);
 
   const { request, loading, error } = useFetchApi<ApiResponse>();
-
+  
   const navigate = useNavigate();
 
   const logout = useCallback(() => {
@@ -35,20 +23,10 @@ export const useAuth = () => {
   useEffect(() => {
     const checkToken = async () => {
       const token = localStorage.getItem("token");
-      if (token) {
-        setUser({email:"asd",id:2,image:"asd",name:"asda",password:"sda"});
-        /*
-        try {
-          const data = await request("http://localhost:3000/auth/validate", {
-            method: "GET",
-            token: token, // Envía el token en los headers
-          });
+      // const user = localStorage.getItem("user"); 
 
-          setUser(data.user);
-        } catch (err) {
-          logout();
-        }
-        */
+      if (token) {
+        setUser({email:"",id:1,image:"",name:"",password:""});
       }
     };
 
@@ -64,11 +42,14 @@ export const useAuth = () => {
       console.log(data);
 
       localStorage.setItem("token", data.value.token);
+      localStorage.setItem("user", JSON.stringify(data.value.user))
+
       setUser(data.value.user);
+      console.error("Register error:", error);
 
       navigate("/");
     } catch (err) {
-      console.error("Login error:", err);
+      console.error("Login error:", error);
       throw err;
     }
   };
@@ -86,11 +67,12 @@ export const useAuth = () => {
       });
       console.log(data);
       localStorage.setItem("token", data.value.token);
+      localStorage.setItem("user", JSON.stringify(data.value.user))
       setUser(data.value.user);
 
       navigate("/");
     } catch (err) {
-      console.error("Register error:", err);
+      console.error("Register error:", error);
       throw err;
     }
   };

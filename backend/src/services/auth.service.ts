@@ -6,8 +6,8 @@ import { BadRequestError } from "../models/errors/bad-request.error";
 import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { RegisterDto } from "../models/dtos/register.dto";
-import { User } from "@prisma/client";
 import { EmailAlreadyExistsError } from "../models/errors/email-already-exists.error";
+import { sanitizeUser } from "../models/safe-user.model";
 
 export class AuthService {
   static async login(email: string, password: string) {
@@ -19,14 +19,21 @@ export class AuthService {
 
     if (!passwordsMatches) throw new BadRequestError("Invalid password");
 
-    return this.getAuthorization(user.id);
+    const token = await this.getAuthorization(user.id);
+
+
+     // Usa sanitizeUser para eliminar password
+    const safeUser = sanitizeUser(user);
+
+    return { user: safeUser, token };
+
   }
 
   static async getAuthorization(userId: number | string) {
     return jwt.sign({ userId }, JWT_SECRET, { expiresIn: "1h" });
   }
 
-  static async register(data: RegisterDto): Promise<User> {
+  static async register(data: RegisterDto) {
     const existingUser = await UserRepository.getByEmail(data.email);
 
     if (existingUser) {
@@ -38,9 +45,13 @@ export class AuthService {
       name: data.name,
       email: data.email,
       password: hashedPassword,
-      image: data.image,
+      
     });
 
-    return newUser;
+
+    const token= await this.getAuthorization(newUser.id);
+
+    return { user: sanitizeUser(newUser), token };
+
   }
 }

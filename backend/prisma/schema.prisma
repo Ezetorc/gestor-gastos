@@ -27,8 +27,7 @@ model User {
   id       Int     @id @default(autoincrement())
   name     String
   password String
-  email    String  @unique
-  image    String?
+  email    String  @unique  
 
   transactions Transaction[]
 

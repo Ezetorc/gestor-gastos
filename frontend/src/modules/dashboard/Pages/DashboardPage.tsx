@@ -3,7 +3,7 @@ import { Dashboard } from "../components/Dashboard/Dashboard";
 import SideBar from "@/modules/core/components/SideBar/Sidebar";
 import Button from "@mui/material/Button";
 import React from "react";
-import ModalDual from "./Modal/ModalDual";
+import ModalDual from "./Modal/Modal";
 import { SnackbarProvider } from "notistack";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 

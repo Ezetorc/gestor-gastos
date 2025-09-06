@@ -1,65 +1,81 @@
 import { buttonSubmitSx } from "@/modules/auth/components/FormLogin/FormLogin.styles";
-import { incomeSchema } from "@/modules/auth/schemas/income.schema";
-import type { FormValuesIncome } from "@/modules/auth/types/income.type copy";
-
+import {
+  expenseSchema,
+  type FormValuesExpense,
+} from "@/modules/dashboard/Pages/Modal/schemas/expense.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
   Button,
   FormControl,
   FormHelperText,
-  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
   TextField,
 } from "@mui/material";
-import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { type VariantType, useSnackbar } from "notistack";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import SaveIcon from "@mui/icons-material/Save";
+import { NumericFormat } from "react-number-format";
 
 interface Props {
   handleClose: () => void;
 }
 
-const FormIncome = ({ handleClose }: Props) => {
+const FormExpense = ({ handleClose }: Props) => {
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormValuesIncome>({
-    resolver: yupResolver(incomeSchema),
+  } = useForm<FormValuesExpense>({
+    resolver: yupResolver(expenseSchema),
+    defaultValues: {
+      typeTransaccion: "gasto",
+      amount: 0,
+      date: new Date(),
+      category: "",
+      pay: "",
+      description: "",
+    },
   });
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const arrayIncomes = [
+  const arrayCategoryExpenses = [
     {
-      id: "inc-1",
-      name: "Salario",
+      id: crypto.randomUUID(),
+      name: "Comida",
     },
     {
-      id: "inc-2",
-      name: "Alquiler",
+      id: crypto.randomUUID(),
+      name: "Impuesto",
     },
     {
-      id: "inc-3",
-      name: "Venta",
-    },
-    {
-      id: "inc-4",
-      name: "Regalo",
-    },
-    {
-      id: "inc-4",
-      name: "Prestamo",
+      id: crypto.randomUUID(),
+      name: "Electrodoméstico",
     },
   ];
 
-  const onSubmit: SubmitHandler<FormValuesIncome> = (data) => {
+  const arrayPaymentMethod = [
+    {
+      id: crypto.randomUUID(),
+      name: "Efectivo",
+    },
+    {
+      id: crypto.randomUUID(),
+      name: "Tarjeta de débito",
+    },
+    {
+      id: crypto.randomUUID(),
+      name: "Mercado Pago",
+    },
+  ];
+
+  const onSubmit: SubmitHandler<FormValuesExpense> = (data) => {
     const variant: VariantType = "success";
 
-    enqueueSnackbar("Ingreso Guardado", { variant });
+    enqueueSnackbar("Gasto Guardado", { variant });
     handleClose();
 
     console.log("Formulario enviado:", data);
@@ -89,30 +105,37 @@ const FormIncome = ({ handleClose }: Props) => {
               {...field}
               sx={{ display: "none" }}
               type="string"
+              defaultValue="gasto"
               label="typeTransaccion"
-              InputLabelProps={{ shrink: true }}
+              slotProps={{ inputLabel: { shrink: true } }}
               error={!!errors.typeTransaccion}
               helperText={errors.typeTransaccion?.message}
             />
           )}
         />
 
-        {/* Monto */}
+        {/* Monto con formato monetario */}
         <Controller
           name="amount"
           control={control}
-          render={({ field }) => (
-            <TextField
+          render={({ field: { onChange, value, ...field } }) => (
+            <NumericFormat
               {...field}
-              label="Monto"
-              type="number"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">$</InputAdornment>
-                ),
+              value={value}
+              onValueChange={(values) => {
+                onChange(values.floatValue);
               }}
+              thousandSeparator={true}
+              decimalSeparator="."
+              decimalScale={2}
+              fixedDecimalScale={true}
+              allowNegative={false}
+              prefix="$"
+              customInput={TextField}
+              label="Monto"
               error={!!errors.amount}
               helperText={errors.amount?.message}
+              fullWidth
             />
           )}
         />
@@ -124,11 +147,9 @@ const FormIncome = ({ handleClose }: Props) => {
           render={({ field }) => (
             <TextField
               {...field}
-              id="Fecha"
               type="date"
               label="Fecha"
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
+              slotProps={{ inputLabel: { shrink: true } }}
               error={!!errors.date}
               helperText={errors.date?.message}
             />
@@ -136,14 +157,14 @@ const FormIncome = ({ handleClose }: Props) => {
         />
 
         <FormControl error={!!errors.category}>
-          <InputLabel id="Categorias">Categorías</InputLabel>
+          <InputLabel>Categorías</InputLabel>
           <Controller
             name="category"
             defaultValue=""
             control={control}
             render={({ field }) => (
-              <Select {...field} label="Categorías" labelId="Categorias">
-                {arrayIncomes.map((option) => (
+              <Select {...field} label="Categorías">
+                {arrayCategoryExpenses.map((option) => (
                   <MenuItem key={option.id} value={option.name}>
                     {option.name}
                   </MenuItem>
@@ -152,6 +173,25 @@ const FormIncome = ({ handleClose }: Props) => {
             )}
           />
           <FormHelperText>{errors.category?.message}</FormHelperText>
+        </FormControl>
+
+        <FormControl error={!!errors.pay}>
+          <InputLabel>Método de Pago</InputLabel>
+          <Controller
+            name="pay"
+            defaultValue=""
+            control={control}
+            render={({ field }) => (
+              <Select {...field} label="Pagos">
+                {arrayPaymentMethod.map((option) => (
+                  <MenuItem key={option.id} value={option.name}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+          />
+          <FormHelperText>{errors.pay?.message}</FormHelperText>
         </FormControl>
 
         {/* Descripción */}
@@ -178,4 +218,4 @@ const FormIncome = ({ handleClose }: Props) => {
     </>
   );
 };
-export default FormIncome;
+export default FormExpense;

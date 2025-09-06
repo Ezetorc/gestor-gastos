@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
-
 import {
   ButtonGroup,
   Card,
@@ -14,21 +13,9 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
-import FormExpense from "./FormExpense";
-import FormIncome from "./FormIncome";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-  overflowY: "auto",
-};
+import FormExpense from "./components/FormExpense/FormExpense";
+import FormIncome from "./components/FormIncome/FormIncome";
+import { buttonExpense, buttonIncome, cardSx, modalSx } from "./Modal.styles";
 
 interface Props {
   open: boolean;
@@ -36,16 +23,12 @@ interface Props {
 }
 
 export default function TransitionsModal({ open, handleClose }: Props) {
-  const [typeForm, setTypeForm] = useState("");
+  const [typeForm, setTypeForm] = useState("gasto");
 
   const [toggleColor, setToggleColor] = useState(false);
 
   const handleShowForm = (modal: string) => {
-    if (modal == "ingreso") {
-      setToggleColor(true);
-    } else {
-      setToggleColor(false);
-    }
+    setToggleColor(modal === "ingreso");
 
     setTypeForm(modal);
   };
@@ -65,13 +48,8 @@ export default function TransitionsModal({ open, handleClose }: Props) {
           },
         }}>
         <Fade in={open}>
-          <Box sx={style}>
-            <Card
-              sx={{
-                maxWidth: 345,
-                maxHeight: { xs: "500px", md: "800px" },
-                overflowY: { xs: "auto", md: "hidden" },
-              }}>
+          <Box sx={modalSx}>
+            <Card sx={cardSx}>
               <CardHeader
                 action={
                   <IconButton aria-label="settings" onClick={handleClose}>
@@ -89,10 +67,7 @@ export default function TransitionsModal({ open, handleClose }: Props) {
                   fullWidth
                   sx={{ border: "1px solid gray" }}>
                   <Button
-                    sx={{
-                      backgroundColor: !toggleColor ? "red" : "",
-                      color: "white",
-                    }}
+                    sx={buttonExpense(toggleColor)}
                     onClick={() => {
                       handleShowForm("gasto");
                     }}>
@@ -100,10 +75,7 @@ export default function TransitionsModal({ open, handleClose }: Props) {
                   </Button>
 
                   <Button
-                    sx={{
-                      backgroundColor: toggleColor ? "green" : "",
-                      color: "white",
-                    }}
+                    sx={buttonIncome(toggleColor)}
                     onClick={() => {
                       handleShowForm("ingreso");
                     }}>

@@ -7,6 +7,75 @@ import { dtoValidationMiddleware } from "../middlewares/dto-validation.middlewar
 export const TransactionRouter = Router();
 
 TransactionRouter.get(
+  "/:id",
+  authMiddleware,
+  /*
+  #swagger.path = '/transactions/:id'
+  #swagger.tags = ['Transactions']
+  #swagger.description = 'Returns a transaction'
+
+  #swagger.parameters['id'] = { description: 'Id of the transaction to get' }
+
+  #swagger.responses[200] = {
+    description: 'A transaction',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            value: { $ref: '#/components/schemas/Transaction' }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #swagger.responses[400] = {
+    description: 'Transaction ID is missing',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Transaction ID is missing' }
+      }
+    }
+  }
+
+  #swagger.responses[400] = {
+    description: 'Invalid transaction ID',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Invalid transaction ID' }
+      }
+    }
+  }
+
+  #swagger.responses[404] = {
+    description: 'Transaction not found',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Transaction not found' }
+      }
+    }
+  }
+
+  #swagger.responses[401] = {
+    description: 'Unauthorized',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Unauthorized' }
+      }
+    }
+  }
+    
+  */
+  TransactionController.getById
+);
+
+TransactionRouter.get(
   "/",
   authMiddleware,
   /*

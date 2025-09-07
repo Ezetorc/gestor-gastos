@@ -8,18 +8,19 @@ import {
 import { NavLink } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import type { DashBoardIcons } from "@/modules/dashboard/types/dashboard-icons";
-import { listItemButton, listItemIcon } from "../SideBar/SideBar.styles";
+import { listItemButton, listItemIcon, listMobile } from "../SideBar/SideBar.styles";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 
 interface Props {
   open: boolean;
+  isMobile?: boolean;
 }
 
-export const ListNav = ({ open }: Props) => {
+export const ListNav = ({ open, isMobile = false }: Props) => {
   const dashBoardIcons: DashBoardIcons[] = [
     {
       id: "1",
-      name: "DashBoard",
+      name: "Dashboard",
       icon: <DashboardIcon />,
       link: "/",
     },
@@ -32,7 +33,7 @@ export const ListNav = ({ open }: Props) => {
   ];
 
   return (
-    <List>
+    <List sx={isMobile ? listMobile : {}}>
       {dashBoardIcons.map((items) => (
         <NavLink
           key={items.id}
@@ -43,7 +44,7 @@ export const ListNav = ({ open }: Props) => {
           }}>
           {({ isActive }) => (
             <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton sx={listItemButton(open, isActive)}>
+              <ListItemButton sx={listItemButton(open, isActive, isMobile)}>
                 <ListItemIcon sx={listItemIcon(open, isActive)}>
                   {items.icon}
                 </ListItemIcon>
@@ -54,6 +55,7 @@ export const ListNav = ({ open }: Props) => {
                       transition: "opacity 0.3s ease",
                     },
                     open ? { opacity: 1 } : { opacity: 0 },
+                    isMobile ? { display: "none" } : {}
                   ]}
                 />
               </ListItemButton>

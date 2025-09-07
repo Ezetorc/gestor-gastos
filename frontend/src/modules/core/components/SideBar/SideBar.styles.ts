@@ -98,7 +98,8 @@ export const titleGastosSx = (open: boolean): SxProps<Theme> => ({
 //Estilos css ListNav
 export const listItemButton = (
   open: boolean,
-  isActive: boolean
+  isActive: boolean,
+  isMobile: boolean = false
 ): SxProps<Theme> => ({
   minHeight: 48,
   px: 2.5,
@@ -109,8 +110,12 @@ export const listItemButton = (
   "&:hover": {
     backgroundColor: isActive ? "primary.dark" : "action.hover",
   },
+<<<<<<< HEAD
 
   ...(open ? { justifyContent: "initial" } : { justifyContent: "center" }),
+=======
+  ...(open && !isMobile ? { justifyContent: "initial" } : { justifyContent: "center" }),
+>>>>>>> 840a87f9947cbe86bd22dc1de3ad07c299985e9a
 });
 
 export const listItemIcon = (open: boolean, isActive: boolean) => ({
@@ -120,3 +125,10 @@ export const listItemIcon = (open: boolean, isActive: boolean) => ({
   color: isActive ? "white" : "inherit",
   ...(open ? { mr: 3 } : { mr: "auto" }),
 });
+
+export const listMobile: SxProps<Theme> = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+};

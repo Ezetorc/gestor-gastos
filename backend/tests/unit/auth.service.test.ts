@@ -24,12 +24,14 @@ describe("AuthService", () => {
       userRepositoryMock.getByEmail.mockResolvedValue(mockUser);
       bcryptMock.compare.mockResolvedValue(true);
 
-      const authorization = await AuthService.login(
+      const result = await AuthService.login(
         mockUser.email,
         mockUser._unhashedPassword
       );
 
-      expect(typeof authorization).toBe("string");
+      expect(typeof result).toBe("object");
+      expect(result).toHaveProperty("token");
+      expect(result).toHaveProperty("user");
     });
 
     it("should throw a 'NotFoundError' when user not found", async () => {
@@ -76,7 +78,7 @@ describe("AuthService", () => {
         name: "User",
         email: "user@test.com",
         password: "Password123",
-        image: "avatar.png",
+        
       };
 
       userRepositoryMock.getByEmail.mockResolvedValue(null);
@@ -95,10 +97,11 @@ describe("AuthService", () => {
         name: data.name,
         email: data.email,
         password: "hashedPassword123",
-        image: data.image,
+        
       });
-      expect(result).toHaveProperty("id");
-      expect(result.password).toBe("hashedPassword123");
+      expect(result).toHaveProperty("token");
+      expect(result).toHaveProperty("user");
+      
     });
   });
 });

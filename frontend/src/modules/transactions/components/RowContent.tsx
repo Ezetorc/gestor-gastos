@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TableCell, IconButton, TextField, Select, MenuItem} from "@mui/material";
+import { TableCell, IconButton, TextField, Select, MenuItem } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
@@ -22,6 +22,7 @@ export const RowContent: React.FC<RowContentProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValues, setEditValues] = useState<Transaction>(transaction);
+
   const onSave = () => {
     handleUpdate(editValues);
     setIsEditing(false);
@@ -34,8 +35,8 @@ export const RowContent: React.FC<RowContentProps> = ({
 
   return (
     <>
+      {/* Columna de índice (#) */}
       <TableCell>{index + 1}</TableCell>
-      <TableCell>{transaction.id}</TableCell>
 
       {isEditing ? (
         <>
@@ -77,6 +78,15 @@ export const RowContent: React.FC<RowContentProps> = ({
               )}
             </TableCell>
           ))}
+          {/* Columna Acciones */}
+          <TableCell sx={{align:{sm: "center", xs: "right"}}}>
+            <IconButton onClick={onSave} size="medium" color="primary">
+              <SaveIcon />
+            </IconButton>
+            <IconButton onClick={onCancel} size="medium" color="error">
+              <CloseIcon />
+            </IconButton>
+          </TableCell>
         </>
       ) : (
         <>
@@ -85,34 +95,20 @@ export const RowContent: React.FC<RowContentProps> = ({
               {render ? render(transaction[key], transaction) : transaction[key]}
             </TableCell>
           ))}
-        </>
-      )}
-
-      {/* Botones */}
-      <TableCell>
-        {isEditing ? (
-          <>
-            <IconButton onClick={onSave} size="small" color="primary">
-              <SaveIcon />
-            </IconButton>
-            <IconButton onClick={onCancel} size="small" color="error">
-              <CloseIcon />
-            </IconButton>
-          </>
-        ) : (
-          <>
-            <IconButton onClick={() => setIsEditing(true)} size="small">
+          {/* Columna Acciones */}
+          <TableCell sx={{align:{sm: "center", xs: "right"}}}>
+            <IconButton onClick={() => setIsEditing(true)} size="medium">
               <EditIcon />
             </IconButton>
             <IconButton
               onClick={() => handleDelete(transaction.id)}
-              size="small"
+              size="medium"
             >
               <DeleteIcon />
             </IconButton>
-          </>
-        )}
-      </TableCell>
+          </TableCell>
+        </>
+      )}
     </>
   );
 };

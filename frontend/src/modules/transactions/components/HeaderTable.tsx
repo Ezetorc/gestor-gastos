@@ -18,7 +18,7 @@ export const HeaderTable = () => {
       description: "Descripción",
       type: "Tipo",
     };
-    return ["#", ...keys.map((key) => headerMap[key] || key)];
+    return [...keys.map((key) => headerMap[key] || key), "Acciones"];
   }, [data]);
   return (
     <TableRow>

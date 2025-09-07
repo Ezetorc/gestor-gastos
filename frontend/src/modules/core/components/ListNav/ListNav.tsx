@@ -27,7 +27,7 @@ export const ListNav = ({ open }: Props) => {
       id: "2",
       name: "Transacciones",
       icon: <CurrencyExchangeIcon />,
-      link: "/transacciones",
+      link: "transacciones",
     },
   ];
 

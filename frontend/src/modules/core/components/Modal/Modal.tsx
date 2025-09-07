@@ -13,8 +13,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
-import FormExpense from "./components/FormExpense/FormExpense";
-import FormIncome from "./components/FormIncome/FormIncome";
+import FormExpense from "../Form/Form";
 import { buttonExpense, buttonIncome, cardSx, modalSx } from "./Modal.styles";
 
 interface Props {
@@ -23,14 +22,10 @@ interface Props {
 }
 
 export default function TransitionsModal({ open, handleClose }: Props) {
-  const [typeForm, setTypeForm] = useState("gasto");
-
   const [toggleColor, setToggleColor] = useState(false);
 
   const handleShowForm = (modal: string) => {
     setToggleColor(modal === "ingreso");
-
-    setTypeForm(modal);
   };
 
   return (
@@ -82,12 +77,7 @@ export default function TransitionsModal({ open, handleClose }: Props) {
                     Ingreso
                   </Button>
                 </ButtonGroup>
-
-                {typeForm == "gasto" ? (
-                  <FormExpense handleClose={handleClose} />
-                ) : (
-                  <FormIncome handleClose={handleClose} />
-                )}
+                <FormExpense handleClose={handleClose} />
               </CardContent>
             </Card>
           </Box>

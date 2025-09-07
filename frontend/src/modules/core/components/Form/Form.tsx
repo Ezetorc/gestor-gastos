@@ -2,7 +2,7 @@ import { buttonSubmitSx } from "@/modules/auth/components/FormLogin/FormLogin.st
 import {
   expenseSchema,
   type FormValuesExpense,
-} from "@/modules/dashboard/Pages/Modal/schemas/expense.schema";
+} from "@/modules/core/schemas/expense.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,

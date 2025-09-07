@@ -3,7 +3,7 @@ import { Dashboard } from "../components/Dashboard/Dashboard";
 import SideBar from "@/modules/core/components/SideBar/Sidebar";
 import Button from "@mui/material/Button";
 import React from "react";
-import ModalDual from "./Modal/Modal";
+import Modal from "../../core/components/Modal/Modal";
 import { SnackbarProvider } from "notistack";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
@@ -31,7 +31,7 @@ const DashboardPage = () => {
           </Button>
         </SideBar>
         <Dashboard />
-        <ModalDual open={open} handleClose={handleClose} />
+        <Modal open={open} handleClose={handleClose} />
       </SnackbarProvider>
     </Container>
   );

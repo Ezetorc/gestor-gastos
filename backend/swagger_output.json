@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/login": {
+    "/auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -26,7 +26,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "authorization": {
+                    "token": {
                       "type": "string",
                       "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                     },
@@ -35,7 +35,7 @@
                     }
                   },
                   "required": [
-                    "authorization",
+                    "token",
                     "user"
                   ]
                 }
@@ -135,7 +135,7 @@
         }
       }
     },
-    "/register": {
+    "/auth/register": {
       "post": {
         "tags": [
           "Auth"
@@ -149,13 +149,17 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "value": {
+                    "token": {
                       "type": "string",
-                      "example": "507f1f77bcf86cd799439011"
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/User"
                     }
                   },
                   "required": [
-                    "value"
+                    "token",
+                    "user"
                   ]
                 }
               }
@@ -242,10 +246,6 @@
                   "password": {
                     "type": "string",
                     "example": "Password123!"
-                  },
-                  "image": {
-                    "type": "string",
-                    "example": "https://example.com/avatar.jpg"
                   }
                 }
               }
@@ -547,6 +547,72 @@
           }
         }
       }
+    },
+    "/transactions/:id": {
+      "delete": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "Deletes a transaction",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "description": "Id of the transaction to delete",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Transaction successfully deleted"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Transaction not found"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -741,6 +807,17 @@
             "type": "string",
             "example": "object"
           },
+          "required": {
+            "type": "array",
+            "example": [
+              "id",
+              "name",
+              "email"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
           "properties": {
             "type": "object",
             "properties": {
@@ -749,7 +826,7 @@
                 "properties": {
                   "type": {
                     "type": "string",
-                    "example": "number"
+                    "example": "integer"
                   },
                   "example": {
                     "type": "number",
@@ -766,20 +843,7 @@
                   },
                   "example": {
                     "type": "string",
-                    "example": "Juan Pérez"
-                  }
-                }
-              },
-              "password": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "myPassWORD123!"
+                    "example": "Mabel"
                   }
                 }
               },
@@ -792,34 +856,10 @@
                   },
                   "example": {
                     "type": "string",
-                    "example": "juan.perez@email.com"
-                  }
-                }
-              },
-              "image": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "https://example.com/avatar.jpg"
+                    "example": "mabel@example.com"
                   }
                 }
               }
-            }
-          },
-          "required": {
-            "type": "array",
-            "example": [
-              "id",
-              "name",
-              "email"
-            ],
-            "items": {
-              "type": "string"
             }
           }
         }

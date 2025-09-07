@@ -11,7 +11,7 @@ export class TransactionRepository {
     const currentPage = args.page < 1 ? 1 : args.page;
     const skip = (currentPage - 1) * args.amount;
 
-    return prisma.transaction.findMany({
+    return await prisma.transaction.findMany({
       where: { userId: args.userId },
       skip,
       take: args.amount,
@@ -19,20 +19,28 @@ export class TransactionRepository {
     });
   }
 
-  static async create(data: TransactionDto & { userId: number }): Promise<Transaction> {
-      return await prisma.transaction.create({
-        data: {
-          name: data.name,
-          userId:data.userId,
-          amount:data.amount,
-          date:data.date,
-          category:data.category,
-          paymentMethod:data.paymentMethod,
-          description:data.description,
-          type:data.type
-          
+  static async getById(id: number): Promise<Transaction | null> {
+    return await prisma.transaction.findUnique({ where: { id } });
+  }
 
-        },
-      });
-    }
+  static async create(
+    data: TransactionDto & { userId: number }
+  ): Promise<Transaction> {
+    return await prisma.transaction.create({
+      data: {
+        name: data.name,
+        userId: data.userId,
+        amount: data.amount,
+        date: data.date,
+        category: data.category,
+        paymentMethod: data.paymentMethod,
+        description: data.description,
+        type: data.type,
+      },
+    });
+  }
+
+  static async delete(id: number): Promise<Transaction> {
+    return await prisma.transaction.delete({ where: { id } });
+  }
 }

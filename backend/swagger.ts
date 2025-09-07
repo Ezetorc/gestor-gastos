@@ -48,16 +48,15 @@ const doc = {
           password: { type: "string", example: "tuContraSEÑA123!" },
         },
       },
+
       User: {
         type: "object",
-        properties: {
-          id: { type: "number", example: 1 },
-          name: { type: "string", example: "Juan Pérez" },
-          password: { type: "string", example: "myPassWORD123!" },
-          email: { type: "string", example: "juan.perez@email.com" },
-          image: { type: "string", example: "https://example.com/avatar.jpg" },
-        },
         required: ["id", "name", "email"],
+        properties: {
+          id: { type: "integer", example: 1 },
+          name: { type: "string", example: "Mabel" },
+          email: { type: "string", example: "mabel@example.com" },
+        },
       },
     },
   },

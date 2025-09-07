@@ -14,5 +14,5 @@ export class RegisterDto {
   })
   public password!: string;
 
-  public image!: string;
+  
 }

@@ -10,7 +10,7 @@ AuthRouter.post(
   "/login",
   dtoValidationMiddleware(LoginDto),
   /*
-  #swagger.path = '/login'
+  #swagger.path = '/auth/login'
   #swagger.tags = ['Auth']
   #swagger.description = 'Authenticates a user and returns an authorization token'
    #swagger.method = 'post'
@@ -38,10 +38,10 @@ AuthRouter.post(
         schema: {
           type: 'object',
           properties: {
-            authorization: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
+            token: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
             user: { $ref: '#/components/schemas/User' }
           },
-          required: ['authorization', 'user']
+          required: ['token', 'user']
         }
       }
     }
@@ -84,7 +84,7 @@ AuthRouter.post(
   "/register",
   dtoValidationMiddleware(RegisterDto),
   /*
-  #swagger.path = '/register'
+  #swagger.path = '/auth/register'
   #swagger.tags = ['Auth']
   #swagger.description = 'Creates new user and returns an authorization token'
 
@@ -99,7 +99,7 @@ AuthRouter.post(
             name: { type: 'string', example: 'Juan Pérez' },
             email: { type: 'string', example: 'juan.perez@email.com' },
             password: { type: 'string', example: 'Password123!' },
-            image: { type: 'string', example: 'https://example.com/avatar.jpg' }
+            
           }
         }
       }
@@ -113,10 +113,10 @@ AuthRouter.post(
         schema: {
           type: 'object',
           properties: {
-            authorization: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
+            token: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' },
             user: { $ref: '#/components/schemas/User' }
           },
-          required: ['authorization', 'user']
+          required: ['token', 'user']
         }
       }
     }

@@ -6,8 +6,10 @@ export const useAuth = () => {
   const setUser = useUserStore((state) => state.setUser);
   // const logout = useUserStore((state) => state.logout);
 
-  const [loading, _setLoading] = useState(true);
-  const [error, _setError] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const login = (datosUsuario: {

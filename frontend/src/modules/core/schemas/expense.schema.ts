@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const expenseSchema = yup.object({
-  typeTransaccion: yup.string().default("gasto"),
+  typeTransation: yup.string().required("El tipo de gasto es requerido"),
   amount: yup
     .number()
     .typeError("El monto debe ser un número válido")

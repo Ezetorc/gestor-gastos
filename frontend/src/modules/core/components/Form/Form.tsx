@@ -8,9 +8,13 @@ import {
   Box,
   Button,
   FormControl,
+  FormControlLabel,
   FormHelperText,
+  FormLabel,
   InputLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   TextField,
 } from "@mui/material";
@@ -18,6 +22,7 @@ import { type VariantType, useSnackbar } from "notistack";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import SaveIcon from "@mui/icons-material/Save";
 import { NumericFormat } from "react-number-format";
+import { useState } from "react";
 
 interface Props {
   handleClose: () => void;
@@ -31,7 +36,7 @@ const FormExpense = ({ handleClose }: Props) => {
   } = useForm<FormValuesExpense>({
     resolver: yupResolver(expenseSchema),
     defaultValues: {
-      typeTransaccion: "gasto",
+      typeTransation: "",
       amount: 0,
       date: new Date(),
       category: "",
@@ -40,6 +45,7 @@ const FormExpense = ({ handleClose }: Props) => {
     },
   });
 
+  const [toggleColor, setToggleColor] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const arrayCategoryExpenses = [
@@ -75,7 +81,9 @@ const FormExpense = ({ handleClose }: Props) => {
   const onSubmit: SubmitHandler<FormValuesExpense> = (data) => {
     const variant: VariantType = "success";
 
-    enqueueSnackbar("Gasto Guardado", { variant });
+    const upperCaseTypeTransation = data.typeTransation.toUpperCase();
+
+    enqueueSnackbar(`${upperCaseTypeTransation}  Guardado`, { variant });
     handleClose();
 
     console.log("Formulario enviado:", data);
@@ -89,16 +97,61 @@ const FormExpense = ({ handleClose }: Props) => {
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
         sx={{
-          "& .MuiTextField-root": { marginY: 2, width: "auto" },
-          "& .MuiSelect-root": { marginY: 2, width: "auto" },
-          "& .MuiRadioGroup-root": { marginY: 2, width: "auto" },
+          "& .MuiTextField-root": { marginY: 1, width: "auto" },
+          "& .MuiSelect-root": { marginY: 1, width: "auto" },
+          "& .MuiRadioGroup-root": { marginY: 1, width: "auto" },
 
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-around",
         }}>
+        <FormControl error={!!errors.typeTransation}>
+          <FormLabel>Tipo de Transacción</FormLabel>
+          <Controller
+            name="typeTransation"
+            control={control}
+            render={({ field }) => (
+              <RadioGroup row {...field}>
+                <FormControlLabel
+                  value="gasto"
+                  control={<Radio sx={{ display: "none" }} />}
+                  label="Gasto"
+                  sx={{
+                    width: "44%",
+                    m: 1,
+                    p: 1,
+                    borderRadius: 1,
+                    border: "1px solid gray",
+                    backgroundColor: !toggleColor ? "red" : "",
+                    display: "inline-flex",
+                    justifyContent: "center",
+                  }}
+                  onClick={() => setToggleColor(false)}
+                />
+                <FormControlLabel
+                  value="ingreso"
+                  control={<Radio sx={{ display: "none" }} />}
+                  label="Ingreso"
+                  sx={{
+                    width: "44%",
+                    m: 1,
+                    p: 1,
+                    borderRadius: 1,
+                    border: "1px solid gray",
+                    backgroundColor: toggleColor ? "green" : "",
+                    display: "inline-flex",
+                    justifyContent: "center",
+                  }}
+                  onClick={() => setToggleColor(true)}
+                />
+              </RadioGroup>
+            )}
+          />
+          <FormHelperText>{errors.typeTransation?.message}</FormHelperText>
+        </FormControl>
+
         <Controller
-          name="typeTransaccion"
+          name="typeTransation"
           control={control}
           render={({ field }) => (
             <TextField
@@ -108,8 +161,8 @@ const FormExpense = ({ handleClose }: Props) => {
               defaultValue="gasto"
               label="typeTransaccion"
               slotProps={{ inputLabel: { shrink: true } }}
-              error={!!errors.typeTransaccion}
-              helperText={errors.typeTransaccion?.message}
+              error={!!errors.typeTransation}
+              helperText={errors.typeTransation?.message}
             />
           )}
         />

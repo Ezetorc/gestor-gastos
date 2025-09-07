@@ -22,6 +22,7 @@ export default function SideBar({ children }: Props) {
       <AppBar position="fixed" sx={{ display: { xs: "block", sm: "none" } }}>
         <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
           <ListNav open={open} isMobile={true} />
+          {children}
         </Toolbar>
       </AppBar>
 

@@ -2,9 +2,7 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
 import {
-  ButtonGroup,
   Card,
   CardContent,
   CardHeader,
@@ -12,9 +10,8 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
-import FormExpense from "../Form/Form";
-import { buttonExpense, buttonIncome, cardSx, modalSx } from "./Modal.styles";
+import Form from "../Form/Form";
+import { cardSx, modalSx } from "./Modal.styles";
 
 interface Props {
   open: boolean;
@@ -22,12 +19,6 @@ interface Props {
 }
 
 export default function TransitionsModal({ open, handleClose }: Props) {
-  const [toggleColor, setToggleColor] = useState(false);
-
-  const handleShowForm = (modal: string) => {
-    setToggleColor(modal === "ingreso");
-  };
-
   return (
     <div>
       <Modal
@@ -57,7 +48,7 @@ export default function TransitionsModal({ open, handleClose }: Props) {
               <Divider />
 
               <CardContent>
-                <ButtonGroup
+                {/*<ButtonGroup
                   variant="outlined"
                   fullWidth
                   sx={{ border: "1px solid gray" }}>
@@ -76,8 +67,8 @@ export default function TransitionsModal({ open, handleClose }: Props) {
                     }}>
                     Ingreso
                   </Button>
-                </ButtonGroup>
-                <FormExpense handleClose={handleClose} />
+                </ButtonGroup>*/}
+                <Form handleClose={handleClose} />
               </CardContent>
             </Card>
           </Box>

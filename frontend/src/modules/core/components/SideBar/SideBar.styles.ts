@@ -47,7 +47,6 @@ export const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-
   variants: [
     {
       props: ({ open }) => open,
@@ -70,7 +69,6 @@ export const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
-
   variants: [
     {
       props: ({ open }) => open,
@@ -89,6 +87,7 @@ export const Drawer = styled(MuiDrawer, {
   ],
 }));
 
+
 export const titleGastosSx = (open: boolean): SxProps<Theme> => ({
   display: open ? "flex" : "none",
   justifyContent: "start",
@@ -106,16 +105,10 @@ export const listItemButton = (
   transition: "all 0.3s ease",
   backgroundColor: isActive ? "primary.main" : "transparent",
   color: isActive ? "white" : "inherit",
-
   "&:hover": {
     backgroundColor: isActive ? "primary.dark" : "action.hover",
   },
-<<<<<<< HEAD
-
-  ...(open ? { justifyContent: "initial" } : { justifyContent: "center" }),
-=======
   ...(open && !isMobile ? { justifyContent: "initial" } : { justifyContent: "center" }),
->>>>>>> 840a87f9947cbe86bd22dc1de3ad07c299985e9a
 });
 
 export const listItemIcon = (open: boolean, isActive: boolean) => ({

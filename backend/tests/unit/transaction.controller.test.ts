@@ -4,6 +4,7 @@ import { transactionServiceMock } from "./../mocks/transaction.service.mock";
 import { describe, expect, it, jest } from "@jest/globals";
 import { BadRequestError } from "../../src/models/errors/bad-request.error";
 import { UnauthorizedError } from "../../src/models/errors/unauthorized.error";
+import { transactionRepositoryMock } from "../mocks/transaction.repository.mock";
 
 jest.mock("../../src/services/transaction.service");
 

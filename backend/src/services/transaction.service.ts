@@ -3,6 +3,7 @@ import { TransactionRepository } from "../repositories/transaction.repository";
 import { TransactionDto } from "../models/dtos/transaction.dto";
 import { NotFoundError } from "../models/errors/not-found.error";
 import { UnauthorizedError } from "../models/errors/unauthorized.error";
+import { PaginatedResult } from "../models/paginated-result.model";
 
 export class TransactionService {
   static async create(
@@ -17,6 +18,26 @@ export class TransactionService {
     const transaction = await TransactionRepository.create(transactionData);
 
     return transaction;
+  }
+
+  static async getAllOfUser(args: {
+    userId: number;
+    page: number;
+    amount: number;
+  }): Promise<PaginatedResult<Transaction>> {
+    const requestedAmount = args.amount;
+    const queryAmount = requestedAmount + 1;
+    const currentPage = args.page < 1 ? 1 : args.page;
+    const skip = (currentPage - 1) * requestedAmount;
+    const transactions = await TransactionRepository.getAllOfUser({
+      userId: args.userId,
+      skip,
+      amount: queryAmount,
+    });
+    const hasNextPage = transactions.length > requestedAmount;
+    const data = transactions.slice(0, requestedAmount);
+
+    return { data, hasNextPage };
   }
 
   static async delete(transactionId: number, userId: number): Promise<void> {

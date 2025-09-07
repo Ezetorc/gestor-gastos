@@ -3,17 +3,14 @@ import { prisma } from "../configuration/prisma.configuration";
 import { TransactionDto } from "../models/dtos/transaction.dto";
 
 export class TransactionRepository {
-  static async getAllOfUserWithPagination(args: {
+  static async getAllOfUser(args: {
     userId: number;
-    page: number;
+    skip: number;
     amount: number;
   }): Promise<Transaction[]> {
-    const currentPage = args.page < 1 ? 1 : args.page;
-    const skip = (currentPage - 1) * args.amount;
-
     return await prisma.transaction.findMany({
       where: { userId: args.userId },
-      skip,
+      skip: args.skip,
       take: args.amount,
       orderBy: { date: "desc" },
     });

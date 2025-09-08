@@ -28,4 +28,12 @@ export class TransactionService {
 
     await TransactionRepository.delete(transactionId);
   }
+
+  static async getById(id: number): Promise<Transaction> {
+    const transaction = await TransactionRepository.getById(id);
+
+    if (!transaction) throw new NotFoundError("Transaction not found");
+
+    return transaction;
+  }
 }

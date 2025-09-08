@@ -48,4 +48,31 @@ describe("TransactionService", () => {
       ).rejects.toThrow(UnauthorizedError);
     });
   });
+
+  describe("getById", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should return a transaction with the given id", async () => {
+      const { id } = transactionMock;
+      const getByIdSpy = jest
+        .spyOn(transactionRepositoryMock, "getById")
+        .mockResolvedValue(transactionMock);
+
+      const result = await TransactionService.getById(id);
+
+      expect(result).toEqual(transactionMock);
+      expect(getByIdSpy).toHaveBeenCalledWith(id);
+    });
+
+    it("should throw a 'NotFoundError' when transaction not found", async () => {
+      const id = 1;
+      transactionRepositoryMock.getById.mockResolvedValue(null);
+
+      await expect(TransactionService.getById(id)).rejects.toThrow(
+        NotFoundError
+      );
+    });
+  });
 });

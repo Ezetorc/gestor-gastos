@@ -81,7 +81,70 @@ TransactionRouter.get(
   /*
   #swagger.path = '/transactions'
   #swagger.tags = ['Transactions']
-  #swagger.description = 'Returns all transactions'
+  #swagger.description = 'Returns all transactions, optionally filtered by query parameters'
+
+  #swagger.parameters['fromDate'] = {
+    in: 'query',
+    description: 'Start date for filtering (ISO format, e.g., 2025-07-01)',
+    type: 'string',
+    example: '2025-07-01'
+  }
+
+  #swagger.parameters['toDate'] = {
+    in: 'query',
+    description: 'End date for filtering (ISO format, e.g., 2025-07-31)',
+    type: 'string',
+    example: '2025-07-31'
+  }
+
+  #swagger.parameters['category'] = {
+    in: 'query',
+    description: 'Category of the transaction',
+    type: 'string',
+    example: 'Servicios'
+  }
+
+  #swagger.parameters['name'] = {
+    in: 'query',
+    description: 'Filter by transaction name/title',
+    type: 'string',
+    example: 'Pago luz'
+  }
+
+  #swagger.parameters['description'] = {
+    in: 'query',
+    description: 'Filter by description',
+    type: 'string',
+    example: 'Pago mensual de electricidad'
+  }
+
+  #swagger.parameters['type'] = {
+    in: 'query',
+    description: 'Transaction type: INCOME, EXPENSE, or both. Para ambos enviar separados por coma (ej: INCOME,EXPENSE)',
+    type: 'string',
+    example: 'INCOME,EXPENSE'
+  }
+
+  #swagger.parameters['amount'] = {
+    in: 'query',
+    description: 'Exact amount',
+    type: 'number',
+    example: 5000
+  }
+
+  #swagger.parameters['amountMin'] = {
+    in: 'query',
+    description: 'Minimum amount',
+    type: 'number',
+    example: 1000
+  }
+
+  #swagger.parameters['amountMax'] = {
+    in: 'query',
+    description: 'Maximum amount',
+    type: 'number',
+    example: 10000
+  }
 
   #swagger.responses[200] = {
     description: 'List of transactions',
@@ -92,12 +155,20 @@ TransactionRouter.get(
           properties: {
             value: {
               type: 'array',
-              items: {
-                $ref: '#/components/schemas/Transaction'
-              }
+              items: { $ref: '#/components/schemas/Transaction' }
             }
           }
         }
+      }
+    }
+  }
+
+  #swagger.responses[400] = {
+    description: 'Invalid query parameters',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Invalid date format for fromDate' }
       }
     }
   }
@@ -106,24 +177,15 @@ TransactionRouter.get(
     description: 'Unexpected error',
     content: {
       'application/json': {
-        schema: {
-          type: 'object',
-          properties: {
-            error: {
-              type: 'string',
-              example: 'Unexpected error'
-            }
-          }
-        },
-        example: {
-          error: 'Unexpected error'
-        }
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Unexpected error' }
       }
     }
   }
   */
   TransactionController.getAll
 );
+
 
 TransactionRouter.post(
   "/",

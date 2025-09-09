@@ -3,6 +3,8 @@ import { TransactionRepository } from "../repositories/transaction.repository";
 import { TransactionDto } from "../models/dtos/transaction.dto";
 import { NotFoundError } from "../models/errors/not-found.error";
 import { UnauthorizedError } from "../models/errors/unauthorized.error";
+import { TransactionFilters } from "../utilities/transactionFilters.utility";
+import { buildsFilters } from "../utilities/buildsFilters.utility";
 
 export class TransactionService {
   static async create(
@@ -35,5 +37,13 @@ export class TransactionService {
     if (!transaction) throw new NotFoundError("Transaction not found");
 
     return transaction;
+  }
+
+  static async getAll(filters: TransactionFilters, userId: number) {
+    const where = buildsFilters(filters);
+   
+    where.userId = userId;
+
+    return await TransactionRepository.getAll(where);
   }
 }

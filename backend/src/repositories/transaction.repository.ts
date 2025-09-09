@@ -1,10 +1,10 @@
-import { Transaction } from "@prisma/client";
+import { Prisma, Transaction } from "@prisma/client";
 import { prisma } from "../configuration/prisma.configuration";
 import { TransactionDto } from "../models/dtos/transaction.dto";
 
 export class TransactionRepository {
-  static async getAll(): Promise<Transaction[]> {
-    return await prisma.transaction.findMany();
+  static async getAll(where?: Prisma.TransactionWhereInput): Promise<Transaction[]> {
+    return await prisma.transaction.findMany({where});
   }
 
   static async getById(id: number): Promise<Transaction | null> {

@@ -254,18 +254,259 @@
         }
       }
     },
-    "/transactions": {
+    "/transactions/:id": {
       "get": {
         "tags": [
           "Transactions"
         ],
-        "description": "Returns all transactions",
+        "description": "Returns a transaction",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "description": "Id of the transaction to get",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A transaction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "$ref": "#/components/schemas/Transaction"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid transaction ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Invalid transaction ID"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Transaction not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "Deletes a transaction",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "description": "Id of the transaction to delete",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Transaction successfully deleted"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Transaction not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "Returns all transactions, optionally filtered by query parameters",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "Start date for filtering (ISO format, e.g., 2025-07-01)",
+            "example": "2025-07-01",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "End date for filtering (ISO format, e.g., 2025-07-31)",
+            "example": "2025-07-31",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Category of the transaction",
+            "example": "Servicios",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Filter by transaction name/title",
+            "example": "Pago luz",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Filter by description",
+            "example": "Pago mensual de electricidad",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Transaction type: INCOME, EXPENSE, or both. Para ambos enviar separados por coma (ej: INCOME,EXPENSE)",
+            "example": "INCOME,EXPENSE",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "Exact amount",
+            "example": 5000,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "amountMin",
+            "in": "query",
+            "description": "Minimum amount",
+            "example": 1000,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "amountMax",
+            "in": "query",
+            "description": "Maximum amount",
+            "example": 10000,
+            "schema": {
+              "type": "number"
             }
           }
         ],
@@ -288,6 +529,24 @@
               }
             }
           },
+          "400": {
+            "description": "Invalid query parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Invalid date format for fromDate"
+                }
+              }
+            }
+          },
           "500": {
             "description": "Unexpected error",
             "content": {
@@ -296,8 +555,7 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "example": "Unexpected error"
+                      "type": "string"
                     }
                   }
                 },
@@ -437,72 +695,6 @@
                     "type": "string",
                     "example": "EXPENSE"
                   }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/transactions/:id": {
-      "delete": {
-        "tags": [
-          "Transactions"
-        ],
-        "description": "Deletes a transaction",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "id",
-            "description": "Id of the transaction to delete",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Transaction successfully deleted"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "error": "Unauthorized"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Transaction not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "error": "Transaction not found"
                 }
               }
             }

@@ -1,14 +1,27 @@
-import { Request, Response } from "express";
+import { request, Request, Response } from "express";
 import { TransactionRepository } from "../repositories/transaction.repository";
 import { success } from "../utilities/success.utility";
 import { TransactionService } from "../services/transaction.service";
 import { AuthenticatedRequest } from "../models/authenticated-request.model";
 import { BadRequestError } from "../models/errors/bad-request.error";
 import { UnauthorizedError } from "../models/errors/unauthorized.error";
+import { buildsFilters } from "../utilities/buildsFilters.utility";
+import { TransactionFilters, transactionFiltersSchema } from "../utilities/transactionFilters.utility";
 
 export class TransactionController {
-  static async getAll(_request: Request, response: Response): Promise<void> {
-    const transactions = await TransactionRepository.getAll();
+  static async getAll(request: Request, response: Response): Promise<void> {
+    const { user } = request as AuthenticatedRequest;
+
+  // Validar query params con Joi
+  const { error, value } = transactionFiltersSchema.validate(request.query);
+  if (error) throw new BadRequestError(error.message);
+
+  const filters = value as TransactionFilters;
+
+  // Agregar filtro de usuario
+  const where = buildsFilters(filters);
+  where.userId = user.id; // solo devuelve las transacciones del usuario
+    const transactions = await TransactionRepository.getAll(where);
 
     response.json(success(transactions));
   }

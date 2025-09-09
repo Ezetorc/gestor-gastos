@@ -11,12 +11,15 @@ export const modalSx: SxProps<Theme> = {
   boxShadow: 24,
   p: 4,
   overflowY: "auto",
+  scrollbarWidth: "thin",
+  scrollbarColor: "#bb40d1ff #222",
 };
 
 export const cardSx: SxProps<Theme> = {
   maxWidth: 345,
   maxHeight: { xs: "500px", md: "800px" },
-  overflowY: { xs: "auto", md: "hidden" },
+
+  overflowY: "auto",
 };
 
 export const buttonExpense = (toggleColor: boolean): SxProps<Theme> => ({

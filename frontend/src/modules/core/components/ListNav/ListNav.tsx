@@ -8,32 +8,32 @@ import {
 import { NavLink } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import type { DashBoardIcons } from "@/modules/dashboard/types/dashboard-icons";
-import { listItemButton, listItemIcon, listMobile } from "../SideBar/SideBar.styles";
+import { listItemButton, listItemIcon } from "../SideBar/SideBar.styles";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import Box from "@mui/material/Box";
 
 interface Props {
   open: boolean;
-  isMobile?: boolean;
 }
 
-export const ListNav = ({ open, isMobile = false }: Props) => {
+export const ListNav = ({ open }: Props) => {
   const dashBoardIcons: DashBoardIcons[] = [
     {
       id: "1",
       name: "Dashboard",
-      icon: <DashboardIcon />,
-      link: "/",
+      icon: <DashboardIcon sx={{ fontSize: { xs: 35, sm: 30 } }} />,
+      link: "/dashboard",
     },
     {
       id: "2",
       name: "Transacciones",
-      icon: <CurrencyExchangeIcon />,
+      icon: <CurrencyExchangeIcon sx={{ fontSize: { xs: 35, sm: 30 } }} />,
       link: "transacciones",
     },
   ];
 
   return (
-    <List sx={isMobile ? listMobile : {}}>
+    <List>
       {dashBoardIcons.map((items) => (
         <NavLink
           key={items.id}
@@ -44,7 +44,7 @@ export const ListNav = ({ open, isMobile = false }: Props) => {
           }}>
           {({ isActive }) => (
             <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton sx={listItemButton(open, isActive, isMobile)}>
+              <ListItemButton sx={listItemButton(open, isActive)}>
                 <ListItemIcon sx={listItemIcon(open, isActive)}>
                   {items.icon}
                 </ListItemIcon>
@@ -55,7 +55,6 @@ export const ListNav = ({ open, isMobile = false }: Props) => {
                       transition: "opacity 0.3s ease",
                     },
                     open ? { opacity: 1 } : { opacity: 0 },
-                    isMobile ? { display: "none" } : {}
                   ]}
                 />
               </ListItemButton>

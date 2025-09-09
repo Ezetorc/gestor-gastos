@@ -7,7 +7,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ListNav } from "../ListNav/ListNav";
 import { useDashboardLayout } from "@/modules/core/hooks/useDashboardLayout";
 import { AppBar, Drawer, DrawerHeader, titleGastosSx } from "./SideBar.styles";
-import { Toolbar } from "@mui/material";
+import SideBarMovil from "./SideBarMovil";
 
 interface Props {
   children: React.ReactNode;
@@ -19,11 +19,19 @@ export default function SideBar({ children }: Props) {
   return (
     <>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ display: { xs: "block", sm: "none" } }}>
+      {/*<AppBar position="fixed" sx={{ display: { xs: "block", sm: "none" } }}>
         <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
           <ListNav open={open} isMobile={true} />
           {children}
         </Toolbar>
+      </AppBar>*/}
+
+      <AppBar
+        position="fixed"
+        sx={{
+          display: { xs: "block", sm: "none" },
+        }}>
+        <SideBarMovil children={children} />
       </AppBar>
 
       <Drawer
@@ -52,6 +60,7 @@ export default function SideBar({ children }: Props) {
         </DrawerHeader>
 
         <Divider />
+
         <Box
           sx={{
             height: "100dvh",

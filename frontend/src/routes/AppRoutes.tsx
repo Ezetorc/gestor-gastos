@@ -10,6 +10,7 @@ import { RouteProtected } from "./ProtectedRoute";
 import { GuestRoute } from "./GuestRoute";
 import DashboardPage from "@/modules/dashboard/Pages/DashboardPage";
 import TransactionsPage from "@/modules/transactions/pages/TransactionsPage";
+import { Dashboard } from "@/modules/dashboard/components/Dashboard/Dashboard";
 
 const AppRoutes = () => {
   return (
@@ -38,16 +39,20 @@ const AppRoutes = () => {
             <RouteProtected>
               <DashboardPage />
             </RouteProtected>
-          }></Route>
+          }>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="transacciones" element={<TransactionsPage />} />
+        </Route>
 
-        <Route
+        {/*<Route
           path="/transacciones"
           element={
             <RouteProtected>
               <TransactionsPage />
             </RouteProtected>
           }
-        />
+        />*/}
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

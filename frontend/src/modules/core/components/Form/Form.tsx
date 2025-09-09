@@ -36,7 +36,7 @@ const FormExpense = ({ handleClose }: Props) => {
   } = useForm<FormValuesExpense>({
     resolver: yupResolver(expenseSchema),
     defaultValues: {
-      typeTransation: "",
+      typeTransation: "gasto",
       amount: 0,
       date: new Date(),
       category: "",
@@ -45,7 +45,7 @@ const FormExpense = ({ handleClose }: Props) => {
     },
   });
 
-  const [toggleColor, setToggleColor] = useState(false);
+  const [toggleColor, setToggleColor] = useState<boolean>();
   const { enqueueSnackbar } = useSnackbar();
 
   const arrayCategoryExpenses = [
@@ -114,6 +114,7 @@ const FormExpense = ({ handleClose }: Props) => {
               <RadioGroup row {...field}>
                 <FormControlLabel
                   value="gasto"
+                  defaultValue="gasto"
                   control={<Radio sx={{ display: "none" }} />}
                   label="Gasto"
                   sx={{

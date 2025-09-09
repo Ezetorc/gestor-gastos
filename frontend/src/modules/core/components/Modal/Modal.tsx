@@ -48,26 +48,6 @@ export default function TransitionsModal({ open, handleClose }: Props) {
               <Divider />
 
               <CardContent>
-                {/*<ButtonGroup
-                  variant="outlined"
-                  fullWidth
-                  sx={{ border: "1px solid gray" }}>
-                  <Button
-                    sx={buttonExpense(toggleColor)}
-                    onClick={() => {
-                      handleShowForm("gasto");
-                    }}>
-                    Gasto
-                  </Button>
-
-                  <Button
-                    sx={buttonIncome(toggleColor)}
-                    onClick={() => {
-                      handleShowForm("ingreso");
-                    }}>
-                    Ingreso
-                  </Button>
-                </ButtonGroup>*/}
                 <Form handleClose={handleClose} />
               </CardContent>
             </Card>

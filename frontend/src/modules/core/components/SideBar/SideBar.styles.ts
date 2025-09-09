@@ -1,6 +1,13 @@
-import { styled, Theme, CSSObject, type SxProps } from "@mui/material/styles";
+import {
+  styled,
+  type Theme,
+  type CSSObject,
+  type SxProps,
+} from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import MuiAppBar, {
+  type AppBarProps as MuiAppBarProps,
+} from "@mui/material/AppBar";
 
 //Transiciones y estilos del Sidebar
 const drawerWidth = 240;
@@ -57,6 +64,7 @@ export const AppBar = styled(MuiAppBar, {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.enteringScreen,
         }),
+        background: "red",
       },
     },
   ],
@@ -87,7 +95,6 @@ export const Drawer = styled(MuiDrawer, {
   ],
 }));
 
-
 export const titleGastosSx = (open: boolean): SxProps<Theme> => ({
   display: open ? "flex" : "none",
   justifyContent: "start",
@@ -97,18 +104,19 @@ export const titleGastosSx = (open: boolean): SxProps<Theme> => ({
 //Estilos css ListNav
 export const listItemButton = (
   open: boolean,
-  isActive: boolean,
-  isMobile: boolean = false
+  isActive: boolean
 ): SxProps<Theme> => ({
-  minHeight: 48,
-  px: 2.5,
+  minHeight: { xs: 80, sm: 48 },
+  width: { xs: "100dvw" },
+  px: { xs: 10, sm: 2.5 },
   transition: "all 0.3s ease",
   backgroundColor: isActive ? "primary.main" : "transparent",
   color: isActive ? "white" : "inherit",
+
   "&:hover": {
     backgroundColor: isActive ? "primary.dark" : "action.hover",
   },
-  ...(open && !isMobile ? { justifyContent: "initial" } : { justifyContent: "center" }),
+  ...(open ? { justifyContent: "initial" } : { justifyContent: "center" }),
 });
 
 export const listItemIcon = (open: boolean, isActive: boolean) => ({
@@ -118,10 +126,3 @@ export const listItemIcon = (open: boolean, isActive: boolean) => ({
   color: isActive ? "white" : "inherit",
   ...(open ? { mr: 3 } : { mr: "auto" }),
 });
-
-export const listMobile: SxProps<Theme> = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-};

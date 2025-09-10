@@ -4,6 +4,8 @@ import { TransactionDto } from "../models/dtos/transaction.dto";
 import { NotFoundError } from "../models/errors/not-found.error";
 import { UnauthorizedError } from "../models/errors/unauthorized.error";
 import { PaginatedResult } from "../models/paginated-result.model";
+import { TransactionFilters } from "../utilities/transactionFilters.utility";
+import { buildsFilters } from "../utilities/buildsFilters.utility";
 
 export class TransactionService {
   static async create(
@@ -24,15 +26,21 @@ export class TransactionService {
     userId: number;
     page: number;
     amount: number;
+    filters?: TransactionFilters;
   }): Promise<PaginatedResult<Transaction>> {
     const requestedAmount = args.amount;
     const queryAmount = requestedAmount + 1;
     const currentPage = args.page < 1 ? 1 : args.page;
     const skip = (currentPage - 1) * requestedAmount;
+
+    const where = buildsFilters(args.filters || {});
+
     const transactions = await TransactionRepository.getAllOfUser({
       userId: args.userId,
       skip,
       amount: queryAmount,
+       filters: where,
+      
     });
     const hasNextPage = transactions.length > requestedAmount;
     const data = transactions.slice(0, requestedAmount);

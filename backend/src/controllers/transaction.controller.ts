@@ -6,6 +6,8 @@ import { parsePaginationQuery } from "../utilities/parse-pagination-query.utilit
 import { AuthenticatedRequest } from "../models/authenticated-request.model";
 import { BadRequestError } from "../models/errors/bad-request.error";
 import { UnauthorizedError } from "../models/errors/unauthorized.error";
+import { TransactionFilters,  transactionFiltersSchema} from "../utilities/transactionFilters.utility";
+
 
 export class TransactionController {
   static async getAllOfUser(
@@ -14,11 +16,20 @@ export class TransactionController {
   ): Promise<void> {
     const { page, amount } = parsePaginationQuery(request.query);
     const authenticatedRequest = request as AuthenticatedRequest;
+
+    const { error, value } = transactionFiltersSchema.validate(request.query);
+    if (error) throw new BadRequestError(error.message);
+
+    const filters: TransactionFilters = value;
+
+    // Agregar filtro de usuario
+
     const userId = authenticatedRequest.user.id;
     const paginatedTransactions = await TransactionService.getAllOfUser({
       userId,
       page,
       amount,
+      filters,
     });
 
     response.json(success(paginatedTransactions));

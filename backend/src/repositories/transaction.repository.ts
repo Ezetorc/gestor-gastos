@@ -1,4 +1,4 @@
-import { Transaction } from "@prisma/client";
+import { Prisma, Transaction } from "@prisma/client";
 import { prisma } from "../configuration/prisma.configuration";
 import { TransactionDto } from "../models/dtos/transaction.dto";
 
@@ -7,11 +7,15 @@ export class TransactionRepository {
     userId: number;
     skip: number;
     amount: number;
+    filters: Prisma.TransactionWhereInput;
   }): Promise<Transaction[]> {
     return await prisma.transaction.findMany({
-      where: { userId: args.userId },
+      where: { userId: args.userId,
+        ...args.filters,
+      },
       skip: args.skip,
       take: args.amount,
+
       orderBy: { date: "desc" },
     });
   }

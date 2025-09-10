@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { TransactionController } from "../controllers/transaction.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
-import { TransactionDto } from "../models/dtos/transaction.dto";
+import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
 import { dtoValidationMiddleware } from "../middlewares/dto-validation.middleware";
 
 export const TransactionRouter = Router();
@@ -147,7 +147,7 @@ TransactionRouter.get(
 TransactionRouter.post(
   "/",
   authMiddleware,
-  dtoValidationMiddleware(TransactionDto),
+  dtoValidationMiddleware(CreateTransactionDto),
   /*
   #swagger.path = '/transactions'
   #swagger.tags = ['Transactions']

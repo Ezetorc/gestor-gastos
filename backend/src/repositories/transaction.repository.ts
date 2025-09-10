@@ -1,6 +1,6 @@
 import { Prisma, Transaction } from "@prisma/client";
 import { prisma } from "../configuration/prisma.configuration";
-import { TransactionDto } from "../models/dtos/transaction.dto";
+import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
 
 export class TransactionRepository {
   static async getAllOfUser(args: {
@@ -10,12 +10,9 @@ export class TransactionRepository {
     filters: Prisma.TransactionWhereInput;
   }): Promise<Transaction[]> {
     return await prisma.transaction.findMany({
-      where: { userId: args.userId,
-        ...args.filters,
-      },
+      where: { userId: args.userId, ...args.filters },
       skip: args.skip,
       take: args.amount,
-
       orderBy: { date: "desc" },
     });
   }
@@ -25,20 +22,24 @@ export class TransactionRepository {
   }
 
   static async create(
-    data: TransactionDto & { userId: number }
+    data: CreateTransactionDto & { userId: number }
   ): Promise<Transaction> {
-    return await prisma.transaction.create({
-      data: {
-        name: data.name,
-        userId: data.userId,
-        amount: data.amount,
-        date: data.date,
-        category: data.category,
-        paymentMethod: data.paymentMethod,
-        description: data.description,
-        type: data.type,
-      },
-    });
+    try {
+      return await prisma.transaction.create({
+        data: {
+          name: data.name,
+          userId: data.userId,
+          amount: data.amount,
+          date: data.date,
+          category: data.category,
+          paymentMethod: data.paymentMethod,
+          description: data.description,
+          type: data.type,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
   }
 
   static async delete(id: number): Promise<Transaction> {

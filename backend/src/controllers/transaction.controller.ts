@@ -1,29 +1,29 @@
 import { Request, Response } from "express";
-import { TransactionRepository } from "../repositories/transaction.repository";
 import { success } from "../utilities/success.utility";
 import { TransactionService } from "../services/transaction.service";
-import { parsePaginationQuery } from "../utilities/parse-pagination-query.utility";
 import { AuthenticatedRequest } from "../models/authenticated-request.model";
 import { BadRequestError } from "../models/errors/bad-request.error";
 import { UnauthorizedError } from "../models/errors/unauthorized.error";
-import { TransactionFilters,  transactionFiltersSchema} from "../utilities/transactionFilters.utility";
-
+import { transactionFiltersSchema } from "../models/schemas/transaction-filters.schema";
+import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
+import { paginationQuerySchema } from "../models/schemas/pagination-query.schema";
+import { PaginationQuery } from "../models/pagination-query.model";
 
 export class TransactionController {
   static async getAllOfUser(
     request: Request,
     response: Response
   ): Promise<void> {
-    const { page, amount } = parsePaginationQuery(request.query);
+    const { error: paginationError, value: paginationQuery } = paginationQuerySchema.validate(request.query)
+
+    if (paginationError) throw new BadRequestError(paginationError.message);
+    
+    const { error: filtersError, value: filters } = transactionFiltersSchema.validate(request.query);
+
+    if (filtersError) throw new BadRequestError(filtersError.message);
+
+    const { page, amount } = paginationQuery as PaginationQuery
     const authenticatedRequest = request as AuthenticatedRequest;
-
-    const { error, value } = transactionFiltersSchema.validate(request.query);
-    if (error) throw new BadRequestError(error.message);
-
-    const filters: TransactionFilters = value;
-
-    // Agregar filtro de usuario
-
     const userId = authenticatedRequest.user.id;
     const paginatedTransactions = await TransactionService.getAllOfUser({
       userId,
@@ -55,11 +55,9 @@ export class TransactionController {
   }
 
   static async create(request: Request, response: Response): Promise<void> {
-    const transactionData = request.body;
-    const newTransaction = await TransactionService.create(
-      transactionData,
-      request.user!.id
-    );
+    const { user } = request as AuthenticatedRequest;
+    const createTransactionDto = request.body as CreateTransactionDto;
+    const newTransaction = await TransactionService.create(createTransactionDto, user.id);
 
     response.status(201).json(success(newTransaction));
   }

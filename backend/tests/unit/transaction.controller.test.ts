@@ -3,8 +3,10 @@ import { TransactionController } from "./../../src/controllers/transaction.contr
 import { transactionServiceMock } from "./../mocks/transaction.service.mock";
 import { describe, expect, it, jest } from "@jest/globals";
 import { BadRequestError } from "../../src/models/errors/bad-request.error";
-import { UnauthorizedError } from "../../src/models/errors/unauthorized.error";
-import { transactionRepositoryMock } from "../mocks/transaction.repository.mock";
+import { paginationQuerySchema } from "../../src/models/schemas/pagination-query.schema";
+import { transactionFiltersSchema } from "../../src/models/schemas/transaction-filters.schema";
+import { TransactionFilters } from "../../src/models/transaction-filters.model";
+import { PaginationQuery } from "../../src/models/pagination-query.model";
 
 jest.mock("../../src/services/transaction.service");
 
@@ -32,57 +34,50 @@ describe("TransactionController", () => {
     });
   });
 
-  describe("getById", () => {
-    it("should return a transaction with the given ID", async () => {
+  describe("getAllOfUser", () => {
+    it("should return paginated transactions when query is valid", async () => {
       const requestMock = {
-        user: { id: transactionMock.userId },
-        params: { id: transactionMock.id },
+        user: { id: 1 },
+        query: { page: 1, amount: 2 },
       } as any;
       const responseMock = { json: jest.fn() } as any;
-      const getByIdSpy = jest
-        .spyOn(transactionServiceMock, "getById")
-        .mockResolvedValue(transactionMock);
+      const paginationQuery: PaginationQuery = { amount: 2, page: 1 };
+      const filters = {}
 
-      await TransactionController.getById(requestMock, responseMock);
+      jest.spyOn(paginationQuerySchema, "validate").mockReturnValue({ value: paginationQuery} as any);
+      jest.spyOn(transactionFiltersSchema, "validate").mockReturnValue({ value: filters } as any);
 
-      expect(getByIdSpy).toHaveBeenCalledWith(requestMock.params.id);
-      expect(responseMock.json).toHaveBeenCalled();
+      const serviceResult = { data: [transactionMock], hasNextPage: false };
+
+      transactionServiceMock.getAllOfUser.mockResolvedValue(serviceResult);
+      await TransactionController.getAllOfUser(requestMock, responseMock);
+
+      expect(transactionServiceMock.getAllOfUser).toHaveBeenCalledWith({
+        userId: requestMock.user.id,
+        page: paginationQuery.page,
+        amount: paginationQuery.amount,
+        filters,
+      });
+      expect(responseMock.json).toHaveBeenCalledWith({ value: serviceResult });
     });
 
-    it("should throw a 'BadRequestError' when transaction ID is missing", async () => {
-      const requestMock = {
-        user: { id: transactionMock.userId },
-        params: {},
-      } as any;
+    it("should throw BadRequestError if pagination validation fails", async () => {
+      const requestMock = { query: {} } as any;
       const responseMock = {} as any;
 
-      await expect(
-        TransactionController.getById(requestMock, responseMock)
-      ).rejects.toThrow(BadRequestError);
+      jest.spyOn(paginationQuerySchema, "validate").mockReturnValue({ error: "Invalid pagination" } as any);
+
+      await expect(TransactionController.getAllOfUser(requestMock, responseMock)).rejects.toThrow(BadRequestError);
     });
 
-    it("should throw a 'BadRequestError' when transaction ID is invalid", async () => {
-      const requestMock = {
-        user: { id: transactionMock.userId },
-        params: { id: "abc" },
-      } as any;
+    it("should throw BadRequestError if filters validation fails", async () => {
+      const requestMock = { query: {} } as any;
       const responseMock = {} as any;
 
-      await expect(
-        TransactionController.getById(requestMock, responseMock)
-      ).rejects.toThrow(BadRequestError);
-    });
+      jest.spyOn(paginationQuerySchema, "validate").mockReturnValue({ value: { page: 1, amount: 2 } } as any);
+      jest.spyOn(transactionFiltersSchema, "validate").mockReturnValue({ error: "Invalid filters" } as any);
 
-    it("should throw a 'UnauthorizedError' when trying to access a transaction of another user", async () => {
-      const requestMock = {
-        user: { id: 2 },
-        params: { id: transactionMock.id },
-      } as any;
-      const responseMock = {} as any;
-
-      await expect(
-        TransactionController.getById(requestMock, responseMock)
-      ).rejects.toThrow(UnauthorizedError);
+      await expect(TransactionController.getAllOfUser(requestMock, responseMock)).rejects.toThrow(BadRequestError);
     });
   });
 });

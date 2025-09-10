@@ -1,6 +1,6 @@
 import { TransactionType } from "@prisma/client";
 
-export interface TransactionFilters {
+export type TransactionFilters = {
   fromDate?: string;
   toDate?: string;
   category?: string;

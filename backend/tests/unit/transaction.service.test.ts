@@ -59,7 +59,6 @@ describe("TransactionService", () => {
       const getByIdSpy = jest
         .spyOn(transactionRepositoryMock, "getById")
         .mockResolvedValue(transactionMock);
-
       const result = await TransactionService.getById(id);
 
       expect(result).toEqual(transactionMock);
@@ -73,6 +72,63 @@ describe("TransactionService", () => {
       await expect(TransactionService.getById(id)).rejects.toThrow(
         NotFoundError
       );
+    });
+  });
+
+  describe("getAllOfUser", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should return paginated transactions with hasNextPage false", async () => {
+      const args = { userId: 1, page: 1, amount: 2, filters: {} };
+      jest
+        .spyOn(transactionRepositoryMock, "getAllOfUser")
+        .mockResolvedValue([transactionMock]);
+
+      const result = await TransactionService.getAllOfUser(args);
+
+      expect(transactionRepositoryMock.getAllOfUser).toHaveBeenCalledWith({
+        userId: args.userId,
+        skip: 0,
+        amount: args.amount + 1,
+        filters: args.filters,
+      });
+      expect(result).toEqual({ data: [transactionMock], hasNextPage: false });
+    });
+
+    it("should return hasNextPage true when there are more transactions than requested", async () => {
+      const args = { userId: 1, page: 1, amount: 1, filters: {} };
+      const extraTransaction = { ...transactionMock, id: 2 };
+      jest
+        .spyOn(transactionRepositoryMock, "getAllOfUser")
+        .mockResolvedValue([transactionMock, extraTransaction]);
+
+      const result = await TransactionService.getAllOfUser(args);
+
+      expect(transactionRepositoryMock.getAllOfUser).toHaveBeenCalledWith({
+        userId: args.userId,
+        skip: 0,
+        amount: args.amount + 1,
+        filters: args.filters,
+      });
+      expect(result).toEqual({ data: [transactionMock], hasNextPage: true });
+    });
+
+    it("should default page to 1 if page is less than 1", async () => {
+      const args = { userId: 1, page: 0, amount: 2, filters: {} };
+      jest
+        .spyOn(transactionRepositoryMock, "getAllOfUser")
+        .mockResolvedValue([transactionMock]);
+
+      const result = await TransactionService.getAllOfUser(args);
+
+      expect(transactionRepositoryMock.getAllOfUser).toHaveBeenCalledWith(
+        expect.objectContaining({
+          skip: 0,
+        })
+      );
+      expect(result.data).toEqual([transactionMock]);
     });
   });
 });

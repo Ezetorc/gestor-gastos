@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import { Dashboard } from "../components/Dashboard/Dashboard";
+
 import SideBar from "@/modules/core/components/SideBar/Sidebar";
 import Button from "@mui/material/Button";
 import React from "react";
@@ -7,6 +7,7 @@ import Modal from "../../core/components/Modal/Modal";
 import { SnackbarProvider } from "notistack";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Outlet } from "react-router-dom";
+import { buttonOpenMenu } from "@/modules/core/components/SideBar/SideBar.styles";
 
 const DashboardPage = () => {
   const [open, setOpen] = React.useState(false);
@@ -24,17 +25,11 @@ const DashboardPage = () => {
       })}>
       <SnackbarProvider>
         <SideBar>
-          <Button
-            onClick={handleOpen}
-            sx={{
-              minHeight: 48,
-              color: "white",
-            }}>
-            <AddCircleOutlineIcon sx={{ fontSize: 30 }} />
+          <Button onClick={handleOpen} sx={buttonOpenMenu}>
+            <AddCircleOutlineIcon />
           </Button>
         </SideBar>
         <Outlet />
-        {/*<Dashboard />*/}
         <Modal open={open} handleClose={handleClose} />
       </SnackbarProvider>
     </Container>

@@ -8,10 +8,13 @@ import {
 import { NavLink } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import type { DashBoardIcons } from "@/modules/dashboard/types/dashboard-icons";
-import { listItemButton, listItemIcon } from "../SideBar/SideBar.styles";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
-import Box from "@mui/material/Box";
-
+import {
+  containerList,
+  iconSize,
+  listItemButton,
+  listItemIcon,
+} from "./ListNav.styles";
 interface Props {
   open: boolean;
 }
@@ -21,42 +24,28 @@ export const ListNav = ({ open }: Props) => {
     {
       id: "1",
       name: "Dashboard",
-      icon: <DashboardIcon sx={{ fontSize: { xs: 35, sm: 30 } }} />,
+      icon: <DashboardIcon sx={iconSize} />,
       link: "/dashboard",
     },
     {
       id: "2",
       name: "Transacciones",
-      icon: <CurrencyExchangeIcon sx={{ fontSize: { xs: 35, sm: 30 } }} />,
+      icon: <CurrencyExchangeIcon sx={iconSize} />,
       link: "transacciones",
     },
   ];
 
   return (
-    <List>
+    <List sx={containerList(open)}>
       {dashBoardIcons.map((items) => (
-        <NavLink
-          key={items.id}
-          to={items.link}
-          style={{
-            textDecoration: "none",
-            color: "inherit",
-          }}>
+        <NavLink key={items.id} to={items.link}>
           {({ isActive }) => (
-            <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItem disablePadding>
               <ListItemButton sx={listItemButton(open, isActive)}>
                 <ListItemIcon sx={listItemIcon(open, isActive)}>
                   {items.icon}
                 </ListItemIcon>
-                <ListItemText
-                  primary={items.name}
-                  sx={[
-                    {
-                      transition: "opacity 0.3s ease",
-                    },
-                    open ? { opacity: 1 } : { opacity: 0 },
-                  ]}
-                />
+                <ListItemText primary={items.name} />
               </ListItemButton>
             </ListItem>
           )}

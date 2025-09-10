@@ -6,7 +6,13 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ListNav } from "../ListNav/ListNav";
 import { useDashboardLayout } from "@/modules/core/hooks/useDashboardLayout";
-import { AppBar, Drawer, DrawerHeader, titleGastosSx } from "./SideBar.styles";
+import {
+  AppBar,
+  Drawer,
+  DrawerHeader,
+  titleGastos,
+  containerListMenu,
+} from "./SideBar.styles";
 import SideBarMovil from "./SideBarMovil";
 
 interface Props {
@@ -19,13 +25,6 @@ export default function SideBar({ children }: Props) {
   return (
     <>
       <CssBaseline />
-      {/*<AppBar position="fixed" sx={{ display: { xs: "block", sm: "none" } }}>
-        <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
-          <ListNav open={open} isMobile={true} />
-          {children}
-        </Toolbar>
-      </AppBar>*/}
-
       <AppBar
         position="fixed"
         sx={{
@@ -34,18 +33,9 @@ export default function SideBar({ children }: Props) {
         <SideBarMovil children={children} />
       </AppBar>
 
-      <Drawer
-        variant="permanent"
-        open={open}
-        sx={{ display: { xs: "none", sm: "block" } }}>
-        <DrawerHeader
-          sx={{
-            display: "flex",
-            justifyContent: open ? "start" : "center",
-            gap: 2,
-            px: 2.5,
-          }}>
-          <Box component="p" sx={titleGastosSx(open)}>
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader>
+          <Box component="p" sx={titleGastos(open)}>
             Control de Gastos
           </Box>
 
@@ -53,7 +43,7 @@ export default function SideBar({ children }: Props) {
             color="inherit"
             aria-label="toggle drawer"
             onClick={toggleDrawer}
-            edge="start"
+            edge="end"
             sx={{ margin: open ? "" : "auto" }}>
             {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -61,14 +51,9 @@ export default function SideBar({ children }: Props) {
 
         <Divider />
 
-        <Box
-          sx={{
-            height: "100dvh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}>
+        <Box component="div" sx={containerListMenu}>
           <ListNav open={open} />
+
           {children}
         </Box>
       </Drawer>

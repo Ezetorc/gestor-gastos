@@ -1,9 +1,4 @@
-import {
-  styled,
-  type Theme,
-  type CSSObject,
-  type SxProps,
-} from "@mui/material/styles";
+import { styled, type Theme, type CSSObject } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, {
   type AppBarProps as MuiAppBarProps,
@@ -36,7 +31,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
 export const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "flex-end",
+  justifyContent: "space-evenly",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
@@ -74,6 +69,10 @@ export const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme }) => ({
   width: drawerWidth,
+  display: "none", // Valor predeterminado para pantallas más pequeñas
+  [theme.breakpoints.up("sm")]: {
+    display: "flex",
+  },
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
@@ -95,34 +94,24 @@ export const Drawer = styled(MuiDrawer, {
   ],
 }));
 
-export const titleGastosSx = (open: boolean): SxProps<Theme> => ({
+export const titleGastos = (open: boolean) => ({
   display: open ? "flex" : "none",
   justifyContent: "start",
   fontWeight: "bold",
 });
 
-//Estilos css ListNav
-export const listItemButton = (
-  open: boolean,
-  isActive: boolean
-): SxProps<Theme> => ({
-  minHeight: { xs: 80, sm: 48 },
-  width: { xs: "100dvw" },
-  px: { xs: 10, sm: 2.5 },
-  transition: "all 0.3s ease",
-  backgroundColor: isActive ? "primary.main" : "transparent",
-  color: isActive ? "white" : "inherit",
-
-  "&:hover": {
-    backgroundColor: isActive ? "primary.dark" : "action.hover",
-  },
-  ...(open ? { justifyContent: "initial" } : { justifyContent: "center" }),
+export const containerListMenu = () => ({
+  height: "100dvh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
 });
 
-export const listItemIcon = (open: boolean, isActive: boolean) => ({
-  minWidth: 0,
-  justifyContent: "center",
-  transition: "margin 0.3s ease",
-  color: isActive ? "white" : "inherit",
-  ...(open ? { mr: 3 } : { mr: "auto" }),
+export const buttonOpenMenu = () => ({
+  minHeight: 48,
+  color: "white",
+
+  svg: {
+    fontSize: 35,
+  },
 });

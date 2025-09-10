@@ -2,10 +2,14 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Divider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
 import { ListNav } from "../ListNav/ListNav";
+import {
+  headerMovil,
+  listItemButton,
+  iconSizeMovil,
+} from "./SideBarMovil.styles";
 
 interface Props {
   children: React.ReactNode;
@@ -19,47 +23,23 @@ export default function SideBarMovil({ children }: Props) {
   };
 
   const DrawerList = (
-    <Box
-      sx={{
-        width: "100dvw",
-        height: "80dvh",
-        marginTop: 13,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-      role="presentation"
-      onClick={toggleDrawer(false)}>
+    <Box sx={listItemButton} role="presentation" onClick={toggleDrawer(false)}>
       <ListNav open={open} />
-
-      <Divider />
       {children}
     </Box>
   );
 
   return (
-    <Box
-      component="div"
-      sx={{
-        width: "100dvw",
-        height: 70,
-        margin: "auto",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-evenly",
-      }}>
+    <Box component="div" sx={headerMovil}>
       <Box component="span">
         {open ? (
-          <CloseIcon sx={{ fontSize: 40 }} onClick={toggleDrawer(false)} />
+          <CloseIcon sx={iconSizeMovil} onClick={toggleDrawer(false)} />
         ) : (
-          <MenuIcon sx={{ fontSize: 40 }} onClick={toggleDrawer(true)} />
+          <MenuIcon sx={iconSizeMovil} onClick={toggleDrawer(true)} />
         )}
       </Box>
 
-      <Typography sx={{ width: 300, textAlign: "center" }} variant="h5">
-        Control de Gastos
-      </Typography>
+      <Typography variant="h6">Control de Gastos</Typography>
 
       <Drawer open={open} onClose={toggleDrawer(true)}>
         {DrawerList}

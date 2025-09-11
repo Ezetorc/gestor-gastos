@@ -254,12 +254,12 @@
         }
       }
     },
-    "/transactions": {
+    "/transactions/:id": {
       "get": {
         "tags": [
           "Transactions"
         ],
-        "description": "Returns all transactions",
+        "description": "Returns a transaction",
         "parameters": [
           {
             "name": "authorization",
@@ -267,23 +267,218 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the transaction to get",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "List of transactions",
+            "description": "A transaction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid transaction ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Invalid transaction ID"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Transaction not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "Deletes a transaction",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the transaction to delete",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Transaction successfully deleted"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Transaction not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "Returns your transactions",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (starts at 1)",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "Number of transactions per page",
+            "required": false,
+            "example": 8,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of your transactions",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "value": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Transaction"
-                      }
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Transaction"
+                          }
+                        },
+                        "hasNextPage": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      },
+                      "required": [
+                        "data",
+                        "hasNextPage"
+                      ]
                     }
-                  }
+                  },
+                  "required": [
+                    "value"
+                  ]
                 }
               }
             }
@@ -299,7 +494,10 @@
                       "type": "string",
                       "example": "Unexpected error"
                     }
-                  }
+                  },
+                  "required": [
+                    "error"
+                  ]
                 },
                 "example": {
                   "error": "Unexpected error"
@@ -443,72 +641,6 @@
           }
         }
       }
-    },
-    "/transactions/:id": {
-      "delete": {
-        "tags": [
-          "Transactions"
-        ],
-        "description": "Deletes a transaction",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "id",
-            "description": "Id of the transaction to delete",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Transaction successfully deleted"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "error": "Unauthorized"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Transaction not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "error": "Transaction not found"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -516,247 +648,63 @@
       "Transaction": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "amount": {
+            "type": "number",
+            "example": 5000
+          },
+          "date": {
+            "type": "string",
+            "example": "2024-07-27T12:00:00Z"
+          },
+          "category": {
+            "type": "string",
+            "example": "Food"
+          },
+          "paymentMethod": {
+            "type": "string",
+            "example": "Cash"
+          },
+          "description": {
+            "type": "string",
+            "example": "Supermarket"
+          },
           "type": {
             "type": "string",
-            "example": "object"
-          },
-          "required": {
-            "type": "array",
-            "example": [
-              "id",
-              "amount",
-              "date",
-              "category",
-              "paymentMethod",
-              "description",
-              "type"
-            ],
-            "items": {
-              "type": "string"
-            }
-          },
-          "properties": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 1
-                  }
-                }
-              },
-              "amount": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 5000
-                  }
-                }
-              },
-              "date": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "format": {
-                    "type": "string",
-                    "example": "date-time"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "2024-07-27T12:00:00Z"
-                  }
-                }
-              },
-              "category": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "Food"
-                  }
-                }
-              },
-              "paymentMethod": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "Cash"
-                  }
-                }
-              },
-              "description": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "Supermarket"
-                  }
-                }
-              },
-              "type": {
-                "type": "object",
-                "properties": {
-                  "enum": {
-                    "type": "object",
-                    "properties": {
-                      "INCOME": {
-                        "type": "string",
-                        "example": "INCOME"
-                      },
-                      "EXPENSE": {
-                        "type": "string",
-                        "example": "EXPENSE"
-                      }
-                    }
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "INCOME"
-                  }
-                }
-              }
-            }
+            "example": "INCOME"
           }
         }
       },
       "LoginDto": {
         "type": "object",
         "properties": {
-          "type": {
+          "email": {
             "type": "string",
-            "example": "object"
+            "example": "tu@email.com"
           },
-          "required": {
-            "type": "array",
-            "example": [
-              "email",
-              "password"
-            ],
-            "items": {
-              "type": "string"
-            }
-          },
-          "properties": {
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "tu@email.com"
-                  }
-                }
-              },
-              "password": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "tuContraSEÑA123!"
-                  }
-                }
-              }
-            }
+          "password": {
+            "type": "string",
+            "example": "tuContraSEÑA123!"
           }
         }
       },
       "User": {
         "type": "object",
         "properties": {
-          "type": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "name": {
             "type": "string",
-            "example": "object"
+            "example": "Mabel"
           },
-          "required": {
-            "type": "array",
-            "example": [
-              "id",
-              "name",
-              "email"
-            ],
-            "items": {
-              "type": "string"
-            }
-          },
-          "properties": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 1
-                  }
-                }
-              },
-              "name": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "Mabel"
-                  }
-                }
-              },
-              "email": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "mabel@example.com"
-                  }
-                }
-              }
-            }
+          "email": {
+            "type": "string",
+            "example": "mabel@example.com"
           }
         }
       }

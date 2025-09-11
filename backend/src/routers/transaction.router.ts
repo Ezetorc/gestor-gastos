@@ -14,19 +14,18 @@ TransactionRouter.get(
   #swagger.tags = ['Transactions']
   #swagger.description = 'Returns a transaction'
 
-  #swagger.parameters['id'] = { description: 'Id of the transaction to get' }
+  #swagger.parameters['id'] = {
+    in: 'path',
+    description: 'Id of the transaction to get',
+    required: true,
+    example: 1
+  }
 
   #swagger.responses[200] = {
     description: 'A transaction',
     content: {
       'application/json': {
-        schema: {
-          type: 'object',
-          properties: {
-            value: { $ref: '#/components/schemas/Transaction' }
-            }
-          }
-        }
+        schema: { $ref: '#/components/schemas/Transaction' }
       }
     }
   }
@@ -87,14 +86,14 @@ TransactionRouter.get(
     in: 'query',
     description: 'Page number (starts at 1)',
     required: false,
-    schema: { type: 'integer', example: 1 }
+    example: 1
   }
 
   #swagger.parameters['amount'] = {
     in: 'query',
     description: 'Number of transactions per page',
     required: false,
-    schema: { type: 'integer', example: 8 }
+    example: 8
   }
 
   #swagger.responses[200] = {
@@ -234,7 +233,12 @@ TransactionRouter.delete(
   #swagger.tags = ['Transactions']
   #swagger.description = 'Deletes a transaction'
   
-  #swagger.parameters['id'] = { description: 'Id of the transaction to delete' }
+  #swagger.parameters['id'] = {
+    in: 'path',
+    description: 'Id of the transaction to delete',
+    required: true,
+    example: 1
+  }
 
   #swagger.responses[204] = {
     description: 'Transaction successfully deleted'

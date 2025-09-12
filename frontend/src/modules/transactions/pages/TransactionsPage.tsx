@@ -1,5 +1,6 @@
 import { Container } from "@mui/material";
 import SideBar from "@/modules/core/components/SideBar/Sidebar";
+import TransactionComponent from "../components/TransactionComponent";
 
 const TransactionsPage = () => {
   return (
@@ -8,12 +9,14 @@ const TransactionsPage = () => {
       sx={(theme) => ({
         display: "flex",
         background: theme.palette.secondary.main,
+        minHeight: "100vh",
+        minWidth: "100%",
+        pt: {xs:10,sm:0}
       })}
     >
       <SideBar />
-      {/* aca va el el contenedor con todos los filtros y demas */}
+      <TransactionComponent/>
     </Container>
   );
 };
 export default TransactionsPage;
- 

@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "amount": 10000,
+    "date": "2025-05-12T18:12:14Z",
+    "category": "Comida",
+    "payment_method": "Efectivo",
+    "description": "Comida de todo el mes",
+    "user_id": 1,
+    "type": "expense"
+  },
+  {
+    "id": 2,
+    "amount": 5000,
+    "date": "2024-11-09T16:18:01Z",
+    "category": "Impuesto",
+    "payment_method": "Tarjeta de débito",
+    "description": "Impuesto de la luz",
+    "user_id": 1,
+    "type": "expense"
+  },
+  {
+    "id": 3,
+    "amount": 67000,
+    "date": "2024-09-29T06:41:35Z",
+    "category": "Electrodoméstico",
+    "payment_method": "Tarjeta de débito",
+    "description": "Televisor",
+    "user_id": 2,
+    "type": "expense"
+  },
+  {
+    "id": 4,
+    "amount": 5000,
+    "date": "2024-12-20T18:12:49Z",
+    "category": "Comida",
+    "payment_method": "Mercado Pago",
+    "description": "Comida de la semana",
+    "user_id": 3,
+    "type": "expense"
+  },
+  {
+    "id": 5,
+    "amount": 120000,
+    "date": "2025-01-20T19:24:04Z",
+    "category": "Cuota",
+    "payment_method": "Tarjeta de crédito",
+    "description": "Cuota de la escuela de mis hijos",
+    "user_id": 4,
+    "type": "expense"
+  },
+  {
+    "id": 6,
+    "amount": 45456,
+    "date": "2025-12-20T18:12:49Z",
+    "category": "Multa",
+    "payment_method": "Mercado Pago",
+    "description": "Multa de tránsito",
+    "user_id": 3,
+    "type": "expense"
+  },
+  {
+    "id": 7,
+    "amount": 55000,
+    "date": "2023-11-20T18:12:49Z",
+    "category": "Comida",
+    "payment_method": "Tarjeta de crédito",
+    "description": "Comida de la semana",
+    "user_id": 7,
+    "type": "expense"
+  },
+  {
+    "id": 8,
+    "amount": 45000,
+    "date": "2024-12-20T18:12:49Z",
+    "category": "Fiesta",
+    "payment_method": "Efectivo",
+    "description": "Fiesta de cumpleaños",
+    "user_id": 9,
+    "type": "expense"
+  },
+  {
+    "id": 9,
+    "amount": 200000,
+    "date": "2025-05-12T18:12:14Z",
+    "category": "Salario",
+    "description": "Salario mensual de mi trabajo",
+    "user_id": 1,
+    "type": "income"
+  },
+  {
+    "id": 10,
+    "amount": 50000,
+    "date": "2024-11-09T16:18:01Z",
+    "category": "Alquiler",
+    "description": "Entrada mensual del alquiler de un negocio",
+    "user_id": 1,
+    "type": "income"
+  },
+  {
+    "id": 11,
+    "amount": 2000,
+    "date": "2024-09-29T06:41:35Z",
+    "category": "Venta",
+    "description": "Venta por Mercado Libre de un pantalón usado viejo que tenía",
+    "user_id": 2,
+    "type": "income"
+  },
+  {
+    "id": 12,
+    "amount": 10000,
+    "date": "2024-12-20T18:12:49Z",
+    "category": "Regalo",
+    "description": "Mi tio me regaló esta plata por mi cumpleaños",
+    "user_id": 2,
+    "type": "income"
+  },
+  {
+    "id": 13,
+    "amount": 300000,
+    "date": "2025-01-20T19:24:04Z",
+    "category": "Préstamo",
+    "description": "Préstamo que me dió el banco para mi futura casa",
+    "user_id": 3,
+    "type": "income"
+  },
+  {
+    "id": 14,
+    "amount": 50000,
+    "date": "2034-11-09T16:18:01Z",
+    "category": "herencia",
+    "payment_method": "diamantes",
+    "description": "fallecio mi abuelo y me dejo esta plata",
+    "user_id": 10,
+    "type": "income"
+  }
+]

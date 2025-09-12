@@ -1,4 +1,3 @@
-import { TransactionType } from "@prisma/client";
 import swaggerAutogen from "swagger-autogen";
 
 const doc = {
@@ -16,37 +15,24 @@ const doc = {
   components: {
     schemas: {
       Transaction: {
-        type: "object",
-        required: [
-          "id",
-          "amount",
-          "date",
-          "category",
-          "paymentMethod",
-          "description",
-          "type",
-        ],
-        properties: {
-          id: { type: "integer", example: 1 },
-          amount: { type: "integer", example: 5000 },
-          date: {
-            type: "string",
-            format: "date-time",
-            example: "2024-07-27T12:00:00Z",
-          },
-          category: { type: "string", example: "Food" },
-          paymentMethod: { type: "string", example: "Cash" },
-          description: { type: "string", example: "Supermarket" },
-          type: { enum: TransactionType, example: "INCOME" },
-        },
+        id: 1,
+        amount: 5000,
+        date: "2024-07-27T12:00:00Z",
+        category: "Food",
+        paymentMethod: "Cash",
+        description: "Supermarket",
+        type: "INCOME",
       },
+
       LoginDto: {
-        type: "object",
-        required: ["email", "password"],
-        properties: {
-          email: { type: "string", example: "tu@email.com" },
-          password: { type: "string", example: "tuContraSEÑA123!" },
-        },
+        email: "tu@email.com",
+        password: "tuContraSEÑA123!",
+      },
+
+      User: {
+        id: 1,
+        name: "Mabel",
+        email: "mabel@example.com",
       },
     },
   },
@@ -55,4 +41,4 @@ const doc = {
 const outputFile = "./swagger_output.json";
 const endpointsFiles = ["./src/routers/*.ts"];
 
-swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc)
+swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc);

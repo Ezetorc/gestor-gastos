@@ -1,33 +1,124 @@
-import { Router } from 'express'
-import { TransactionController } from '../controllers/transaction.controller'
-import { authMiddleware } from '../middlewares/auth.middleware'
-import { TransactionDto } from '../models/dtos/transaction.dto'
-import { dtoValidationMiddleware } from '../middlewares/dto-validation.middleware'
+import { Router } from "express";
+import { TransactionController } from "../controllers/transaction.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
+import { dtoValidationMiddleware } from "../middlewares/dto-validation.middleware";
 
-export const TransactionRouter = Router()
+export const TransactionRouter = Router();
 
 TransactionRouter.get(
-  '/',
+  "/:id",
+  authMiddleware,
+  /*
+  #swagger.path = '/transactions/:id'
+  #swagger.tags = ['Transactions']
+  #swagger.description = 'Returns a transaction'
+
+  #swagger.parameters['id'] = {
+    in: 'path',
+    description: 'Id of the transaction to get',
+    required: true,
+    example: 1
+  }
+
+  #swagger.responses[200] = {
+    description: 'A transaction',
+    content: {
+      'application/json': {
+        schema: { $ref: '#/components/schemas/Transaction' }
+      }
+    }
+  }
+
+  #swagger.responses[400] = {
+    description: 'Transaction ID is missing',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Transaction ID is missing' }
+      }
+    }
+  }
+
+  #swagger.responses[400] = {
+    description: 'Invalid transaction ID',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Invalid transaction ID' }
+      }
+    }
+  }
+
+  #swagger.responses[404] = {
+    description: 'Transaction not found',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Transaction not found' }
+      }
+    }
+  }
+
+  #swagger.responses[401] = {
+    description: 'Unauthorized',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Unauthorized' }
+      }
+    }
+  }
+    
+  */
+  TransactionController.getById
+);
+
+TransactionRouter.get(
+  "/",
   authMiddleware,
   /*
   #swagger.path = '/transactions'
   #swagger.tags = ['Transactions']
-  #swagger.description = 'Returns all transactions'
+  #swagger.description = 'Returns your transactions'
+
+  #swagger.parameters['page'] = {
+    in: 'query',
+    description: 'Page number (starts at 1)',
+    required: false,
+    example: 1
+  }
+
+  #swagger.parameters['amount'] = {
+    in: 'query',
+    description: 'Number of transactions per page',
+    required: false,
+    example: 8
+  }
 
   #swagger.responses[200] = {
-    description: 'List of transactions',
+    description: 'Paginated list of your transactions',
     content: {
       'application/json': {
         schema: {
           type: 'object',
           properties: {
             value: {
-              type: 'array',
-              items: {
-                $ref: '#/components/schemas/Transaction'
-              }
+              type: 'object',
+              properties: {
+                data: {
+                  type: 'array',
+                  items: { $ref: '#/components/schemas/Transaction' }
+                },
+                hasNextPage: {
+                  type: 'boolean',
+                  example: true
+                }
+              },
+              required: ['data', 'hasNextPage']
             }
-          }
+          },
+          required: ['value']
         }
       }
     }
@@ -40,26 +131,22 @@ TransactionRouter.get(
         schema: {
           type: 'object',
           properties: {
-            error: {
-              type: 'string',
-              example: 'Unexpected error'
-            }
-          }
+            error: { type: 'string', example: 'Unexpected error' }
+          },
+          required: ['error']
         },
-        example: {
-          error: 'Unexpected error'
-        }
+        example: { error: 'Unexpected error' }
       }
     }
   }
   */
-  TransactionController.getAll
-)
+  TransactionController.getAllOfUser
+);
 
 TransactionRouter.post(
-  '/',
+  "/",
   authMiddleware,
-  dtoValidationMiddleware(TransactionDto),
+  dtoValidationMiddleware(CreateTransactionDto),
   /*
   #swagger.path = '/transactions'
   #swagger.tags = ['Transactions']
@@ -136,4 +223,46 @@ TransactionRouter.post(
   }
   */
   TransactionController.create
+);
+
+TransactionRouter.delete(
+  "/:id",
+  authMiddleware,
+  /*
+  #swagger.path = '/transactions/:id'
+  #swagger.tags = ['Transactions']
+  #swagger.description = 'Deletes a transaction'
+  
+  #swagger.parameters['id'] = {
+    in: 'path',
+    description: 'Id of the transaction to delete',
+    required: true,
+    example: 1
+  }
+
+  #swagger.responses[204] = {
+    description: 'Transaction successfully deleted'
+  }
+
+  #swagger.responses[404] = {
+    description: 'Transaction not found',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Transaction not found' }
+      }
+    }
+  }
+
+  #swagger.responses[401] = {
+    description: 'Unauthorized',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Unauthorized' }
+      }
+    }
+  }
+  */
+  TransactionController.delete
 );

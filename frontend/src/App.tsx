@@ -3,8 +3,6 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import AppRoutes from './routes/AppRoutes';
-
-
 import { useMemo } from "react";
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";

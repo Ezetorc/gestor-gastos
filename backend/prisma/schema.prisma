@@ -10,7 +10,7 @@ datasource db {
 model Transaction {
   id            Int             @id @default(autoincrement())
   amount        Int
-  date          DateTime
+  date          DateTime        @default(now())
   name          String
   category      String
   paymentMethod String          @map("payment_method")
@@ -24,11 +24,10 @@ model Transaction {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   name     String
   password String
-  email    String  @unique
-  image    String?
+  email    String @unique
 
   transactions Transaction[]
 

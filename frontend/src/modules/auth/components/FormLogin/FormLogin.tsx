@@ -118,7 +118,7 @@ export function FormLogin() {
 
       {error && (
         <Typography color="error" align="center" mt={1}>
-          {error}
+          {error.message}
         </Typography>
       )}
 

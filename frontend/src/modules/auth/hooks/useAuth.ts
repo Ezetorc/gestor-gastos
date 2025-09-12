@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import type { RegisterFormData } from "../types/register.type";
 import type { ApiResponse, Credentials } from "../types/auth";
 import { useCallback, useEffect } from "react";
+import type { ApiError } from "@/modules/core/types/fetch";
+
 
 export const useAuth = () => {
   const user = useUserStore((state) => state.user);
@@ -11,27 +13,44 @@ export const useAuth = () => {
   const logoutStore = useUserStore((state) => state.logout);
 
   const { request, loading, error } = useFetchApi<ApiResponse>();
-  
   const navigate = useNavigate();
+
+  const handleApiError = useCallback(
+    (err: unknown) => {
+      const apiErr = err as ApiError;
+
+      if (apiErr?.status === 401) {
+        logout();
+      }
+
+      // console.error("API Error:", apiErr?.message || err);
+    },
+    [] 
+  );
 
   const logout = useCallback(() => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     logoutStore();
     navigate("/login");
-  }, [logoutStore, navigate]); 
+  }, [logoutStore, navigate]);
 
   useEffect(() => {
     const checkToken = async () => {
       const token = localStorage.getItem("token");
-      // const user = localStorage.getItem("user"); 
+      const storedUser = localStorage.getItem("user");
 
-      if (token) {
-        setUser({email:"",id:1,image:"",name:"",password:""});
+      if (token && storedUser) {
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch {
+          logout();
+        }
       }
     };
 
     checkToken();
-  }, [request, setUser, logout]); 
+  }, [setUser, logout]);
 
   const login = async (credentials: Credentials) => {
     try {
@@ -39,18 +58,14 @@ export const useAuth = () => {
         method: "POST",
         body: credentials,
       });
-      console.log(data);
 
       localStorage.setItem("token", data.value.token);
-      localStorage.setItem("user", JSON.stringify(data.value.user))
-
+      localStorage.setItem("user", JSON.stringify(data.value.user));
       setUser(data.value.user);
-      console.error("Register error:", error);
 
       navigate("/");
     } catch (err) {
-      console.error("Login error:", error);
-      throw err;
+      handleApiError(err);
     }
   };
 
@@ -62,17 +77,16 @@ export const useAuth = () => {
           name: formData.name,
           email: formData.email,
           password: formData.password,
-          image: "https://example.com/avatar.jpg",
         },
       });
-      console.log(data);
+
       localStorage.setItem("token", data.value.token);
-      localStorage.setItem("user", JSON.stringify(data.value.user))
+      localStorage.setItem("user", JSON.stringify(data.value.user));
       setUser(data.value.user);
 
       navigate("/");
     } catch (err) {
-      console.error("Register error:", error);
+      handleApiError(err);
       throw err;
     }
   };
@@ -84,6 +98,6 @@ export const useAuth = () => {
     register,
     logout,
     loading,
-    error,
+    error
   };
 };

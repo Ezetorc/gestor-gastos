@@ -1,5 +1,11 @@
 export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
+export type ApiError = {
+  status: number;
+  message: string;
+} | null;
+
+
 export interface FetchOptions<TBody = unknown> {
   method?: HttpMethod;
   body?: TBody;
@@ -10,7 +16,7 @@ export interface FetchOptions<TBody = unknown> {
 export interface FetchState<TData> {
   data: TData | null;
   loading: boolean;
-  error: string | null;
+  error: ApiError;
 }
 
 export interface FetchError {

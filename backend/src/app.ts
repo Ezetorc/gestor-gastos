@@ -7,7 +7,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerOutput from "../swagger_output.json";
 import { TransactionRouter } from "./routers/transaction.router";
 import { CORS_CONFIGURATION } from "./configuration/cors.configuration";
-
+import cors from "cors"
 export const app = express();
 
 app

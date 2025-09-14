@@ -31,15 +31,10 @@ export function FormRegister() {
     resolver: yupResolver(registerSchema),
   });
 
-  const { register: registerUser, error } = useAuth();
+  const { register, error } = useAuth();
 
   const onSubmit = (data: RegisterFormData) => {
-    const usuario = {
-      id: "a",
-      nombre: data.name,
-      email: data.email,
-    };
-    registerUser(usuario);
+    register(data);
   };
 
   const headerBoxSx: SxProps<Theme> = {

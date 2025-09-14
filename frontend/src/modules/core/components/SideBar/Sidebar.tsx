@@ -5,7 +5,6 @@ import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ListNav } from "../ListNav/ListNav";
-import { useDashboardLayout } from "@/modules/core/hooks/useDashboardLayout";
 import {
   AppBar,
   Drawer,
@@ -13,6 +12,7 @@ import {
   titleGastosSx,
 } from "./SideBar.styles";
 import { Toolbar } from "@mui/material";
+import { useDashboardLayout } from "../../hooks/useSideBar";
 
 export default function SideBar() {
   const { toggleDrawer, open } = useDashboardLayout();
@@ -37,13 +37,9 @@ export default function SideBar() {
             aria-label="toggle drawer"
             onClick={toggleDrawer}
             edge="start"
-            sx={{margin: open? "": "auto"}}
+            sx={{ margin: open ? "" : "auto" }}
           >
-            {!open ? (
-               <ChevronRightIcon /> 
-            ) : (
-              <ChevronLeftIcon />
-            )}
+            {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
 

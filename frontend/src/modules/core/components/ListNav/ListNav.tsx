@@ -1,4 +1,5 @@
 import {
+  Box,
   List,
   ListItem,
   ListItemButton,
@@ -10,6 +11,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import type { DashBoardIcons } from "@/modules/dashboard/types/dashboard-icons";
 import { listItemButton, listItemIcon, listMobile } from "../SideBar/SideBar.styles";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import { useAuth } from "@/modules/auth/hooks/useAuth";
 
 interface Props {
   open: boolean;
@@ -17,6 +19,7 @@ interface Props {
 }
 
 export const ListNav = ({ open, isMobile = false }: Props) => {
+  const {logout } = useAuth();
   const dashBoardIcons: DashBoardIcons[] = [
     {
       id: "1",
@@ -60,6 +63,7 @@ export const ListNav = ({ open, isMobile = false }: Props) => {
           )}
         </NavLink>
       ))}
+      <Box onClick={()=>logout()} sx={{background:"red", color:"white", cursor:"pointer"}}>Cerrar sesion</Box>
     </List>
   );
 };

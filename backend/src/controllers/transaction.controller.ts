@@ -8,7 +8,7 @@ import { transactionFiltersSchema } from "../models/schemas/transaction-filters.
 import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
 import { paginationQuerySchema } from "../models/schemas/pagination-query.schema";
 import { PaginationQuery } from "../models/pagination-query.model";
-import { TransactionUpdateDto } from "../models/dtos/transaction-update.dto";
+import {UpdateTransactionDto } from "../models/dtos/update-transaction.dto";
 
 export class TransactionController {
   static async getAllOfUser(
@@ -63,9 +63,9 @@ export class TransactionController {
     response.status(201).json(success(newTransaction));
   }
 
-  static async patch(request: Request, response: Response): Promise<void> {
+  static async update(request: Request, response: Response): Promise<void> {
     const { user } = request as AuthenticatedRequest;
-    const requestTransactionDto = request.body as TransactionUpdateDto;
+    const updateTransactionDto = request.body as UpdateTransactionDto;
     const { id } = request.params;
      if (!id) {
     throw new BadRequestError("Transaction ID is missing");
@@ -77,7 +77,7 @@ export class TransactionController {
   }
 
  
-    const updateTransaction  = await TransactionService.patch(transactionId,user.id,requestTransactionDto);
+    const updateTransaction  = await TransactionService.update(transactionId,user.id,updateTransactionDto);
 
     response.status(200).json(success(updateTransaction));
   }

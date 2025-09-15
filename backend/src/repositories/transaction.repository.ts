@@ -1,7 +1,7 @@
 import { Prisma, Transaction } from "@prisma/client";
 import { prisma } from "../configuration/prisma.configuration";
 import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
-import { TransactionUpdateDto } from "../models/dtos/transaction-update.dto";
+import { UpdateTransactionDto } from "../models/dtos/update-transaction.dto";
 
 export class TransactionRepository {
  
@@ -45,7 +45,7 @@ export class TransactionRepository {
   }
 
    static async update(transactionId: number,    
-     updates: TransactionUpdateDto) : Promise<Transaction>{
+     updates: UpdateTransactionDto) : Promise<Transaction>{
       
       return await prisma.transaction.update({ 
         where: { id:transactionId },

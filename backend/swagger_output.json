@@ -346,6 +346,96 @@
           }
         }
       },
+      "patch": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "Update a transaction (any field can be updated)",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the transaction to update",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateTransactionDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Transaction not found"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTransactionDto"
+              },
+              "example": {
+                "name": "Pago leña",
+                "amount": 6000
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Transactions"
@@ -652,6 +742,10 @@
             "type": "number",
             "example": 1
           },
+          "name": {
+            "type": "string",
+            "example": "Pago luz"
+          },
           "amount": {
             "type": "number",
             "example": 5000
@@ -707,6 +801,48 @@
             "example": "mabel@example.com"
           }
         }
+      },
+      "UpdateTransactionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Pago leña"
+          },
+          "amount": {
+            "type": "number",
+            "example": 6000
+          },
+          "date": {
+            "type": "string",
+            "example": "2025-08-31T12:00:00Z"
+          },
+          "category": {
+            "type": "string",
+            "example": "Servicios"
+          },
+          "paymentMethod": {
+            "type": "string",
+            "example": "Tarjeta"
+          },
+          "description": {
+            "type": "string",
+            "example": "Pago Agua actualizado"
+          },
+          "type": {
+            "type": "string",
+            "example": "EXPENSE"
+          }
+        }
+      },
+      "required": {
+        "type": "array",
+        "example": [],
+        "items": {}
       }
     }
   }

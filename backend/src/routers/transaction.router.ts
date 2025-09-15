@@ -225,6 +225,12 @@ TransactionRouter.post(
   TransactionController.create
 );
 
+TransactionRouter.patch(
+  "/:id",
+  authMiddleware,
+  TransactionController.patch
+)
+
 TransactionRouter.delete(
   "/:id",
   authMiddleware,

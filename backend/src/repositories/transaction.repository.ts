@@ -1,8 +1,10 @@
 import { Prisma, Transaction } from "@prisma/client";
 import { prisma } from "../configuration/prisma.configuration";
 import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
+import { TransactionUpdateDto } from "../models/dtos/transaction-update.dto";
 
 export class TransactionRepository {
+ 
   static async getAllOfUser(args: {
     userId: number;
     skip: number;
@@ -41,6 +43,18 @@ export class TransactionRepository {
       throw error;
     }
   }
+
+   static async update(transactionId: number,    
+     updates: TransactionUpdateDto) : Promise<Transaction>{
+      
+      return await prisma.transaction.update({ 
+        where: { id:transactionId },
+        data:updates,
+      
+      });
+    
+  }
+ 
 
   static async delete(id: number): Promise<Transaction> {
     return await prisma.transaction.delete({ where: { id } });

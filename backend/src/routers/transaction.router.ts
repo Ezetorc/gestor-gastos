@@ -3,6 +3,7 @@ import { TransactionController } from "../controllers/transaction.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
 import { dtoValidationMiddleware } from "../middlewares/dto-validation.middleware";
+import{UpdateTransactionDto} from "../models/dtos/update-transaction.dto"
 
 export const TransactionRouter = Router();
 
@@ -224,6 +225,65 @@ TransactionRouter.post(
   */
   TransactionController.create
 );
+
+TransactionRouter.patch(
+  "/:id",
+  authMiddleware,
+  dtoValidationMiddleware(UpdateTransactionDto), // opcional si quieres validar el body
+  /*
+  #swagger.path = '/transactions/:id'
+  #swagger.tags = ['Transactions']
+  #swagger.description = 'Update a transaction (any field can be updated)'
+  
+  #swagger.parameters['id'] = {
+    in: 'path',
+    description: 'Id of the transaction to update',
+    required: true,
+    example: 1
+  }
+
+  #swagger.requestBody = {
+    required: true,
+    content: {
+      'application/json': {
+        schema: { $ref: '#/components/schemas/UpdateTransactionDto' },
+        example: { name: "Pago leña", amount: 6000 }
+      }
+    }
+  }
+
+  #swagger.responses[200] = {
+    description: 'Transaction successfully updated',
+    content: {
+      'application/json': {
+        schema: { $ref: '#/components/schemas/UpdateTransactionDto' }
+      }
+    }
+  }
+
+  #swagger.responses[404] = {
+    description: 'Transaction not found',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Transaction not found' }
+      }
+    }
+  }
+
+  #swagger.responses[401] = {
+    description: 'Unauthorized',
+    content: {
+      'application/json': {
+        schema: { type: 'object', properties: { error: { type: 'string' } } },
+        example: { error: 'Unauthorized' }
+      }
+    }
+  }
+  */
+  TransactionController.update
+);
+
 
 TransactionRouter.delete(
   "/:id",

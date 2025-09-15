@@ -6,6 +6,7 @@ import { PaginatedResult } from "../models/paginated-result.model";
 import { buildFilters } from "../utilities/build-filters.utility";
 import { TransactionFilters } from "../models/transaction-filters.model";
 import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
+import {UpdateTransactionDto} from "../models/dtos/update-transaction.dto";
 
 export class TransactionService {
   static async create(
@@ -41,11 +42,28 @@ export class TransactionService {
     return { data, hasNextPage };
   }
 
+  static async update(
+    transactionId:number,
+     userId:number,
+       data: UpdateTransactionDto): Promise<Transaction> {
+    const transaction = await TransactionRepository.getById(transactionId);
+   
+    if (!transaction) throw new NotFoundError("Transaction not found");
+    if (transaction.userId !== userId)
+      throw new UnauthorizedError("This transaction doesn't belong to you");
+
+    return await TransactionRepository.update(transactionId,data);
+    
+      
+
+  }
+
   static async delete(transactionId: number, userId: number): Promise<void> {
     const transaction = await TransactionRepository.getById(transactionId);
 
     if (!transaction) throw new NotFoundError("Transaction not found");
     if (transaction.userId !== userId)
+     
       throw new UnauthorizedError("This transaction doesn't belong to you");
 
     await TransactionRepository.delete(transactionId);

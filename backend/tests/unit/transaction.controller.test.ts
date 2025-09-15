@@ -34,6 +34,37 @@ describe("TransactionController", () => {
     });
   });
 
+  describe("update", () => {
+    it("should updated the transaction and respond with 200 and Json", async () => {
+      const requestMock = {
+        transactionMock: { id: 1 },
+        user: { id: 1 },
+        params: { id: 1 },
+      } as any;
+      const json = jest.fn();
+      const status = jest.fn().mockReturnValue({ json });
+      const responseMock = { status, json } as any;
+
+      transactionServiceMock.update.mockResolvedValue({
+        id: 1,
+        userId: 1,
+        ...requestMock.body,
+      });
+
+      await TransactionController.update(requestMock, responseMock);
+
+      expect(transactionServiceMock.update).toHaveBeenCalledWith(
+        Number(requestMock.params.id),
+        requestMock.user.id,
+        requestMock.body
+      );
+      expect(responseMock.status).toHaveBeenCalledWith(200);
+      expect(responseMock.status().json).toHaveBeenCalledWith({
+        value: { id: 1, userId: 1, ...requestMock.body },
+      });
+    });
+  });
+
   describe("getAllOfUser", () => {
     it("should return paginated transactions when query is valid", async () => {
       const requestMock = {
@@ -42,10 +73,14 @@ describe("TransactionController", () => {
       } as any;
       const responseMock = { json: jest.fn() } as any;
       const paginationQuery: PaginationQuery = { amount: 2, page: 1 };
-      const filters = {}
+      const filters = {};
 
-      jest.spyOn(paginationQuerySchema, "validate").mockReturnValue({ value: paginationQuery} as any);
-      jest.spyOn(transactionFiltersSchema, "validate").mockReturnValue({ value: filters } as any);
+      jest
+        .spyOn(paginationQuerySchema, "validate")
+        .mockReturnValue({ value: paginationQuery } as any);
+      jest
+        .spyOn(transactionFiltersSchema, "validate")
+        .mockReturnValue({ value: filters } as any);
 
       const serviceResult = { data: [transactionMock], hasNextPage: false };
 
@@ -65,19 +100,29 @@ describe("TransactionController", () => {
       const requestMock = { query: {} } as any;
       const responseMock = {} as any;
 
-      jest.spyOn(paginationQuerySchema, "validate").mockReturnValue({ error: "Invalid pagination" } as any);
+      jest
+        .spyOn(paginationQuerySchema, "validate")
+        .mockReturnValue({ error: "Invalid pagination" } as any);
 
-      await expect(TransactionController.getAllOfUser(requestMock, responseMock)).rejects.toThrow(BadRequestError);
+      await expect(
+        TransactionController.getAllOfUser(requestMock, responseMock)
+      ).rejects.toThrow(BadRequestError);
     });
 
     it("should throw BadRequestError if filters validation fails", async () => {
       const requestMock = { query: {} } as any;
       const responseMock = {} as any;
 
-      jest.spyOn(paginationQuerySchema, "validate").mockReturnValue({ value: { page: 1, amount: 2 } } as any);
-      jest.spyOn(transactionFiltersSchema, "validate").mockReturnValue({ error: "Invalid filters" } as any);
+      jest
+        .spyOn(paginationQuerySchema, "validate")
+        .mockReturnValue({ value: { page: 1, amount: 2 } } as any);
+      jest
+        .spyOn(transactionFiltersSchema, "validate")
+        .mockReturnValue({ error: "Invalid filters" } as any);
 
-      await expect(TransactionController.getAllOfUser(requestMock, responseMock)).rejects.toThrow(BadRequestError);
+      await expect(
+        TransactionController.getAllOfUser(requestMock, responseMock)
+      ).rejects.toThrow(BadRequestError);
     });
   });
 });

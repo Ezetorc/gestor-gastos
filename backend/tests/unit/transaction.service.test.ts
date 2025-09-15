@@ -4,6 +4,7 @@ import { transactionRepositoryMock } from "./../mocks/transaction.repository.moc
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 import { NotFoundError } from "../../src/models/errors/not-found.error";
 import { UnauthorizedError } from "../../src/models/errors/unauthorized.error";
+import { TransactionType } from "@prisma/client";
 
 jest.mock("../../src/repositories/transaction.repository");
 
@@ -129,6 +130,82 @@ describe("TransactionService", () => {
         })
       );
       expect(result.data).toEqual([transactionMock]);
+    });
+  });
+
+  describe("update", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    const mockTransaction = {
+      id: 4,
+      userId: 2,
+      amount: 5000,
+      description: "Pago Agua",
+      category: "Servicios",
+      paymentMethod: "Tarjeta",
+      type: TransactionType.EXPENSE,
+      date: new Date("2025-08-31T12:00:00.000Z"),
+      name: "Pago Agua mensual",
+    };
+
+    it("should update the transaction if the userId matches", async () => {
+      const updates = {
+        amount: 6000,
+        description: "Pago Agua actualizado",
+        type: TransactionType.EXPENSE,
+        category: "Servicios",
+        date: new Date(),
+      };
+
+      transactionRepositoryMock.getById.mockResolvedValueOnce(mockTransaction);
+
+      transactionRepositoryMock.update.mockResolvedValue({
+        ...mockTransaction,
+        ...updates,
+      });
+
+      const updated = await TransactionService.update(
+        mockTransaction.id, // transactionId
+        mockTransaction.userId, // userId correcto
+        updates // DTO de actualización
+      );
+
+      expect(updated.amount).toBe(6000);
+      expect(updated.description).toBe("Pago Agua actualizado");
+      expect(transactionRepositoryMock.update).toHaveBeenCalledWith(
+        mockTransaction.id,
+        updates
+      );
+    });
+
+    it("should throw a 'NotFoundError' when the transaction does not exist", async () => {
+      transactionRepositoryMock.getById.mockResolvedValue(null);
+
+      await expect(
+        TransactionService.update(99, 2, {
+          amount: 1000,
+          type: TransactionType.EXPENSE,
+          category: "Servicios",
+          description: "x",
+          date: new Date(),
+        })
+      ).rejects.toThrow(NotFoundError);
+    });
+
+    it("should throw an 'UnauthorizedError' when trying to patch a transaction of another user", async () => {
+      transactionRepositoryMock.getById.mockResolvedValue(mockTransaction);
+
+      await expect(
+        TransactionService.update(mockTransaction.id, 999, {
+          amount: 6000,
+          type: TransactionType.EXPENSE,
+          category: "Servicios",
+          description: "x",
+          date: new Date(),
+        })
+      ).rejects.toThrow(UnauthorizedError);
     });
   });
 });

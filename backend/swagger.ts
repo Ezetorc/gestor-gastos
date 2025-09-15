@@ -16,6 +16,7 @@ const doc = {
     schemas: {
       Transaction: {
         id: 1,
+        name: "Pago luz",
         amount: 5000,
         date: "2024-07-27T12:00:00Z",
         category: "Food",
@@ -34,6 +35,18 @@ const doc = {
         name: "Mabel",
         email: "mabel@example.com",
       },
+
+      UpdateTransactionDto: {
+        id: 1,
+        name: "Pago leña",
+        amount: 6000,
+        date: "2025-08-31T12:00:00Z",
+        category: "Servicios",
+        paymentMethod: "Tarjeta",
+        description: "Pago Agua actualizado",
+        type: "EXPENSE",
+      },
+      required: [],
     },
   },
 };

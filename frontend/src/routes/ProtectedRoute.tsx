@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useUserStore } from "@/modules/auth/stores/useUserStore";
 
 export function RouteProtected({ children }: { children: React.ReactNode }) {
@@ -8,5 +8,5 @@ export function RouteProtected({ children }: { children: React.ReactNode }) {
     return <Navigate to="/login" replace />;
   }
 
-  return <>{children}</>;
+  return children ?? <Outlet />;
 }

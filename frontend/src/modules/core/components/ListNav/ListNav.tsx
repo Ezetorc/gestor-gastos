@@ -25,7 +25,7 @@ export const ListNav = ({ open }: Props) => {
       id: "1",
       name: "Dashboard",
       icon: <DashboardIcon sx={iconSize} />,
-      link: "/dashboard",
+      link: "/",
     },
     {
       id: "2",

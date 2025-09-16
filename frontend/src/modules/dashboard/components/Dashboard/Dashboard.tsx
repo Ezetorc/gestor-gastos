@@ -3,8 +3,6 @@ import { Summary } from "../Summary/Summary";
 import { Totals } from "../Totals";
 import DashedLineChart from "../DashedLineChart";
 
-import expenses from "../../mocks/expenses.mock.json";
-import incomes from "../../mocks/incomes.mock.json";
 
 import {
   dashboardContainerSx,
@@ -12,34 +10,15 @@ import {
   dashboardCardSx,
 } from "./Dashboard.styles";
 import { PieChartComponent } from "../PiesChart/PieChart";
+import { useUserStore } from "@/modules/auth/stores/useUserStore";
+import { dashboardData } from "../constants/dashboard";
 
 export const Dashboard = () => {
-  const totalExpenses = expenses.reduce(
-    (sum, expense) => sum + expense.amount,
-    0
-  );
-  const totalIncomes = incomes.reduce((sum, income) => sum + income.amount, 0);
-  const balance = totalIncomes - totalExpenses;
-
-  const dashboardData = {
-    expenses,
-    incomes,
-    summary: {
-      gastosHoy: -15000,
-      gastoSemana: -25000,
-      gastoMes: -totalExpenses,
-      balance: balance,
-    },
-    totals: {
-      totalGastos: -totalExpenses,
-      totalIngresos: totalIncomes,
-      balanceResumen: balance,
-    },
-  };
+  const user = useUserStore((state) => state.user);
 
   return (
     <Box sx={dashboardContainerSx}>
-      <Typography variant="h5">Organiza tus transacciones</Typography>
+      <Typography variant="h5">Bienvenido {user?.name}! Organiza tus finanzas</Typography>
       <Summary
         gastosHoy={dashboardData.summary.gastosHoy}
         gastoSemana={dashboardData.summary.gastoSemana}

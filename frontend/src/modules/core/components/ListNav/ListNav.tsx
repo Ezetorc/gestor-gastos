@@ -1,4 +1,5 @@
 import {
+  Box,
   List,
   ListItem,
   ListItemButton,
@@ -15,11 +16,14 @@ import {
   listItemButton,
   listItemIcon,
 } from "./ListNav.styles";
+import { useAuth } from "@/modules/auth/hooks/useAuth";
+
 interface Props {
   open: boolean;
 }
 
 export const ListNav = ({ open }: Props) => {
+  const {logout } = useAuth();
   const dashBoardIcons: DashBoardIcons[] = [
     {
       id: "1",
@@ -51,6 +55,7 @@ export const ListNav = ({ open }: Props) => {
           )}
         </NavLink>
       ))}
+      <Box onClick={()=>logout()} sx={{background:"red", color:"white", cursor:"pointer"}}>Cerrar sesion</Box>
     </List>
   );
 };

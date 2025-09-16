@@ -1,16 +1,39 @@
 import { Request, Response } from "express";
-import { TransactionRepository } from "../repositories/transaction.repository";
 import { success } from "../utilities/success.utility";
 import { TransactionService } from "../services/transaction.service";
 import { AuthenticatedRequest } from "../models/authenticated-request.model";
 import { BadRequestError } from "../models/errors/bad-request.error";
 import { UnauthorizedError } from "../models/errors/unauthorized.error";
+import { transactionFiltersSchema } from "../models/schemas/transaction-filters.schema";
+import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
+import { paginationQuerySchema } from "../models/schemas/pagination-query.schema";
+import { PaginationQuery } from "../models/pagination-query.model";
+import {UpdateTransactionDto } from "../models/dtos/update-transaction.dto";
 
 export class TransactionController {
-  static async getAll(_request: Request, response: Response): Promise<void> {
-    const transactions = await TransactionRepository.getAll();
+  static async getAllOfUser(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    const { error: paginationError, value: paginationQuery } = paginationQuerySchema.validate(request.query)
 
-    response.json(success(transactions));
+    if (paginationError) throw new BadRequestError(paginationError.message);
+    
+    const { error: filtersError, value: filters } = transactionFiltersSchema.validate(request.query);
+
+    if (filtersError) throw new BadRequestError(filtersError.message);
+
+    const { page, amount } = paginationQuery as PaginationQuery
+    const authenticatedRequest = request as AuthenticatedRequest;
+    const userId = authenticatedRequest.user.id;
+    const paginatedTransactions = await TransactionService.getAllOfUser({
+      userId,
+      page,
+      amount,
+      filters,
+    });
+
+    response.json(success(paginatedTransactions));
   }
 
   static async getById(request: Request, response: Response): Promise<void> {
@@ -21,23 +44,42 @@ export class TransactionController {
 
     const transactionId = Number(id);
 
-    if (isNaN(transactionId)) throw new BadRequestError("Invalid Transaction ID");
+    if (isNaN(transactionId))
+      throw new BadRequestError("Invalid Transaction ID");
 
     const transaction = await TransactionService.getById(transactionId);
 
-    if (user.id !== transaction.userId) throw new UnauthorizedError("Unauthorized");
+    if (user.id !== transaction.userId)
+      throw new UnauthorizedError("Unauthorized");
 
     response.json(success(transaction));
   }
 
   static async create(request: Request, response: Response): Promise<void> {
-    const transactionData = request.body;
-    const newTransaction = await TransactionService.create(
-      transactionData,
-      request.user!.id
-    );
+    const { user } = request as AuthenticatedRequest;
+    const createTransactionDto = request.body as CreateTransactionDto;
+    const newTransaction = await TransactionService.create(createTransactionDto, user.id);
 
     response.status(201).json(success(newTransaction));
+  }
+
+  static async update(request: Request, response: Response): Promise<void> {
+    const { user } = request as AuthenticatedRequest;
+    const updateTransactionDto = request.body as UpdateTransactionDto;
+    const { id } = request.params;
+     if (!id) {
+    throw new BadRequestError("Transaction ID is missing");
+  }
+
+  const transactionId = Number(id);
+  if (isNaN(transactionId)) {
+    throw new BadRequestError("Invalid Transaction ID");
+  }
+
+ 
+    const updateTransaction  = await TransactionService.update(transactionId,user.id,updateTransactionDto);
+
+    response.status(200).json(success(updateTransaction));
   }
 
   static async delete(request: Request, response: Response): Promise<void> {

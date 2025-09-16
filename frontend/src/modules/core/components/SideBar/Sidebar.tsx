@@ -5,7 +5,6 @@ import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ListNav } from "../ListNav/ListNav";
-import { useDashboardLayout } from "@/modules/core/hooks/useDashboardLayout";
 import {
   AppBar,
   Drawer,
@@ -19,6 +18,7 @@ import { Button } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useState } from "react";
 import ModalTransactions from "../Modal/ModalTransactions";
+import { useDashboardLayout } from "../../hooks/useSideBar";
 
 export default function SideBar() {
   const { toggleDrawer, open } = useDashboardLayout();

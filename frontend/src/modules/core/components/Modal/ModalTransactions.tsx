@@ -11,14 +11,14 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Form from "../Form/Form";
-import { cardSx, modalSx } from "./Modal.styles";
+import { cardSx, modalSx } from "./ModalTransactions.style";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
 }
 
-export default function TransitionsModal({ open, handleClose }: Props) {
+export default function ModalTransactions({ open, handleClose }: Props) {
   return (
     <div>
       <Modal

@@ -17,24 +17,27 @@ import {
 import SideBarMovil from "./SideBarMovil";
 import { Button } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { useState } from "react";
+import ModalTransactions from "../Modal/ModalTransactions";
 
-interface Props {
-  handleOpen: () => void;
-}
-
-export default function SideBar({ handleOpen }: Props) {
+export default function SideBar() {
   const { toggleDrawer, open } = useDashboardLayout();
+
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   return (
     <>
       <CssBaseline />
+      <ModalTransactions open={openModal} handleClose={handleCloseModal} />
       <AppBar
         position="fixed"
         sx={{
           display: { xs: "block", sm: "none" },
         }}
       >
-        <SideBarMovil handleOpen={handleOpen} />
+        <SideBarMovil handleOpen={handleOpenModal} />
       </AppBar>
 
       <Drawer variant="permanent" open={open}>
@@ -59,7 +62,7 @@ export default function SideBar({ handleOpen }: Props) {
         <Box component="div" sx={containerListMenu}>
           <ListNav open={open} />
         </Box>
-        <Button onClick={handleOpen} sx={buttonOpenMenu}>
+        <Button onClick={handleOpenModal} sx={buttonOpenMenu}>
           <AddCircleOutlineIcon />
         </Button>
       </Drawer>

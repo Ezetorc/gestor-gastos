@@ -2,24 +2,21 @@ import type { SxProps, Theme } from "@mui/material";
 
 export const modalSx: SxProps<Theme> = {
   position: "absolute",
-  top: "50%",
+  top: "20px",
   left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
+  transform: "translateX(-50%)",
   overflowY: "auto",
-  scrollbarWidth: "thin",
+  scrollbarWidth: "5px",
   scrollbarColor: "#bb40d1ff #222",
+  borderRadius: 5,
+  maxHeight: "90vh"
 };
 
 export const cardSx: SxProps<Theme> = {
-  maxWidth: 345,
   maxHeight: { xs: "500px", md: "800px" },
-
+  width:"400px",
   overflowY: "auto",
+  p:2
 };
 
 export const buttonExpense = (toggleColor: boolean): SxProps<Theme> => ({

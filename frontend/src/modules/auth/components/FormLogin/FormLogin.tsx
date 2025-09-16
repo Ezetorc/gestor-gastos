@@ -44,8 +44,7 @@ export function FormLogin() {
       component="form"
       noValidate
       onSubmit={handleSubmit(onSubmit)}
-      sx={formSx}
-    >
+      sx={formSx}>
       <Box sx={headerBoxSx}>
         <Box sx={iconWrapperSx}>
           <AccessibilityIcon
@@ -60,8 +59,7 @@ export function FormLogin() {
           color="white"
           fontWeight="bold"
           textAlign="center"
-          component="h1"
-        >
+          component="h1">
           Iniciar Sesión
         </Typography>
         <Typography sx={mutedTextSx}>Accede a tu cuenta de gastos</Typography>
@@ -105,8 +103,7 @@ export function FormLogin() {
                 <InputAdornment position="end">
                   <IconButton
                     onClick={() => setShowPassword(!showPassword)}
-                    edge="end"
-                  >
+                    edge="end">
                     {/*<Icon name={showPassword ? "visibilityOff" : "visibility"} />*/}
                   </IconButton>
                 </InputAdornment>

@@ -9,26 +9,40 @@ import {
   AppBar,
   Drawer,
   DrawerHeader,
-  titleGastosSx,
+  titleGastos,
+  containerListMenu,
+  buttonOpenMenu,
 } from "./SideBar.styles";
-import { Toolbar } from "@mui/material";
+import SideBarMovil from "./SideBarMovil";
+import { Button } from "@mui/material";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { useState } from "react";
+import ModalTransactions from "../Modal/ModalTransactions";
 import { useDashboardLayout } from "../../hooks/useSideBar";
 
 export default function SideBar() {
   const { toggleDrawer, open } = useDashboardLayout();
 
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+
   return (
     <>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ display: { xs: "block", sm: "none" } }}>
-        <Toolbar sx={{display:"flex", justifyContent:"center"}}>
-          <ListNav open={open} isMobile={true}/>
-        </Toolbar>
+      <ModalTransactions open={openModal} handleClose={handleCloseModal} />
+      <AppBar
+        position="fixed"
+        sx={{
+          display: { xs: "block", sm: "none" },
+        }}
+      >
+        <SideBarMovil handleOpen={handleOpenModal} />
       </AppBar>
 
-      <Drawer variant="permanent" open={open} sx={{display:{xs:"none", sm:"block"}}}>
-        <DrawerHeader sx={{display: "flex", justifyContent:open? "start": "center", gap:2, px:2.5}}>
-          <Box component="p" sx={titleGastosSx(open)}>
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader>
+          <Box component="p" sx={titleGastos(open)}>
             Control de Gastos
           </Box>
 
@@ -36,7 +50,7 @@ export default function SideBar() {
             color="inherit"
             aria-label="toggle drawer"
             onClick={toggleDrawer}
-            edge="start"
+            edge="end"
             sx={{ margin: open ? "" : "auto" }}
           >
             {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -44,7 +58,13 @@ export default function SideBar() {
         </DrawerHeader>
 
         <Divider />
-        <ListNav open={open} />
+
+        <Box component="div" sx={containerListMenu}>
+          <ListNav open={open} />
+        </Box>
+        <Button onClick={handleOpenModal} sx={buttonOpenMenu}>
+          <AddCircleOutlineIcon />
+        </Button>
       </Drawer>
     </>
   );

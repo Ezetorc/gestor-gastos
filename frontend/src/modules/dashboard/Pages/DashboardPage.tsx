@@ -1,21 +1,27 @@
-import { Container } from '@mui/material';
-import { Dashboard } from '../components/Dashboard/Dashboard';
-import SideBar from '@/modules/core/components/SideBar/Sidebar';
+import { Container } from "@mui/material";
+
+import SideBar from "@/modules/core/components/SideBar/Sidebar";
+import { SnackbarProvider } from "notistack";
+import { Outlet } from "react-router-dom";
 
 const DashboardPage = () => {
+
   return (
     <Container
       maxWidth="xl"
       sx={(theme) => ({
-        display: 'flex',
+        display: "flex",
         background: theme.palette.secondary.main,
-        minHeight: '100vh',
-        minWidth: '100%',
-        pt: {xs:10,sm:0}
-      })}
-    >
-      <SideBar />
-      <Dashboard />
+        minHeight: "100dvh",
+        mt: { xs: 8, sm: 0 },
+      })}>
+      <SnackbarProvider>
+        <SideBar/>
+        
+       
+        <Outlet />
+       
+      </SnackbarProvider>
     </Container>
   );
 };

@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ListNav } from "../ListNav/ListNav";
 import {
@@ -10,24 +10,19 @@ import {
   listItemButton,
   iconSizeMovil,
 } from "./SideBarMovil.styles";
+import { buttonOpenMenu } from "./SideBar.styles";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 interface Props {
-  children: React.ReactNode;
+  handleOpen: () => void;
 }
 
-export default function SideBarMovil({ children }: Props) {
+export default function SideBarMovil({ handleOpen }: Props) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
-
-  const DrawerList = (
-    <Box sx={listItemButton} role="presentation" onClick={toggleDrawer(false)}>
-      <ListNav open={open} />
-      {children}
-    </Box>
-  );
 
   return (
     <Box component="div" sx={headerMovil}>
@@ -42,7 +37,16 @@ export default function SideBarMovil({ children }: Props) {
       <Typography variant="h6">Control de Gastos</Typography>
 
       <Drawer open={open} onClose={toggleDrawer(true)}>
-        {DrawerList}
+        <Box
+          sx={listItemButton}
+          role="presentation"
+          onClick={toggleDrawer(false)}
+        >
+          <ListNav open={open} />
+          <Button onClick={handleOpen} sx={buttonOpenMenu}>
+            <AddCircleOutlineIcon />
+          </Button>
+        </Box>
       </Drawer>
     </Box>
   );

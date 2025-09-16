@@ -12,14 +12,17 @@ import {
   DrawerHeader,
   titleGastos,
   containerListMenu,
+  buttonOpenMenu,
 } from "./SideBar.styles";
 import SideBarMovil from "./SideBarMovil";
+import { Button } from "@mui/material";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 interface Props {
-  children: React.ReactNode;
+  handleOpen: () => void;
 }
 
-export default function SideBar({ children }: Props) {
+export default function SideBar({ handleOpen }: Props) {
   const { toggleDrawer, open } = useDashboardLayout();
 
   return (
@@ -29,8 +32,9 @@ export default function SideBar({ children }: Props) {
         position="fixed"
         sx={{
           display: { xs: "block", sm: "none" },
-        }}>
-        <SideBarMovil children={children} />
+        }}
+      >
+        <SideBarMovil handleOpen={handleOpen} />
       </AppBar>
 
       <Drawer variant="permanent" open={open}>
@@ -44,7 +48,8 @@ export default function SideBar({ children }: Props) {
             aria-label="toggle drawer"
             onClick={toggleDrawer}
             edge="end"
-            sx={{ margin: open ? "" : "auto" }}>
+            sx={{ margin: open ? "" : "auto" }}
+          >
             {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
@@ -53,9 +58,10 @@ export default function SideBar({ children }: Props) {
 
         <Box component="div" sx={containerListMenu}>
           <ListNav open={open} />
-
-          {children}
         </Box>
+        <Button onClick={handleOpen} sx={buttonOpenMenu}>
+          <AddCircleOutlineIcon />
+        </Button>
       </Drawer>
     </>
   );

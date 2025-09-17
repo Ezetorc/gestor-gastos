@@ -18,11 +18,9 @@ export const useAuth = () => {
   const handleApiError = useCallback(
     (err: unknown) => {
       const apiErr = err as ApiError;
-
       if (apiErr?.status === 401) {
         logout();
       }
-
       // console.error("API Error:", apiErr?.message || err);
     },
     [] 
@@ -47,6 +45,7 @@ export const useAuth = () => {
           logout();
         }
       }
+        
     };
 
     checkToken();

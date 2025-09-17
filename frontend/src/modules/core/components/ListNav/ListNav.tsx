@@ -55,7 +55,9 @@ export const ListNav = ({ open }: Props) => {
           )}
         </NavLink>
       ))}
-      <Box onClick={()=>logout()} sx={{background:"red", color:"white", cursor:"pointer"}}>Cerrar sesion</Box>
+      {open && 
+      <Box onClick={()=>logout()} sx={{background:"#e63131", py:1, borderRadius: 5, display:"flex",justifyContent:"center",alignItems:"center",mx:1, color:"white", cursor:"pointer"}}>Cerrar sesion</Box>
+      }
     </List>
   );
 };

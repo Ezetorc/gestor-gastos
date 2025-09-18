@@ -23,12 +23,16 @@ import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import SaveIcon from "@mui/icons-material/Save";
 import { NumericFormat } from "react-number-format";
 import { useState } from "react";
+import { useFetchApi } from "@/modules/core/hooks/useFetchApi";
+import type { ApiResponse } from "@/modules/auth/types/auth";
 
 interface Props {
   handleClose: () => void;
 }
 
 const FormExpense = ({ handleClose }: Props) => {
+  const { request } = useFetchApi<ApiResponse>();
+
   const {
     handleSubmit,
     control,
@@ -36,12 +40,13 @@ const FormExpense = ({ handleClose }: Props) => {
   } = useForm<FormValuesExpense>({
     resolver: yupResolver(expenseSchema),
     defaultValues: {
-      typeTransation: "gasto",
+      name: "",
       amount: 0,
       date: new Date(),
       category: "",
-      pay: "",
+      paymentMethod: "",
       description: "",
+      type: "EXPENSE",
     },
   });
 
@@ -52,6 +57,10 @@ const FormExpense = ({ handleClose }: Props) => {
     {
       id: crypto.randomUUID(),
       name: "Comida",
+    },
+    {
+      id: crypto.randomUUID(),
+      name: "Servicios",
     },
     {
       id: crypto.randomUUID(),
@@ -78,15 +87,23 @@ const FormExpense = ({ handleClose }: Props) => {
     },
   ];
 
-  const onSubmit: SubmitHandler<FormValuesExpense> = (data) => {
+  const onSubmit: SubmitHandler<FormValuesExpense> = async (data) => {
     const variant: VariantType = "success";
+    const upperCaseTypeTransation = data.type.toUpperCase();
 
-    const upperCaseTypeTransation = data.typeTransation.toUpperCase();
+    try {
+      const token = localStorage.getItem("token");
+      await request("http://localhost:3000/transactions", {
+        method: "POST",
+        token: token || undefined,
+        body: data,
+      });
+    } catch (error) {
+      console.error("Error creando la transacción:", error);
+    }
 
     enqueueSnackbar(`${upperCaseTypeTransation}  Guardado`, { variant });
     handleClose();
-
-    console.log("Formulario enviado:", data);
   };
 
   return (
@@ -105,10 +122,10 @@ const FormExpense = ({ handleClose }: Props) => {
           flexDirection: "column",
           justifyContent: "space-around",
         }}>
-        <FormControl error={!!errors.typeTransation}>
+        <FormControl error={!!errors.type}>
           <FormLabel>Tipo de Transacción</FormLabel>
           <Controller
-            name="typeTransation"
+            name="type"
             control={control}
             render={({ field }) => (
               <RadioGroup row {...field}>
@@ -130,7 +147,7 @@ const FormExpense = ({ handleClose }: Props) => {
                   onClick={() => setToggleColor(false)}
                 />
                 <FormControlLabel
-                  value="ingreso"
+                  value="INCOME"
                   control={<Radio sx={{ display: "none" }} />}
                   label="Ingreso"
                   sx={{
@@ -148,11 +165,28 @@ const FormExpense = ({ handleClose }: Props) => {
               </RadioGroup>
             )}
           />
-          <FormHelperText>{errors.typeTransation?.message}</FormHelperText>
+          <FormHelperText>{errors.type?.message}</FormHelperText>
         </FormControl>
 
         <Controller
-          name="typeTransation"
+          name="name"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <TextField
+              margin="dense"
+              fullWidth
+              label="Nombre"
+              variant="outlined"
+              {...field}
+              error={!!errors.name}
+              helperText={errors.name?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="type"
           control={control}
           render={({ field }) => (
             <TextField
@@ -162,8 +196,8 @@ const FormExpense = ({ handleClose }: Props) => {
               defaultValue="gasto"
               label="typeTransaccion"
               slotProps={{ inputLabel: { shrink: true } }}
-              error={!!errors.typeTransation}
-              helperText={errors.typeTransation?.message}
+              error={!!errors.type}
+              helperText={errors.type?.message}
             />
           )}
         />
@@ -229,10 +263,10 @@ const FormExpense = ({ handleClose }: Props) => {
           <FormHelperText>{errors.category?.message}</FormHelperText>
         </FormControl>
 
-        <FormControl error={!!errors.pay}>
+        <FormControl error={!!errors.paymentMethod}>
           <InputLabel>Método de Pago</InputLabel>
           <Controller
-            name="pay"
+            name="paymentMethod"
             defaultValue=""
             control={control}
             render={({ field }) => (
@@ -245,7 +279,7 @@ const FormExpense = ({ handleClose }: Props) => {
               </Select>
             )}
           />
-          <FormHelperText>{errors.pay?.message}</FormHelperText>
+          <FormHelperText>{errors.paymentMethod?.message}</FormHelperText>
         </FormControl>
 
         {/* Descripción */}

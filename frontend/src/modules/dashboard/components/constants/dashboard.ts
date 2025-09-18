@@ -15,7 +15,7 @@ export const dashboardData = {
   expenses,
   incomes,
   summary: {
-    gastosHoy: -15000,
+    gastosHoy: -19000,
     gastoSemana: -25000,
     gastoMes: -totalExpenses,
     balance: balance,

@@ -2,8 +2,6 @@ import { Box, Card, Typography } from "@mui/material";
 import { Summary } from "../Summary/Summary";
 import { Totals } from "../Totals";
 import DashedLineChart from "../DashedLineChart";
-
-
 import {
   dashboardContainerSx,
   dashboardSectionSx,
@@ -18,7 +16,9 @@ export const Dashboard = () => {
 
   return (
     <Box sx={dashboardContainerSx}>
-      <Typography variant="h5">Bienvenido {user?.name}! Organiza tus finanzas</Typography>
+      <Typography variant="h5">
+        Bienvenido {user?.name}! Organiza tus finanzas
+      </Typography>
       <Summary
         gastosHoy={dashboardData.summary.gastosHoy}
         gastoSemana={dashboardData.summary.gastoSemana}

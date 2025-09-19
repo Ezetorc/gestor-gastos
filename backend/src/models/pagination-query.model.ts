@@ -1,1 +1,1 @@
-export type PaginationQuery = { page: number; amount: number };
+export type PaginationQuery = { page: number; limit: number };

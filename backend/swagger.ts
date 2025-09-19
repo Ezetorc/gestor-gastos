@@ -13,6 +13,14 @@ const doc = {
     },
   ],
   components: {
+
+     securitySchemes: {
+    bearerAuth: {
+      type: "http",
+      scheme: "bearer",
+      bearerFormat: "JWT",
+    },
+  },
     schemas: {
       Transaction: {
         id: 1,
@@ -54,4 +62,4 @@ const doc = {
 const outputFile = "./swagger_output.json";
 const endpointsFiles = ["./src/routers/*.ts"];
 
-swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc);
+swaggerAutogen({ openapi: "3.0.0",autoHeaders: false  })(outputFile, endpointsFiles, doc);

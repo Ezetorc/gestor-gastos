@@ -22,10 +22,10 @@ export class TransactionService {
   static async getAllOfUser(args: {
     userId: number;
     page: number;
-    amount: number;
+    limit: number;
     filters?: TransactionFilters;
   }): Promise<PaginatedResult<Transaction>> {
-    const requestedAmount = args.amount;
+    const requestedAmount = args.limit;
     const queryAmount = requestedAmount + 1;
     const currentPage = args.page < 1 ? 1 : args.page;
     const skip = (currentPage - 1) * requestedAmount;
@@ -33,7 +33,7 @@ export class TransactionService {
     const transactions = await TransactionRepository.getAllOfUser({
       userId: args.userId,
       skip,
-      amount: queryAmount,
+      limit: queryAmount,
       filters,
     });
     const hasNextPage = transactions.length > requestedAmount;

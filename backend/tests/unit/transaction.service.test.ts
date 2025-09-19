@@ -82,7 +82,7 @@ describe("TransactionService", () => {
     });
 
     it("should return paginated transactions with hasNextPage false", async () => {
-      const args = { userId: 1, page: 1, amount: 2, filters: {} };
+      const args = { userId: 1, page: 1, limit: 2, filters: {} };
       jest
         .spyOn(transactionRepositoryMock, "getAllOfUser")
         .mockResolvedValue([transactionMock]);
@@ -92,14 +92,14 @@ describe("TransactionService", () => {
       expect(transactionRepositoryMock.getAllOfUser).toHaveBeenCalledWith({
         userId: args.userId,
         skip: 0,
-        amount: args.amount + 1,
+        limit: args.limit + 1,
         filters: args.filters,
       });
       expect(result).toEqual({ data: [transactionMock], hasNextPage: false });
     });
 
     it("should return hasNextPage true when there are more transactions than requested", async () => {
-      const args = { userId: 1, page: 1, amount: 1, filters: {} };
+      const args = { userId: 1, page: 1, limit: 1, filters: {} };
       const extraTransaction = { ...transactionMock, id: 2 };
       jest
         .spyOn(transactionRepositoryMock, "getAllOfUser")
@@ -110,14 +110,14 @@ describe("TransactionService", () => {
       expect(transactionRepositoryMock.getAllOfUser).toHaveBeenCalledWith({
         userId: args.userId,
         skip: 0,
-        amount: args.amount + 1,
+        limit: args.limit + 1,
         filters: args.filters,
       });
       expect(result).toEqual({ data: [transactionMock], hasNextPage: true });
     });
 
     it("should default page to 1 if page is less than 1", async () => {
-      const args = { userId: 1, page: 0, amount: 2, filters: {} };
+      const args = { userId: 1, page: 0, limit: 2, filters: {} };
       jest
         .spyOn(transactionRepositoryMock, "getAllOfUser")
         .mockResolvedValue([transactionMock]);

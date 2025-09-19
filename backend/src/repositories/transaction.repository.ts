@@ -8,13 +8,13 @@ export class TransactionRepository {
   static async getAllOfUser(args: {
     userId: number;
     skip: number;
-    amount: number;
+    limit: number;
     filters: Prisma.TransactionWhereInput;
   }): Promise<Transaction[]> {
     return await prisma.transaction.findMany({
       where: { userId: args.userId, ...args.filters },
       skip: args.skip,
-      take: args.amount,
+      take: args.limit,
       orderBy: { date: "desc" },
     });
   }

@@ -11,9 +11,10 @@ TransactionRouter.get(
   "/:id",
   authMiddleware,
   /*
-  #swagger.path = '/transactions/:id'
+  #swagger.path = '/transactions/{id}'
   #swagger.tags = ['Transactions']
   #swagger.description = 'Returns a transaction'
+  #swagger.security = [{ "bearerAuth": [] }]
 
   #swagger.parameters['id'] = {
     in: 'path',
@@ -82,6 +83,8 @@ TransactionRouter.get(
   #swagger.path = '/transactions'
   #swagger.tags = ['Transactions']
   #swagger.description = 'Returns your transactions'
+  #swagger.security = [{ "bearerAuth": [] }]
+
 
   #swagger.parameters['page'] = {
     in: 'query',
@@ -90,7 +93,7 @@ TransactionRouter.get(
     example: 1
   }
 
-  #swagger.parameters['amount'] = {
+  #swagger.parameters['limit'] = {
     in: 'query',
     description: 'Number of transactions per page',
     required: false,
@@ -152,6 +155,8 @@ TransactionRouter.post(
   #swagger.path = '/transactions'
   #swagger.tags = ['Transactions']
   #swagger.description = 'Creates a new transaction for the authenticated user'
+  #swagger.security = [{ "bearerAuth": [] }]
+
    #swagger.method = 'post'
 
   #swagger.requestBody = {
@@ -231,10 +236,11 @@ TransactionRouter.patch(
   authMiddleware,
   dtoValidationMiddleware(UpdateTransactionDto), // opcional si quieres validar el body
   /*
-  #swagger.path = '/transactions/:id'
+  #swagger.path = '/transactions/{id}'
   #swagger.tags = ['Transactions']
   #swagger.description = 'Update a transaction (any field can be updated)'
-  
+  #swagger.security = [{ "bearerAuth": [] }]
+
   #swagger.parameters['id'] = {
     in: 'path',
     description: 'Id of the transaction to update',
@@ -289,9 +295,11 @@ TransactionRouter.delete(
   "/:id",
   authMiddleware,
   /*
-  #swagger.path = '/transactions/:id'
+  #swagger.path = '/transactions/{id}'
   #swagger.tags = ['Transactions']
   #swagger.description = 'Deletes a transaction'
+  #swagger.security = [{ "bearerAuth": [] }]
+
   
   #swagger.parameters['id'] = {
     in: 'path',

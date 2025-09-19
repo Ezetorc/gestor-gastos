@@ -1,14 +1,31 @@
 import { useEffect, useState } from "react";
 import type { Transaction } from "../types/transaction";
-import transactionsData from "../mocks/transactions.mock.json";
-
-const typedTransactions: Transaction[] = transactionsData as Transaction[];
 
 export const useManageData = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
-    setTransactions(typedTransactions);
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return;
+    }
+
+    fetch("http://localhost:3000/transactions", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data && Array.isArray(data.data)) {
+          setTransactions(data.data);
+        } else if (Array.isArray(data)) {
+          setTransactions(data);
+        }
+      });
   }, []);
 
   const handleDelete = (id: number) => {

@@ -515,7 +515,7 @@
             }
           },
           {
-            "name": "amount",
+            "name": "limit",
             "in": "query",
             "description": "Number of transactions per page",
             "required": false,

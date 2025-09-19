@@ -93,7 +93,7 @@ TransactionRouter.get(
     example: 1
   }
 
-  #swagger.parameters['amount'] = {
+  #swagger.parameters['limit'] = {
     in: 'query',
     description: 'Number of transactions per page',
     required: false,

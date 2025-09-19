@@ -33,7 +33,7 @@ export class TransactionService {
     const transactions = await TransactionRepository.getAllOfUser({
       userId: args.userId,
       skip,
-      amount: queryAmount,
+      limit: queryAmount,
       filters,
     });
     const hasNextPage = transactions.length > requestedAmount;

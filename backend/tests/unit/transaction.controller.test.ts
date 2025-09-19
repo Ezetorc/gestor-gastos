@@ -72,7 +72,7 @@ describe("TransactionController", () => {
         query: { page: 1, amount: 2 },
       } as any;
       const responseMock = { json: jest.fn() } as any;
-      const paginationQuery: PaginationQuery = { amount: 2, page: 1 };
+      const paginationQuery: PaginationQuery = { limit: 2, page: 1 };
       const filters = {};
 
       jest
@@ -90,7 +90,7 @@ describe("TransactionController", () => {
       expect(transactionServiceMock.getAllOfUser).toHaveBeenCalledWith({
         userId: requestMock.user.id,
         page: paginationQuery.page,
-        amount: paginationQuery.amount,
+        limit: paginationQuery.limit,
         filters,
       });
       expect(responseMock.json).toHaveBeenCalledWith({ value: serviceResult });

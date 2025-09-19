@@ -254,7 +254,7 @@
         }
       }
     },
-    "/transactions/:id": {
+    "/transactions/{id}": {
       "get": {
         "tags": [
           "Transactions"
@@ -262,21 +262,14 @@
         "description": "Returns a transaction",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
-            "description": "Id of the transaction to get",
             "required": true,
-            "example": 1,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Id of the transaction to get",
+            "example": 1
           }
         ],
         "responses": {
@@ -344,7 +337,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "patch": {
         "tags": [
@@ -353,21 +351,14 @@
         "description": "Update a transaction (any field can be updated)",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
-            "description": "Id of the transaction to update",
             "required": true,
-            "example": 1,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Id of the transaction to update",
+            "example": 1
           }
         ],
         "responses": {
@@ -421,6 +412,11 @@
             }
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -443,21 +439,14 @@
         "description": "Deletes a transaction",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
-            "description": "Id of the transaction to delete",
             "required": true,
-            "example": 1,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Id of the transaction to delete",
+            "example": 1
           }
         ],
         "responses": {
@@ -500,7 +489,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/transactions": {
@@ -510,13 +504,6 @@
         ],
         "description": "Returns your transactions",
         "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "page",
             "in": "query",
@@ -595,22 +582,18 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "Transactions"
         ],
         "description": "Creates a new transaction for the authenticated user",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "201": {
             "description": "Transaction successfully created",
@@ -680,6 +663,11 @@
             }
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -734,6 +722,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "Transaction": {
         "type": "object",

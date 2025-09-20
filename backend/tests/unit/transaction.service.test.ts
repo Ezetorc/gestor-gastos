@@ -167,9 +167,9 @@ describe("TransactionService", () => {
       });
 
       const updated = await TransactionService.update(
-        mockTransaction.id, // transactionId
-        mockTransaction.userId, // userId correcto
-        updates // DTO de actualización
+        mockTransaction.id,
+        mockTransaction.userId,
+        updates
       );
 
       expect(updated.amount).toBe(6000);
@@ -206,6 +206,47 @@ describe("TransactionService", () => {
           date: new Date(),
         })
       ).rejects.toThrow(UnauthorizedError);
+    });
+  });
+
+  describe("getSummary", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should return a summary of transactions", async () => {
+      const userId = 1;
+      const getTotalExpensesSpy = jest
+        .spyOn(transactionRepositoryMock, "getTotalExpenses")
+        .mockResolvedValue(20000);
+      const getTotalIncomesSpy = jest
+        .spyOn(transactionRepositoryMock, "getTotalIncomes")
+        .mockResolvedValue(0);
+      const getTodayExpensesSpy = jest
+        .spyOn(transactionRepositoryMock, "getTodayExpenses")
+        .mockResolvedValue(0);
+      const getWeekExpensesSpy = jest
+        .spyOn(transactionRepositoryMock, "getWeekExpenses")
+        .mockResolvedValue(0);
+      const getMonthExpensesSpy = jest
+        .spyOn(transactionRepositoryMock, "getMonthExpenses")
+        .mockResolvedValue(5000);
+
+      const result = await TransactionService.getSummary(userId);
+
+      expect(result).toEqual({
+        totalExpenses: 20000,
+        totalIncomes: 0,
+        monthBalance: -20000,
+        todayExpenses: 0,
+        weekExpenses: 0,
+        monthExpenses: 5000,
+      });
+      expect(getTotalExpensesSpy).toHaveBeenCalledWith(userId);
+      expect(getTotalIncomesSpy).toHaveBeenCalledWith(userId);
+      expect(getTodayExpensesSpy).toHaveBeenCalledWith(userId);
+      expect(getWeekExpensesSpy).toHaveBeenCalledWith(userId);
+      expect(getMonthExpensesSpy).toHaveBeenCalledWith(userId);
     });
   });
 });

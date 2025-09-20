@@ -3,9 +3,15 @@ import { TransactionController } from "../controllers/transaction.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
 import { dtoValidationMiddleware } from "../middlewares/dto-validation.middleware";
-import{UpdateTransactionDto} from "../models/dtos/update-transaction.dto"
+import { UpdateTransactionDto } from "../models/dtos/update-transaction.dto";
 
 export const TransactionRouter = Router();
+
+TransactionRouter.get(
+  "/summary",
+  authMiddleware,
+  TransactionController.getSummary
+);
 
 TransactionRouter.get(
   "/:id",
@@ -289,7 +295,6 @@ TransactionRouter.patch(
   */
   TransactionController.update
 );
-
 
 TransactionRouter.delete(
   "/:id",

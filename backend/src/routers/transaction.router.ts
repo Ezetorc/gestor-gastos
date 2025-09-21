@@ -3,9 +3,81 @@ import { TransactionController } from "../controllers/transaction.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
 import { dtoValidationMiddleware } from "../middlewares/dto-validation.middleware";
-import{UpdateTransactionDto} from "../models/dtos/update-transaction.dto"
+import { UpdateTransactionDto } from "../models/dtos/update-transaction.dto";
 
 export const TransactionRouter = Router();
+
+TransactionRouter.get(
+  "/summary",
+  authMiddleware,
+  /*
+  #swagger.path = '/transactions/summary'
+  #swagger.tags = ['Transactions']
+  #swagger.description = 'Returns a summary of transactions'
+  #swagger.security = [{ "bearerAuth": [] }]
+
+  #swagger.responses[200] = {
+    description: 'Summary of transactions',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            value: {
+              type: 'object',
+              properties: {
+                totalExpenses: {
+                  type: 'number',
+                  example: 20000
+                },
+                totalIncomes: {
+                  type: 'number',
+                  example: 0
+                },
+                monthBalance: {
+                  type: 'number',
+                  example: -20000
+                },
+                todayExpenses: {
+                  type: 'number',
+                  example: 0
+                },
+                weekExpenses: {
+                  type: 'number',
+                  example: 0
+                },
+                monthExpenses: {
+                  type: 'number',
+                  example: 5000
+                }
+              },
+              required: ['totalExpenses']
+            }
+          },
+          required: ['value']
+        }
+      }
+    }
+  }
+
+  #swagger.responses[500] = {
+    description: 'Unexpected error',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            error: { type: 'string', example: 'Unexpected error' }
+          },
+          required: ['error']
+        },
+        example: { error: 'Unexpected error' }
+      }
+    }
+  }
+  */
+  TransactionController.getSummary
+);
 
 TransactionRouter.get(
   "/:id",
@@ -289,7 +361,6 @@ TransactionRouter.patch(
   */
   TransactionController.update
 );
-
 
 TransactionRouter.delete(
   "/:id",

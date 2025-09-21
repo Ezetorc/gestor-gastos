@@ -100,4 +100,11 @@ export class TransactionController {
 
     response.status(204).end();
   }
+
+  static async getSummary(request: Request, response: Response): Promise<void> {
+    const { user } = request as AuthenticatedRequest;
+    const summary = await TransactionService.getSummary(user.id);
+
+    response.status(200).json(success(summary));
+  }
 }

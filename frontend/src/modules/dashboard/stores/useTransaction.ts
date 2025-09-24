@@ -1,24 +1,20 @@
 import { create } from "zustand";
-
-interface GetDataExpense {
-  name: string;
-  type: string;
-  amount: number;
-  date: Date;
-  category: string;
-  paymentMethod: string;
-  description: string;
-}
+import type {
+  Expense,
+  Income,
+  Transaction,
+  TransactionList,
+} from "../types/transaction.types";
 
 interface TransactionState {
-  dataTransaction: GetDataExpense[];
-  dataExpense: GetDataExpense[];
+  dataExpense: Expense;
+  dataIncome: Income;
   getData: () => Promise<void>;
 }
 
-export const useTransactionStore = create<TransactionState>((set) => ({
-  dataTransaction: [],
+export const useTransaction = create<TransactionState>((set) => ({
   dataExpense: [],
+  dataIncome: [],
   getData: async () => {
     const token = localStorage.getItem("token");
     const options = {
@@ -34,12 +30,17 @@ export const useTransactionStore = create<TransactionState>((set) => ({
         "http://localhost:3000/transactions",
         options
       );
-      const data = await response.json();
+      const data: TransactionList = await response.json();
+      const transactions: Transaction[] = data.value.data;
 
-      const transactions: GetDataExpense[] = data.value.data;
+      const dataExpense = transactions.filter(
+        (item) => item.type === "EXPENSE"
+      );
+      const dataIncome = transactions.filter((item) => item.type === "INCOME");
+
       set({
-        dataTransaction: transactions,
-        dataExpense: transactions.filter((t) => t.type === "expense"),
+        dataExpense: dataExpense,
+        dataIncome: dataIncome,
       });
     } catch (err) {
       console.error("Error obteniendo transacciones:", err);

@@ -25,7 +25,8 @@ import { NumericFormat } from "react-number-format";
 import { useState } from "react";
 import { useFetchApi } from "@/modules/core/hooks/useFetchApi";
 import type { ApiResponse } from "@/modules/auth/types/auth";
-import { useTransactionStore } from "@/modules/dashboard/stores/useTransaction";
+import { useTransaction } from "@/modules/dashboard/stores/useTransaction";
+import { useGetSummary } from "@/modules/dashboard/stores/useGetSummary";
 
 interface Props {
   handleClose: () => void;
@@ -34,7 +35,8 @@ interface Props {
 const FormExpense = ({ handleClose }: Props) => {
   const { request } = useFetchApi<ApiResponse>();
 
-  const { getData } = useTransactionStore();
+  const { getData } = useTransaction();
+  const { getDataSummary } = useGetSummary();
 
   const {
     handleSubmit,
@@ -105,6 +107,7 @@ const FormExpense = ({ handleClose }: Props) => {
       console.error("Error creando la transacción:", error);
     }
     getData();
+    getDataSummary();
     enqueueSnackbar(`${upperCaseTypeTransation}  Guardado`, { variant });
     handleClose();
   };

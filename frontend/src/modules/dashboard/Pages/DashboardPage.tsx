@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { alpha, Container } from "@mui/material";
 import SideBar from "@/modules/core/components/SideBar/Sidebar";
 import { Dashboard } from "../components/Dashboard/Dashboard";
 
@@ -8,7 +8,7 @@ const DashboardPage = () => {
       maxWidth="xl"
       sx={(theme) => ({
         display: "flex",
-        background: theme.palette.secondary.main,
+        background: alpha(theme.palette.secondary.main,0.2),
         minHeight: "100dvh",
         mt: { xs: 8, sm: 0 },
       })}>

@@ -39,7 +39,7 @@ export const Summary = ({
         value={gastoMes}
         Icon={TrendingDownIcon}
       />
-      <SummaryStatCard label="Balance" value={balance} Icon={TrendingUpIcon} />
+      <SummaryStatCard label="Balance" value={balance} Icon={TrendingUpIcon} isBalance={true}/>
     </Box>
   );
 };

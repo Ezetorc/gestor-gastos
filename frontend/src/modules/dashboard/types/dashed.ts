@@ -1,13 +1,6 @@
-export interface DataItem {
-  id: number;
-  amount: number;
-  date: string;
-  category: string;
-  description: string;
-  user_id: number;
-}
+import type { Expense, Income } from "./transaction.types";
 
 export interface DashedLineChartProps {
-  expenses: DataItem[];
-  incomes: DataItem[];
+  expenses: Expense;
+  incomes: Income;
 }

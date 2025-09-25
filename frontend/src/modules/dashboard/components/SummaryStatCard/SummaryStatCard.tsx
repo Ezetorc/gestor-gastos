@@ -45,7 +45,7 @@ export const SummaryStatCard: React.FC<SummaryStatCardProps> = ({
           variant="h5"
           sx={(theme) => ({
             color: getColor(theme),
-            fontSize: 19,
+            fontSize: 26,
             fontWeight: "bold",
           })}
         >

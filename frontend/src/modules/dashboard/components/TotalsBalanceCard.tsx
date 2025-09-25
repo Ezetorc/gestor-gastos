@@ -15,12 +15,11 @@ const rowSx: SxProps<Theme> = {
   alignItems: "center",
   mb: 2,
   pb: 1,
-  borderBottom: "1px solid #ccc5",
+  borderBottom: "1px solid rgba(204, 204, 204, 0.2)",
 };
 
 const valueSx: SxProps<Theme> = (theme) => ({
   marginLeft: "auto",
-  fontWeight: "bold",
   color: theme.palette.text.secondary,
 });
 
@@ -44,8 +43,8 @@ export const TotalsBalanceCard = ({
       <Box>
         {totals.map(({ label, value }) => (
           <Box key={label} sx={rowSx}>
-            <Typography variant="h6">{label}:</Typography>
-            <Typography variant="h6" sx={valueSx}>
+            <Typography variant="body1">{label}:</Typography>
+            <Typography variant="body1" sx={valueSx}>
               ${Math.abs(value).toFixed(2)}
             </Typography>
           </Box>
@@ -56,8 +55,8 @@ export const TotalsBalanceCard = ({
 
       <Box
         sx={{
-          borderTop: "1px solid #ccc5",
-          marginTop: "auto",
+          borderTop: "1px solid rgba(204, 204, 204, 0.2)",
+          marginTop: 5,
           display: "flex",
           alignItems: "center",
           pt: 2,

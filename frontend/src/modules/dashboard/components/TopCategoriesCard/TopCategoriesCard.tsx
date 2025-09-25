@@ -39,10 +39,10 @@ export const TopCategoriesCard = ({
   return (
     <Card sx={cardSx}>
       <CardContent>
-        <Typography variant="subtitle2" gutterBottom>
+        <Typography variant="subtitle2" gutterBottom sx={{pb:1,borderBottom: "1px solid rgba(204, 204, 204, 0.2)"}}>
           {title}
         </Typography>
-        <hr />
+        
         <List>
           {topCategories.map(({ label, value }) => (
             <ListItem key={label} sx={categoryItemSx}>
@@ -52,6 +52,7 @@ export const TopCategoriesCard = ({
                   justifyContent: "center",
                   alignItems: "center",
                   gap: 2,
+                
                 }}>
                 <Circle sx={{ fontSize: "10px" }} />
                 <Typography variant="body2">{label}</Typography>

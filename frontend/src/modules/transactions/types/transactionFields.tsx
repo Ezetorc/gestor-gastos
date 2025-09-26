@@ -14,13 +14,13 @@ type FieldConfigFor<K extends keyof Transaction> = {
 
 type FieldConfig = { [K in keyof Transaction]: FieldConfigFor<K> }[keyof Transaction];
 
-export const trasactionFields: FieldConfig[] = [
+export const transactionFields: FieldConfig[] = [
   {
     key: "amount",
     type: "number",
     render: (amount, t) => (
-      <span style={{ color: t.type === "income" ? "green" : "red" }}>
-        {t.type === "income" ? "+" : "-"}
+      <span style={{ color: t.type === "INCOME" ? "green" : "red" }}>
+        {t.type === "INCOME" ? "+" : "-"}
         {Math.abs(amount).toLocaleString("es-ES", {
           style: "currency",
           currency: "EUR", // Puedes cambiarlo a tu moneda local
@@ -42,13 +42,13 @@ export const trasactionFields: FieldConfig[] = [
     render: (value) => value || "Sin categoría",
   },
   {
-    key: "payment_method",
+    key: "paymentMethod",
     render: (value) => value || "No especificado",
   },
   { key: "description", render: (value) => value || "-" },
   {
     key: "type",
     isSelect: true,
-    render: (_, t) => (t.type === "income" ? "Ingreso" : "Gasto"),
+    render: (_, t) => (t.type === "INCOME" ? "Ingreso" : "Gasto"),
   },
 ];

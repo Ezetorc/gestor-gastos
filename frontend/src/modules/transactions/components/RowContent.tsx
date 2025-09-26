@@ -5,13 +5,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import CloseIcon from "@mui/icons-material/Close";
 import type { Transaction } from "../types/transaction";
-import { trasactionFields } from "../types/trasactionFields";
+import { transactionFields } from "../types/transactionFields.tsx";
 
+type UpdateTransactionDto = Partial<Omit<Transaction, "id" | "userId">>;
 interface RowContentProps {
   index: number;
   transaction: Transaction;
   handleDelete: (id: number) => void;
-  handleUpdate: (transaction: Transaction) => void;
+  handleUpdate: (id: number, data: UpdateTransactionDto) => void;
 }
 
 export const RowContent: React.FC<RowContentProps> = ({
@@ -24,7 +25,13 @@ export const RowContent: React.FC<RowContentProps> = ({
   const [editValues, setEditValues] = useState<Transaction>(transaction);
 
   const onSave = () => {
-    handleUpdate(editValues);
+    // Separamos el id y userId del resto de los datos que se van a enviar.
+    const { id, userId, ...payload } = editValues;
+
+    // Log para verificar el payload antes de enviarlo
+    console.log("Payload a enviar:", payload);
+
+    handleUpdate(id, payload);
     setIsEditing(false);
   };
 
@@ -40,7 +47,7 @@ export const RowContent: React.FC<RowContentProps> = ({
 
       {isEditing ? (
         <>
-          {trasactionFields.map(({ key, type, isSelect }) => (
+          {transactionFields.map(({ key, type, isSelect }) => (
             <TableCell key={key}>
               {isSelect ? (
                 <Select
@@ -79,7 +86,7 @@ export const RowContent: React.FC<RowContentProps> = ({
             </TableCell>
           ))}
           {/* Columna Acciones */}
-          <TableCell sx={{align:{sm: "center", xs: "right"}}}>
+          <TableCell sx={{ align: { sm: "center", xs: "right" } }}>
             <IconButton onClick={onSave} size="medium" color="primary">
               <SaveIcon />
             </IconButton>
@@ -90,13 +97,13 @@ export const RowContent: React.FC<RowContentProps> = ({
         </>
       ) : (
         <>
-          {trasactionFields.map(({ key, render }) => (
+          {transactionFields.map(({ key, render }) => (
             <TableCell key={key}>
               {render ? render(transaction[key], transaction) : transaction[key]}
             </TableCell>
           ))}
           {/* Columna Acciones */}
-          <TableCell sx={{align:{sm: "center", xs: "right"}}}>
+          <TableCell sx={{ align: { sm: "center", xs: "right" } }}>
             <IconButton onClick={() => setIsEditing(true)} size="medium">
               <EditIcon />
             </IconButton>

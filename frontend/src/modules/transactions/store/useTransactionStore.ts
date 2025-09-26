@@ -7,7 +7,7 @@ type UpdateTransactionDto = Partial<Omit<Transaction, "id" | "userId">>;
 interface TransactionState {
   transactions: Transaction[];
   fetchTransactions: () => Promise<void>;
-  deleteTransaction: (id: number) => Promise<void>;
+  deleteTransaction: (id: number | Transaction) => Promise<void>;
   updateTransaction: (id: number, data: UpdateTransactionDto) => Promise<void>;
 }
 
@@ -48,12 +48,14 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
     }
   },
 
-  deleteTransaction: async (id: number) => {
+  deleteTransaction: async (idOrTransaction: number | Transaction) => {
     const token = localStorage.getItem("token");
     if (!token) {
       console.error("No se encontró token. Abortando delete.");
       return;
     }
+
+    const id = typeof idOrTransaction === 'number' ? idOrTransaction : idOrTransaction.id;
 
     // Actualización optimista: removemos la transacción de la UI inmediatamente
     const originalTransactions = get().transactions;
@@ -82,12 +84,14 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
     }
   },
 
-  updateTransaction: async (id: number, data: UpdateTransactionDto) => {
+  updateTransaction: async (idOrTransaction: number | Transaction, data: UpdateTransactionDto) => {
     const token = localStorage.getItem("token");
     if (!token) {
       console.error("No se encontró token. Abortando update.");
       return;
     }
+
+    const id = typeof idOrTransaction === 'number' ? idOrTransaction : idOrTransaction.id;
 
     try {
       const response = await fetch(`http://localhost:3000/transactions/${id}`, {
@@ -103,17 +107,11 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
         throw new Error("Falló la actualización en el servidor");
       }
 
-      const updatedTransaction = await response.json();
-      // Actualizamos el estado con la respuesta del servidor para asegurar consistencia
-      set((state) => ({
-        transactions: state.transactions.map((t) =>
-          t.id === id ? { ...t, ...updatedTransaction.value } : t
-        ),
-      }));
       console.log(`🔄 Transacción con id ${id} actualizada.`);
+      // Después de actualizar, volvemos a solicitar todas las transacciones para tener el estado más reciente.
+      await get().fetchTransactions();
     } catch (error) {
       console.error("❌ Error actualizando la transacción:", error);
-      // Aquí podrías también implementar una reversión si la API falla
     }
   },
 }));

@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Card, CardContent, Typography, type Theme } from "@mui/material";
 import React from "react";
 import {
   containerSx,
@@ -20,7 +20,7 @@ export const SummaryStatCard: React.FC<SummaryStatCardProps> = ({
   Icon,
   isBalance = false,
 }) => {
-  const getColor = (theme: any) => {
+  const getColor = (theme: Theme) => {
     if (isBalance) {
       if (value > 0) return "rgba(136, 255, 68, 1)";
       if (value < 0) return "rgba(255, 49, 49, 1)";

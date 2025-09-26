@@ -6,25 +6,20 @@ import type { ApiResponse, Credentials } from "../types/auth";
 import { useCallback, useEffect } from "react";
 import type { ApiError } from "@/modules/core/types/fetch";
 
-
 export const useAuth = () => {
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
   const logoutStore = useUserStore((state) => state.logout);
-
   const { request, loading, error } = useFetchApi<ApiResponse>();
   const navigate = useNavigate();
 
-  const handleApiError = useCallback(
-    (err: unknown) => {
-      const apiErr = err as ApiError;
-      if (apiErr?.status === 401) {
-        logout();
-      }
-      // console.error("API Error:", apiErr?.message || err);
-    },
-    [] 
-  );
+  const handleApiError = useCallback((err: unknown) => {
+    const apiErr = err as ApiError;
+    if (apiErr?.status === 401) {
+      logout();
+    }
+    // console.error("API Error:", apiErr?.message || err);
+  }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem("token");
@@ -45,7 +40,6 @@ export const useAuth = () => {
           logout();
         }
       }
-        
     };
 
     checkToken();
@@ -97,6 +91,6 @@ export const useAuth = () => {
     register,
     logout,
     loading,
-    error
+    error,
   };
 };

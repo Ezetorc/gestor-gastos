@@ -1,7 +1,7 @@
-import type { Expense } from "./expense";
+import type { Expense } from "./transaction.types";
 
 export interface TopCategoriesCardProps {
   title?: string;
-  expenses: Expense[];
+  expenses: Expense;
   maxCategories?: number;
 }

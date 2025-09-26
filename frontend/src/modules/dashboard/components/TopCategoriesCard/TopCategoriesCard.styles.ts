@@ -17,6 +17,7 @@ export const categoryItemSx: SxProps<Theme> = {
   display: 'flex',
   justifyContent: 'space-between',
   fontWeight: "bold",
+  padding: 0
 };
 
 export const categoryValueSx: SxProps<Theme> = (theme)=>({

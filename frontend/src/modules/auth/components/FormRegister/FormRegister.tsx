@@ -134,8 +134,7 @@ export function FormRegister() {
             variant="outlined"
             {...field}
             error={!!errors.password}
-            helperText={errors.password?.message}
-            sx={inputSx}
+            inputProps={{ "data-testid": "password-input" }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

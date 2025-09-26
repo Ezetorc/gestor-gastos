@@ -1,27 +1,21 @@
-import { useEffect, useState } from "react";
-import type { Transaction } from "../types/transaction";
-import transactionsData from "../mocks/transactions.mock.json";
-
-const typedTransactions: Transaction[] = transactionsData as Transaction[];
+import { useEffect } from "react";
+import { useTransactionStore } from "../store/useTransactionStore";
 
 export const useManageData = () => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const {
+    transactions,
+    fetchTransactions,
+    deleteTransaction,
+    updateTransaction,
+  } = useTransactionStore();
 
   useEffect(() => {
-    setTransactions(typedTransactions);
-  }, []);
+    fetchTransactions();
+  }, [fetchTransactions]);
 
-  const handleDelete = (id: number) => {
-    setTransactions(transactions.filter((transaction) => transaction.id !== id));
+  return {
+    data: transactions,
+    handleDelete: deleteTransaction,
+    handleUpdate: updateTransaction,
   };
-
-  const handleUpdate = (updatedTransaction: Transaction) => {
-    setTransactions(
-      transactions.map((transaction) =>
-        transaction.id === updatedTransaction.id ? updatedTransaction : transaction
-      )
-    );
-  };
-
-  return { data: transactions, handleDelete, handleUpdate };
 };

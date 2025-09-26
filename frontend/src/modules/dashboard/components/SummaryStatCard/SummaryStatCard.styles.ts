@@ -23,8 +23,3 @@ export const labelSx :SxProps<Theme>=(theme)=> ({
   fontSize: 16,
 });
 
-export const valueSx: SxProps<Theme> = (theme)=>({
-  color: theme.palette.text.primary,
-  fontWeight: "bold",
-  fontSize: "1.5rem",
-});

@@ -11,9 +11,7 @@ export interface SelectFilter<T> {
   options: SelectOption[];
 }
 
-
 export type TransactionSelectFilter = SelectFilter<TransactionFilters>;
-
 
 export interface TransactionFilters {
   search: string;
@@ -23,7 +21,6 @@ export interface TransactionFilters {
   date_from?: string;
   date_to?: string;
 }
-
 
 export interface DateFilter<T> {
   key: keyof T;

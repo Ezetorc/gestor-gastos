@@ -72,7 +72,7 @@ describe("TransactionController", () => {
         query: { page: 1, amount: 2 },
       } as any;
       const responseMock = { json: jest.fn() } as any;
-      const paginationQuery: PaginationQuery = { amount: 2, page: 1 };
+      const paginationQuery: PaginationQuery = { limit: 2, page: 1 };
       const filters = {};
 
       jest
@@ -90,7 +90,7 @@ describe("TransactionController", () => {
       expect(transactionServiceMock.getAllOfUser).toHaveBeenCalledWith({
         userId: requestMock.user.id,
         page: paginationQuery.page,
-        amount: paginationQuery.amount,
+        limit: paginationQuery.limit,
         filters,
       });
       expect(responseMock.json).toHaveBeenCalledWith({ value: serviceResult });
@@ -123,6 +123,39 @@ describe("TransactionController", () => {
       await expect(
         TransactionController.getAllOfUser(requestMock, responseMock)
       ).rejects.toThrow(BadRequestError);
+    });
+  });
+
+  describe("getSummary", () => {
+    it("should return a summary of transactions", async () => {
+      const requestMock = { user: { id: 1 } } as any;
+      const json = jest.fn();
+      const responseMock = {
+        status: jest.fn().mockReturnValue({ json }),
+        json,
+      } as any;
+      const expected = {
+        totalExpenses: 20000,
+        totalIncomes: 0,
+        monthBalance: -20000,
+        todayExpenses: 0,
+        weekExpenses: 0,
+        monthExpenses: 5000,
+      };
+
+      transactionServiceMock.getSummary.mockResolvedValue(expected);
+      await TransactionController.getSummary(
+        requestMock,
+        responseMock
+      );
+
+      expect(transactionServiceMock.getSummary).toHaveBeenCalledWith(
+        requestMock.user.id
+      );
+      expect(responseMock.status).toHaveBeenCalledWith(200);
+      expect(responseMock.status().json).toHaveBeenCalledWith({
+        value: expected,
+      });
     });
   });
 });

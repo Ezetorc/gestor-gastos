@@ -6,7 +6,7 @@ import { PaginatedResult } from "../models/paginated-result.model";
 import { buildFilters } from "../utilities/build-filters.utility";
 import { TransactionFilters } from "../models/transaction-filters.model";
 import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
-import {UpdateTransactionDto} from "../models/dtos/update-transaction.dto";
+import { UpdateTransactionDto } from "../models/dtos/update-transaction.dto";
 
 export class TransactionService {
   static async create(
@@ -22,10 +22,10 @@ export class TransactionService {
   static async getAllOfUser(args: {
     userId: number;
     page: number;
-    amount: number;
+    limit: number;
     filters?: TransactionFilters;
   }): Promise<PaginatedResult<Transaction>> {
-    const requestedAmount = args.amount;
+    const requestedAmount = args.limit;
     const queryAmount = requestedAmount + 1;
     const currentPage = args.page < 1 ? 1 : args.page;
     const skip = (currentPage - 1) * requestedAmount;
@@ -33,7 +33,7 @@ export class TransactionService {
     const transactions = await TransactionRepository.getAllOfUser({
       userId: args.userId,
       skip,
-      amount: queryAmount,
+      limit: queryAmount,
       filters,
     });
     const hasNextPage = transactions.length > requestedAmount;
@@ -43,19 +43,17 @@ export class TransactionService {
   }
 
   static async update(
-    transactionId:number,
-     userId:number,
-       data: UpdateTransactionDto): Promise<Transaction> {
+    transactionId: number,
+    userId: number,
+    data: UpdateTransactionDto
+  ): Promise<Transaction> {
     const transaction = await TransactionRepository.getById(transactionId);
-   
+
     if (!transaction) throw new NotFoundError("Transaction not found");
     if (transaction.userId !== userId)
       throw new UnauthorizedError("This transaction doesn't belong to you");
 
-    return await TransactionRepository.update(transactionId,data);
-    
-      
-
+    return await TransactionRepository.update(transactionId, data);
   }
 
   static async delete(transactionId: number, userId: number): Promise<void> {
@@ -63,7 +61,6 @@ export class TransactionService {
 
     if (!transaction) throw new NotFoundError("Transaction not found");
     if (transaction.userId !== userId)
-     
       throw new UnauthorizedError("This transaction doesn't belong to you");
 
     await TransactionRepository.delete(transactionId);
@@ -75,5 +72,23 @@ export class TransactionService {
     if (!transaction) throw new NotFoundError("Transaction not found");
 
     return transaction;
+  }
+
+  static async getSummary(userId: number) {
+    const totalExpenses = await TransactionRepository.getTotalExpenses(userId);
+    const totalIncomes = await TransactionRepository.getTotalIncomes(userId);
+    const todayExpenses = await TransactionRepository.getTodayExpenses(userId);
+    const weekExpenses = await TransactionRepository.getWeekExpenses(userId);
+    const monthExpenses = await TransactionRepository.getMonthExpenses(userId);
+    const monthBalance = totalIncomes - totalExpenses;
+
+    return {
+      totalExpenses,
+      totalIncomes,
+      monthBalance,
+      todayExpenses,
+      weekExpenses,
+      monthExpenses,
+    };
   }
 }

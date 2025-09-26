@@ -3,17 +3,90 @@ import { TransactionController } from "../controllers/transaction.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { CreateTransactionDto } from "../models/dtos/create-transaction.dto";
 import { dtoValidationMiddleware } from "../middlewares/dto-validation.middleware";
-import{UpdateTransactionDto} from "../models/dtos/update-transaction.dto"
+import { UpdateTransactionDto } from "../models/dtos/update-transaction.dto";
 
 export const TransactionRouter = Router();
+
+TransactionRouter.get(
+  "/summary",
+  authMiddleware,
+  /*
+  #swagger.path = '/transactions/summary'
+  #swagger.tags = ['Transactions']
+  #swagger.description = 'Returns a summary of transactions'
+  #swagger.security = [{ "bearerAuth": [] }]
+
+  #swagger.responses[200] = {
+    description: 'Summary of transactions',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            value: {
+              type: 'object',
+              properties: {
+                totalExpenses: {
+                  type: 'number',
+                  example: 20000
+                },
+                totalIncomes: {
+                  type: 'number',
+                  example: 0
+                },
+                monthBalance: {
+                  type: 'number',
+                  example: -20000
+                },
+                todayExpenses: {
+                  type: 'number',
+                  example: 0
+                },
+                weekExpenses: {
+                  type: 'number',
+                  example: 0
+                },
+                monthExpenses: {
+                  type: 'number',
+                  example: 5000
+                }
+              },
+              required: ['totalExpenses']
+            }
+          },
+          required: ['value']
+        }
+      }
+    }
+  }
+
+  #swagger.responses[500] = {
+    description: 'Unexpected error',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            error: { type: 'string', example: 'Unexpected error' }
+          },
+          required: ['error']
+        },
+        example: { error: 'Unexpected error' }
+      }
+    }
+  }
+  */
+  TransactionController.getSummary
+);
 
 TransactionRouter.get(
   "/:id",
   authMiddleware,
   /*
-  #swagger.path = '/transactions/:id'
+  #swagger.path = '/transactions/{id}'
   #swagger.tags = ['Transactions']
   #swagger.description = 'Returns a transaction'
+  #swagger.security = [{ "bearerAuth": [] }]
 
   #swagger.parameters['id'] = {
     in: 'path',
@@ -82,6 +155,8 @@ TransactionRouter.get(
   #swagger.path = '/transactions'
   #swagger.tags = ['Transactions']
   #swagger.description = 'Returns your transactions'
+  #swagger.security = [{ "bearerAuth": [] }]
+
 
   #swagger.parameters['page'] = {
     in: 'query',
@@ -90,7 +165,7 @@ TransactionRouter.get(
     example: 1
   }
 
-  #swagger.parameters['amount'] = {
+  #swagger.parameters['limit'] = {
     in: 'query',
     description: 'Number of transactions per page',
     required: false,
@@ -152,6 +227,8 @@ TransactionRouter.post(
   #swagger.path = '/transactions'
   #swagger.tags = ['Transactions']
   #swagger.description = 'Creates a new transaction for the authenticated user'
+  #swagger.security = [{ "bearerAuth": [] }]
+
    #swagger.method = 'post'
 
   #swagger.requestBody = {
@@ -231,10 +308,11 @@ TransactionRouter.patch(
   authMiddleware,
   dtoValidationMiddleware(UpdateTransactionDto), // opcional si quieres validar el body
   /*
-  #swagger.path = '/transactions/:id'
+  #swagger.path = '/transactions/{id}'
   #swagger.tags = ['Transactions']
   #swagger.description = 'Update a transaction (any field can be updated)'
-  
+  #swagger.security = [{ "bearerAuth": [] }]
+
   #swagger.parameters['id'] = {
     in: 'path',
     description: 'Id of the transaction to update',
@@ -284,14 +362,15 @@ TransactionRouter.patch(
   TransactionController.update
 );
 
-
 TransactionRouter.delete(
   "/:id",
   authMiddleware,
   /*
-  #swagger.path = '/transactions/:id'
+  #swagger.path = '/transactions/{id}'
   #swagger.tags = ['Transactions']
   #swagger.description = 'Deletes a transaction'
+  #swagger.security = [{ "bearerAuth": [] }]
+
   
   #swagger.parameters['id'] = {
     in: 'path',

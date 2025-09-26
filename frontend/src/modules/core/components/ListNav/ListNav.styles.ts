@@ -1,5 +1,6 @@
 //Estilos css ListNav
 
+
 export const containerList = (open: boolean) => ({
   a: {
     textDecoration: "none",
@@ -18,11 +19,12 @@ export const listItemButton = (open: boolean, isActive: boolean) => ({
   width: { xs: "100dvw" },
   px: { xs: 10, sm: 2.5 },
   transition: "all 0.3s ease",
-  backgroundColor: isActive ? "primary.main" : "transparent",
-  color: isActive ? "white" : "inherit",
-
+  fontWeight: "bold",
+  backgroundColor: isActive ? "secondary.main" : "transparent",
+  color: isActive ? "black" : "inherit",
+  
   "&:hover": {
-    backgroundColor: isActive ? "primary.dark" : "action.hover",
+    backgroundColor: isActive ? "secondary.dark" : "action.hover",
   },
   ...(open ? { justifyContent: "initial" } : { justifyContent: "center" }),
 });

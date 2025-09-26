@@ -2,8 +2,6 @@ import { Box, Card, Typography } from "@mui/material";
 import { Summary } from "../Summary/Summary";
 import { Totals } from "../Totals";
 import DashedLineChart from "../DashedLineChart";
-
-
 import {
   dashboardContainerSx,
   dashboardSectionSx,
@@ -11,38 +9,52 @@ import {
 } from "./Dashboard.styles";
 import { PieChartComponent } from "../PiesChart/PieChart";
 import { useUserStore } from "@/modules/auth/stores/useUserStore";
-import { dashboardData } from "../constants/dashboard";
+import { useEffect } from "react";
+import { useTransaction } from "../../stores/useTransaction";
+import { useGetSummary } from "../../stores/useGetSummary";
 
 export const Dashboard = () => {
   const user = useUserStore((state) => state.user);
 
+  const { dataExpense, dataIncome, getData } = useTransaction();
+  const { dataSummary, getDataSummary } = useGetSummary();
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
+
+  useEffect(() => {
+    getDataSummary();
+  }, [getDataSummary]);
+
+  if (!dataSummary) return;
+
   return (
     <Box sx={dashboardContainerSx}>
-      <Typography variant="h5">Bienvenido {user?.name}! Organiza tus finanzas</Typography>
+      <Typography variant="h5">
+        Bienvenido {user?.name}! Organiza tus finanzas
+      </Typography>
       <Summary
-        gastosHoy={dashboardData.summary.gastosHoy}
-        gastoSemana={dashboardData.summary.gastoSemana}
-        gastoMes={dashboardData.summary.gastoMes}
-        balance={dashboardData.summary.balance}
+        gastosHoy={dataSummary?.todayExpenses}
+        gastoSemana={dataSummary?.weekExpenses}
+        gastoMes={dataSummary?.monthExpenses}
+        balance={dataSummary?.monthBalance}
       />
 
       <Totals
-        totalGastos={dashboardData.totals.totalGastos}
-        totalIngresos={dashboardData.totals.totalIngresos}
-        balance={dashboardData.totals.balanceResumen}
-        expenses={dashboardData.expenses}
+        totalGastos={dataSummary?.totalExpenses}
+        totalIngresos={dataSummary?.totalIncomes}
+        balance={dataSummary?.monthBalance}
+        expenses={dataExpense}
       />
 
       <Box sx={dashboardSectionSx}>
         <Card sx={dashboardCardSx}>
-          <PieChartComponent expenses={dashboardData.expenses} />
+          <PieChartComponent expenses={dataExpense} />
         </Card>
 
         <Card sx={dashboardCardSx}>
-          <DashedLineChart
-            expenses={dashboardData.expenses}
-            incomes={dashboardData.incomes}
-          />
+          <DashedLineChart expenses={dataExpense} incomes={dataIncome} />
         </Card>
       </Box>
     </Box>

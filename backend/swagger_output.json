@@ -254,7 +254,91 @@
         }
       }
     },
-    "/transactions/:id": {
+    "/transactions/summary": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "description": "Returns a summary of transactions",
+        "responses": {
+          "200": {
+            "description": "Summary of transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "totalExpenses": {
+                          "type": "number",
+                          "example": 20000
+                        },
+                        "totalIncomes": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "monthBalance": {
+                          "type": "number",
+                          "example": -20000
+                        },
+                        "todayExpenses": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "weekExpenses": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "monthExpenses": {
+                          "type": "number",
+                          "example": 5000
+                        }
+                      },
+                      "required": [
+                        "totalExpenses"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Unexpected error"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                },
+                "example": {
+                  "error": "Unexpected error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/transactions/{id}": {
       "get": {
         "tags": [
           "Transactions"
@@ -262,21 +346,14 @@
         "description": "Returns a transaction",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
-            "description": "Id of the transaction to get",
             "required": true,
-            "example": 1,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Id of the transaction to get",
+            "example": 1
           }
         ],
         "responses": {
@@ -344,7 +421,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "patch": {
         "tags": [
@@ -353,21 +435,14 @@
         "description": "Update a transaction (any field can be updated)",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
-            "description": "Id of the transaction to update",
             "required": true,
-            "example": 1,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Id of the transaction to update",
+            "example": 1
           }
         ],
         "responses": {
@@ -421,6 +496,11 @@
             }
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -443,21 +523,14 @@
         "description": "Deletes a transaction",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
-            "description": "Id of the transaction to delete",
             "required": true,
-            "example": 1,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Id of the transaction to delete",
+            "example": 1
           }
         ],
         "responses": {
@@ -500,7 +573,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/transactions": {
@@ -510,13 +588,6 @@
         ],
         "description": "Returns your transactions",
         "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "page",
             "in": "query",
@@ -528,7 +599,7 @@
             }
           },
           {
-            "name": "amount",
+            "name": "limit",
             "in": "query",
             "description": "Number of transactions per page",
             "required": false,
@@ -595,22 +666,18 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "Transactions"
         ],
         "description": "Creates a new transaction for the authenticated user",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "201": {
             "description": "Transaction successfully created",
@@ -680,6 +747,11 @@
             }
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -734,6 +806,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "Transaction": {
         "type": "object",

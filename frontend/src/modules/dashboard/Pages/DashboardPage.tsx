@@ -1,25 +1,20 @@
-import { Container } from "@mui/material";
-
+import { alpha, Container } from "@mui/material";
 import SideBar from "@/modules/core/components/SideBar/Sidebar";
-import { Outlet } from "react-router-dom";
 import { Dashboard } from "../components/Dashboard/Dashboard";
 
 const DashboardPage = () => {
-
   return (
     <Container
       maxWidth="xl"
       sx={(theme) => ({
         display: "flex",
-        background: theme.palette.secondary.main,
+        background: alpha(theme.palette.secondary.main,0.2),
         minHeight: "100dvh",
         mt: { xs: 8, sm: 0 },
       })}>
-      
-        <SideBar/>
-        <Outlet />
-        <Dashboard/>
-    
+      <SideBar />
+
+      <Dashboard />
     </Container>
   );
 };

@@ -1,22 +1,13 @@
 import { Box, type SxProps, type Theme } from "@mui/material";
 import { TopCategoriesCard } from "./TopCategoriesCard/TopCategoriesCard";
 import { TotalsBalanceCard } from "./TotalsBalanceCard"; // Asegúrate de importar tu card de totales
-
-interface Expense {
-  id: number;
-  amount: number;
-  date: string;
-  category: string;
-  payment_method: string;
-  description: string;
-  user_id: number;
-}
+import type { Expense } from "../types/transaction.types";
 
 interface TotalsProps {
   totalGastos: number;
   totalIngresos: number;
   balance: number;
-  expenses: Expense[];
+  expenses: Expense;
 }
 
 const MAX_CATEGORIES = 5;

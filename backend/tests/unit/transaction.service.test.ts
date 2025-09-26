@@ -82,7 +82,7 @@ describe("TransactionService", () => {
     });
 
     it("should return paginated transactions with hasNextPage false", async () => {
-      const args = { userId: 1, page: 1, amount: 2, filters: {} };
+      const args = { userId: 1, page: 1, limit: 2, filters: {} };
       jest
         .spyOn(transactionRepositoryMock, "getAllOfUser")
         .mockResolvedValue([transactionMock]);
@@ -92,14 +92,14 @@ describe("TransactionService", () => {
       expect(transactionRepositoryMock.getAllOfUser).toHaveBeenCalledWith({
         userId: args.userId,
         skip: 0,
-        amount: args.amount + 1,
+        limit: args.limit + 1,
         filters: args.filters,
       });
       expect(result).toEqual({ data: [transactionMock], hasNextPage: false });
     });
 
     it("should return hasNextPage true when there are more transactions than requested", async () => {
-      const args = { userId: 1, page: 1, amount: 1, filters: {} };
+      const args = { userId: 1, page: 1, limit: 1, filters: {} };
       const extraTransaction = { ...transactionMock, id: 2 };
       jest
         .spyOn(transactionRepositoryMock, "getAllOfUser")
@@ -110,14 +110,14 @@ describe("TransactionService", () => {
       expect(transactionRepositoryMock.getAllOfUser).toHaveBeenCalledWith({
         userId: args.userId,
         skip: 0,
-        amount: args.amount + 1,
+        limit: args.limit + 1,
         filters: args.filters,
       });
       expect(result).toEqual({ data: [transactionMock], hasNextPage: true });
     });
 
     it("should default page to 1 if page is less than 1", async () => {
-      const args = { userId: 1, page: 0, amount: 2, filters: {} };
+      const args = { userId: 1, page: 0, limit: 2, filters: {} };
       jest
         .spyOn(transactionRepositoryMock, "getAllOfUser")
         .mockResolvedValue([transactionMock]);
@@ -167,9 +167,9 @@ describe("TransactionService", () => {
       });
 
       const updated = await TransactionService.update(
-        mockTransaction.id, // transactionId
-        mockTransaction.userId, // userId correcto
-        updates // DTO de actualización
+        mockTransaction.id,
+        mockTransaction.userId,
+        updates
       );
 
       expect(updated.amount).toBe(6000);
@@ -206,6 +206,47 @@ describe("TransactionService", () => {
           date: new Date(),
         })
       ).rejects.toThrow(UnauthorizedError);
+    });
+  });
+
+  describe("getSummary", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should return a summary of transactions", async () => {
+      const userId = 1;
+      const getTotalExpensesSpy = jest
+        .spyOn(transactionRepositoryMock, "getTotalExpenses")
+        .mockResolvedValue(20000);
+      const getTotalIncomesSpy = jest
+        .spyOn(transactionRepositoryMock, "getTotalIncomes")
+        .mockResolvedValue(0);
+      const getTodayExpensesSpy = jest
+        .spyOn(transactionRepositoryMock, "getTodayExpenses")
+        .mockResolvedValue(0);
+      const getWeekExpensesSpy = jest
+        .spyOn(transactionRepositoryMock, "getWeekExpenses")
+        .mockResolvedValue(0);
+      const getMonthExpensesSpy = jest
+        .spyOn(transactionRepositoryMock, "getMonthExpenses")
+        .mockResolvedValue(5000);
+
+      const result = await TransactionService.getSummary(userId);
+
+      expect(result).toEqual({
+        totalExpenses: 20000,
+        totalIncomes: 0,
+        monthBalance: -20000,
+        todayExpenses: 0,
+        weekExpenses: 0,
+        monthExpenses: 5000,
+      });
+      expect(getTotalExpensesSpy).toHaveBeenCalledWith(userId);
+      expect(getTotalIncomesSpy).toHaveBeenCalledWith(userId);
+      expect(getTodayExpensesSpy).toHaveBeenCalledWith(userId);
+      expect(getWeekExpensesSpy).toHaveBeenCalledWith(userId);
+      expect(getMonthExpensesSpy).toHaveBeenCalledWith(userId);
     });
   });
 });

@@ -1,32 +1,51 @@
 import type { Transaction } from "./transaction";
 import React from "react";
 
-export interface FieldConfig {
-  key: keyof Transaction;
+// Usamos un tipo más avanzado para asegurar que el 'render' coincida con la 'key'
+type FieldConfigFor<K extends keyof Transaction> = {
+  key: K;
   type?: string; // para <TextField>
   isSelect?: boolean; // para dropdown
-  render?: (value: any, transaction: Transaction) => React.ReactNode; // vista solo lectura
-}
+  render?: (
+    value: Transaction[K],
+    transaction: Transaction
+  ) => React.ReactNode; // vista solo lectura
+};
+
+type FieldConfig = { [K in keyof Transaction]: FieldConfigFor<K> }[keyof Transaction];
 
 export const trasactionFields: FieldConfig[] = [
   {
     key: "amount",
     type: "number",
-    render: (_, t) => (
+    render: (amount, t) => (
       <span style={{ color: t.type === "income" ? "green" : "red" }}>
         {t.type === "income" ? "+" : "-"}
-        {Math.abs(t.amount).toLocaleString()}
+        {Math.abs(amount).toLocaleString("es-ES", {
+          style: "currency",
+          currency: "EUR", // Puedes cambiarlo a tu moneda local
+        })}
       </span>
     ),
   },
   {
     key: "date",
     type: "date",
-    render: (_, t) => new Date(t.date).toLocaleDateString("es-ES"),
+    render: (date) => new Date(date).toLocaleDateString("es-ES"),
   },
-  { key: "category" },
-  { key: "payment_method", render: (v) => v || "N/A" },
-  { key: "description" },
+  {
+    key: "name",
+    render: (value) => value || "Sin nombre",
+  },
+  {
+    key: "category",
+    render: (value) => value || "Sin categoría",
+  },
+  {
+    key: "payment_method",
+    render: (value) => value || "No especificado",
+  },
+  { key: "description", render: (value) => value || "-" },
   {
     key: "type",
     isSelect: true,

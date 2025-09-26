@@ -6,19 +6,26 @@ export const HeaderTable = () => {
   const { data } = useManageData();
   const headers = useMemo(() => {
     if (!data || data.length === 0) {
-      return ["#"];
+      // Si no hay datos, mostramos un conjunto de cabeceras por defecto
+      return ["#", "Monto", "Fecha", "Categoría", "Método de Pago", "Descripción", "Tipo", "Acciones"];
     }
-    const keys = Object.keys(data[0]).filter((key) => key !== "user_id");
-    const headerMap: Record<string, string> = {
-      id: "ID",
+
+    // Mapeo para capitalizar y traducir los nombres de las claves del backend
+    const headerTranslations: Record<string, string> = {
       amount: "Monto",
       date: "Fecha",
       category: "Categoría",
       payment_method: "Método de Pago",
       description: "Descripción",
       type: "Tipo",
+      // Agrega más traducciones si es necesario
     };
-    return [...keys.map((key) => headerMap[key] || key), "Acciones"];
+
+    // Obtenemos las claves del primer objeto, excluyendo 'id' y 'userId'
+    const keys = Object.keys(data[0]).filter((key) => key !== "id" && key !== "userId");
+
+    // Construimos el array final de cabeceras: # al inicio, luego las claves traducidas, y Acciones al final.
+    return ["#", ...keys.map((key) => headerTranslations[key] || key.charAt(0).toUpperCase() + key.slice(1)), "Acciones"];
   }, [data]);
   return (
     <TableRow>

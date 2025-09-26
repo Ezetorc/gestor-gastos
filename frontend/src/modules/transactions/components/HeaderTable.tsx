@@ -5,12 +5,7 @@ import { TableCell, TableRow } from "@mui/material";
 export const HeaderTable = () => {
   const { data } = useManageData();
   const headers = useMemo(() => {
-    if (!data || data.length === 0) {
-      // Si no hay datos, mostramos un conjunto de cabeceras por defecto
-      return ["#", "Monto", "Fecha", "Categoría", "Método de Pago", "Descripción", "Tipo", "Acciones"];
-    }
-
-    // Mapeo para capitalizar y traducir los nombres de las claves del backend
+    // Mapeo para traducir los nombres de las claves del backend a un formato legible
     const headerTranslations: Record<string, string> = {
       amount: "Monto",
       date: "Fecha",
@@ -20,12 +15,20 @@ export const HeaderTable = () => {
       type: "Tipo",
       // Agrega más traducciones si es necesario
     };
-
-    // Obtenemos las claves del primer objeto, excluyendo 'id' y 'userId'
-    const keys = Object.keys(data[0]).filter((key) => key !== "id" && key !== "userId");
-
-    // Construimos el array final de cabeceras: # al inicio, luego las claves traducidas, y Acciones al final.
-    return ["#", ...keys.map((key) => headerTranslations[key] || key.charAt(0).toUpperCase() + key.slice(1)), "Acciones"];
+    
+    // Si no hay datos, usamos un conjunto de cabeceras predefinido.
+    if (!data || data.length === 0) {
+      return ["#", ...Object.values(headerTranslations), "Acciones"];
+    }
+    
+    // Obtenemos las claves del primer objeto de transacción, excluyendo 'id' y 'userId'.
+    const transactionKeys = Object.keys(data[0]).filter(
+      (key) => key !== "id" && key !== "userId"
+    );
+    
+    // Construimos el array final: '#' al inicio, las claves traducidas, y 'Acciones' al final.
+    const dynamicHeaders = transactionKeys.map((key) => headerTranslations[key] || key);
+    return ["#", ...dynamicHeaders, "Acciones"];
   }, [data]);
   return (
     <TableRow>
